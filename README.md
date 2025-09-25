@@ -255,9 +255,14 @@ Set-ExecutionPolicy RemoteSigned
 2. Execute `ma init` novamente
 3. Reabra o projeto
 
-### Obter Ajuda
+### Obter Ajuda e Documentação
 
-- 📋 [Guia de Uso Rápido](QUICK-START.md)
+- ⚡ **[Início Rápido - 5 Minutos](INICIO-RAPIDO-5MIN.md)** - Comece a usar agora!
+- � **[Guia Integrado Completo](GUIA-INTEGRADO-COMPLETO.md)** - Documentação completa
+- 💡 **[Exemplos Práticos](EXEMPLOS-PRATICOS.md)** - Casos de uso reais
+- 🔧 **[Integração VS Code](VSCODE-INTEGRATION.md)** - Recursos avançados
+- 🧠 **[Prompt OmniForge](prompts/omniforge-orchestrator-agent.md)** - GitHub Copilot
+- 📊 **[Resumo da Integração](INTEGRATION-SUMMARY.md)** - Status do sistema
 - 🐛 [Reportar Bug](https://github.com/jessefreitas/vscode-multiagent/issues)
 - 💡 [Sugerir Funcionalidade](https://github.com/jessefreitas/vscode-multiagent/issues)
 

@@ -18,6 +18,7 @@
 ## ✨ Características Principais
 
 ### Sistema MultiAgent
+
 - 🤖 **Agentes Especializados**: Coder-SCPO, Reviewer-SCPO, Executor, Security
 - 🚀 **Instalação Automática**: Um comando configura tudo
 - 🔒 **Execução Segura**: Sandbox com timeout e validação
@@ -25,6 +26,7 @@
 - 🎯 **Multi-linguagem**: Python, JavaScript, C#, PowerShell com padrões SCPO
 
 ### Integração SCPO
+
 - 📋 **Templates Produção**: Arquiteturas testadas e otimizadas
 - ⚡ **Token Efficiency**: Redução de 40-60% no uso de tokens
 - 🏗️ **Padrões Estruturados**: Validação → Processamento → Output → Cleanup
@@ -34,21 +36,23 @@
 ## 🚀 Início Rápido
 
 ### 1. Inicialização com SCPO
+
 ```bash
 # Configurar projeto com SCPO habilitado
 ma init --scpo
 
-# Verificar status da integração  
+# Verificar status da integração
 ma status
 ```
 
 ### 2. Geração de Código Inteligente
+
 ```bash
 # API Backend com padrões SCPO
 ma generate "Create REST API for user management" backend
 
 # Frontend otimizado
-ma generate "Build responsive login page" frontend  
+ma generate "Build responsive login page" frontend
 
 # Testes abrangentes
 ma generate "Add unit and integration tests" testing
@@ -58,6 +62,7 @@ ma generate "Optimize database queries" optimization
 ```
 
 ### 3. Biblioteca SCPO
+
 ```bash
 # Listar todos os prompts disponíveis
 ma scpo list
@@ -70,6 +75,7 @@ ma prompts view "backend-architecture"
 ```
 
 ### 4. Análise e Review
+
 ```bash
 # Review com análise SCPO
 ma review myapi.py --scpo
@@ -79,6 +85,7 @@ ma scpo analyze --file mycode.js
 ```
 
 ### 5. Execução Segura
+
 ```bash
 # Teste com dry-run
 ma execute server.py --dry-run
@@ -89,36 +96,39 @@ ma execute --sandbox --timeout 60
 
 ## 📚 Domínios SCPO Suportados
 
-| Domínio | Descrição | Exemplos de Uso |
-|---------|-----------|-----------------|
-| **Backend** | APIs, servidores, microserviços | REST APIs, GraphQL, Database design |
-| **Frontend** | UI/UX, componentes, responsividade | React/Vue components, CSS Grid, A11y |
-| **Testing** | Testes unitários, integração, E2E | Jest/Pytest, Cypress, Coverage |
-| **Optimization** | Performance, algoritmos, caching | Query optimization, Bundle size, Caching |
-| **Documentation** | READMEs, APIs, arquitetura | Docs técnicos, ADRs, Onboarding |
-| **Mobile** | Apps nativos, híbridos, PWAs | React Native, Flutter, Responsive |
-| **Database** | Modelagem, queries, migrations | Schema design, Indexing, Backup |
+| Domínio           | Descrição                          | Exemplos de Uso                          |
+| ----------------- | ---------------------------------- | ---------------------------------------- |
+| **Backend**       | APIs, servidores, microserviços    | REST APIs, GraphQL, Database design      |
+| **Frontend**      | UI/UX, componentes, responsividade | React/Vue components, CSS Grid, A11y     |
+| **Testing**       | Testes unitários, integração, E2E  | Jest/Pytest, Cypress, Coverage           |
+| **Optimization**  | Performance, algoritmos, caching   | Query optimization, Bundle size, Caching |
+| **Documentation** | READMEs, APIs, arquitetura         | Docs técnicos, ADRs, Onboarding          |
+| **Mobile**        | Apps nativos, híbridos, PWAs       | React Native, Flutter, Responsive        |
+| **Database**      | Modelagem, queries, migrations     | Schema design, Indexing, Backup          |
 
 ## 🎯 Comandos Principais
 
 ### Comando Unificado `ma`
+
 ```bash
 ma <comando> [argumentos] [opções]
 ```
 
 ### Comandos Disponíveis
-| Comando | Descrição | Exemplo |
-|---------|-----------|---------|
-| `init` | Inicializar projeto | `ma init --scpo` |
-| `generate` | Gerar código com SCPO | `ma generate "Create API" backend` |
-| `review` | Analisar código | `ma review file.py --scpo` |
-| `execute` | Executar com segurança | `ma execute app.js --dry-run` |
-| `scpo` | Comandos SCPO específicos | `ma scpo list` |
-| `prompts` | Gerenciar prompts | `ma prompts search "test"` |
-| `status` | Status do projeto | `ma status` |
-| `backup` | Backup versionado | `ma backup` |
+
+| Comando    | Descrição                 | Exemplo                            |
+| ---------- | ------------------------- | ---------------------------------- |
+| `init`     | Inicializar projeto       | `ma init --scpo`                   |
+| `generate` | Gerar código com SCPO     | `ma generate "Create API" backend` |
+| `review`   | Analisar código           | `ma review file.py --scpo`         |
+| `execute`  | Executar com segurança    | `ma execute app.js --dry-run`      |
+| `scpo`     | Comandos SCPO específicos | `ma scpo list`                     |
+| `prompts`  | Gerenciar prompts         | `ma prompts search "test"`         |
+| `status`   | Status do projeto         | `ma status`                        |
+| `backup`   | Backup versionado         | `ma backup`                        |
 
 ### Opções Globais
+
 - `--scpo`: Habilitar modo SCPO
 - `--dry-run`: Execução simulada
 - `--force`: Forçar operação
@@ -150,6 +160,7 @@ ma <comando> [argumentos] [opções]
 ## 🔧 Configuração Avançada
 
 ### multiagent.json
+
 ```json
 {
   "version": "2.0",
@@ -172,7 +183,9 @@ ma <comando> [argumentos] [opções]
 ```
 
 ### Extensão VS Code
+
 A extensão SCPO adiciona:
+
 - ✅ 40+ snippets otimizados por domínio
 - ✅ Comandos integrados no Command Palette
 - ✅ Syntax highlighting para .scpo files
@@ -182,6 +195,7 @@ A extensão SCPO adiciona:
 ## 📊 Métricas e Qualidade
 
 ### Pontuação SCPO
+
 - **Estrutura**: Validação, processamento, output, cleanup
 - **Documentação**: Comentários, README, exemplos
 - **Otimização**: Token efficiency, performance patterns
@@ -189,11 +203,12 @@ A extensão SCPO adiciona:
 - **Produção**: Error handling, logging, monitoring
 
 ### Exemplo de Report
+
 ```
 📊 SCPO Analysis Report
 =======================
 ✅ Structure: 8/10
-✅ Documentation: 9/10  
+✅ Documentation: 9/10
 ✅ Optimization: 7/10
 ✅ Compliance: 10/10
 ✅ Production Ready: 8/10
@@ -205,6 +220,7 @@ A extensão SCPO adiciona:
 ## 🚀 Casos de Uso
 
 ### 1. Desenvolvimento Backend
+
 ```bash
 # Gerar API completa com SCPO
 ma generate "User authentication with JWT" backend
@@ -217,6 +233,7 @@ ma execute test-auth.py --sandbox
 ```
 
 ### 2. Frontend Otimizado
+
 ```bash
 # Componente responsivo
 ma generate "Dashboard with charts" frontend
@@ -226,6 +243,7 @@ ma scpo optimize --bundle --frontend
 ```
 
 ### 3. Pipeline de Qualidade
+
 ```bash
 # Setup completo de testes
 ma generate "Complete testing suite" testing
@@ -237,16 +255,19 @@ ma review --coverage --scpo
 ## 📈 Benefícios da Integração
 
 ### Produtividade
+
 - ⚡ **40-60% menos tokens** necessários
 - 🚀 **Geração 3x mais rápida** de código
 - 🎯 **90% de compliance** com best practices
 
 ### Qualidade
+
 - 🔍 **Análise automática** de padrões SCPO
 - 📊 **Métricas detalhadas** de qualidade
 - ✅ **Validação constante** de estruturas
 
 ### Manutenibilidade
+
 - 📚 **Documentação automática** com padrões SCPO
 - 🏗️ **Arquitetura consistente** entre projetos
 - 🔄 **Refactoring guiado** por prompts especializados
@@ -260,6 +281,7 @@ ma review --coverage --scpo
 5. Submit um Pull Request
 
 ### Adicionando Novos Prompts SCPO
+
 1. Crie arquivo `.md` em `/prompts/`
 2. Siga template SCPO estruturado
 3. Teste com `ma generate` usando o novo prompt

@@ -1,23 +1,23 @@
 # Script MultiAgent + SCPO: Geração Inteligente de Código
 param(
-    [Parameter(Mandatory=$true)]
-    [string]$CodeTask,
+  [Parameter(Mandatory = $true)]
+  [string]$CodeTask,
     
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("backend", "frontend", "testing", "optimization", "documentation", "mobile", "database")]
-    [string]$Domain = "backend",
+  [Parameter(Mandatory = $false)]
+  [ValidateSet("backend", "frontend", "testing", "optimization", "documentation", "mobile", "database")]
+  [string]$Domain = "backend",
     
-    [Parameter(Mandatory=$false)]
-    [string]$OutputFile = "",
+  [Parameter(Mandatory = $false)]
+  [string]$OutputFile = "",
     
-    [Parameter(Mandatory=$false)]
-    [switch]$UseSCPO = $true,
+  [Parameter(Mandatory = $false)]
+  [switch]$UseSCPO = $true,
     
-    [Parameter(Mandatory=$false)]
-    [switch]$Review = $false,
+  [Parameter(Mandatory = $false)]
+  [switch]$Review = $false,
     
-    [Parameter(Mandatory=$false)]
-    [switch]$Execute = $false
+  [Parameter(Mandatory = $false)]
+  [switch]$Execute = $false
 )
 
 Write-Host "🤖 MultiAgent + SCPO Code Generator" -ForegroundColor Cyan
@@ -26,25 +26,26 @@ Write-Host "🎯 Domain: $Domain" -ForegroundColor Gray
 
 # Verificar se é um projeto MultiAgent
 if (-not (Test-Path "multiagent.json")) {
-    Write-Host "⚠️  Não é um projeto MultiAgent. Execute 'ma init' primeiro." -ForegroundColor Yellow
-    $response = Read-Host "Continuar mesmo assim? (y/N)"
-    if ($response -ne "y" -and $response -ne "Y") {
-        exit 1
-    }
+  Write-Host "⚠️  Não é um projeto MultiAgent. Execute 'ma init' primeiro." -ForegroundColor Yellow
+  $response = Read-Host "Continuar mesmo assim? (y/N)"
+  if ($response -ne "y" -and $response -ne "Y") {
+    exit 1
+  }
 }
 
 # Carregar configuração se existir
 if (Test-Path "multiagent.json") {
-    $config = Get-Content "multiagent.json" | ConvertFrom-Json
-    $projectType = $config.project.type
-} else {
-    $projectType = "generic"
+  $config = Get-Content "multiagent.json" | ConvertFrom-Json
+  $projectType = $config.project.type
+}
+else {
+  $projectType = "generic"
 }
 
 # Criar diretório de cache
 $cacheDir = ".multiagent-cache"
 if (-not (Test-Path $cacheDir)) {
-    New-Item -ItemType Directory -Path $cacheDir | Out-Null
+  New-Item -ItemType Directory -Path $cacheDir | Out-Null
 }
 
 # Gerar timestamp para sessão
@@ -69,22 +70,22 @@ Write-Host "🧠 Agente SCPO-Coder inicializando..." -ForegroundColor Cyan
 # Carregar prompts SCPO baseado no domínio
 $scpoPromptPath = "prompts"
 if (-not (Test-Path $scpoPromptPath)) {
-    $scpoPromptPath = "$env:USERPROFILE\.vscode-multiagent\prompts"
+  $scpoPromptPath = "$env:USERPROFILE\.vscode-multiagent\prompts"
 }
 
 if (-not (Test-Path $scpoPromptPath)) {
-    Write-Host "⚠️  Prompts SCPO não encontrados. Usando modo padrão." -ForegroundColor Yellow
-    $UseSCPO = $false
+  Write-Host "⚠️  Prompts SCPO não encontrados. Usando modo padrão." -ForegroundColor Yellow
+  $UseSCPO = $false
 }
 
 # Aplicar prompt SCPO especializado
 $scpoContext = ""
 if ($UseSCPO) {
-    Write-Host "📚 Carregando contexto SCPO para domínio: $Domain" -ForegroundColor Yellow
+  Write-Host "📚 Carregando contexto SCPO para domínio: $Domain" -ForegroundColor Yellow
     
-    switch ($Domain) {
-        "backend" {
-            $scpoContext = @"
+  switch ($Domain) {
+    "backend" {
+      $scpoContext = @"
 ROLE: Senior Backend Developer using SCPO methodology
 TASK: $CodeTask
 CONSTRAINTS: Clean architecture, SOLID principles, production-ready code
@@ -98,9 +99,9 @@ SCPO_BACKEND_APPROACH:
 - Performance optimization
 - Microservices decomposition when appropriate
 "@
-        }
-        "frontend" {
-            $scpoContext = @"
+    }
+    "frontend" {
+      $scpoContext = @"
 ROLE: Frontend Specialist using SCPO methodology  
 TASK: $CodeTask
 CONSTRAINTS: Responsive design, accessibility, performance optimized
@@ -114,9 +115,9 @@ SCPO_FRONTEND_APPROACH:
 - Accessibility (WCAG AA)
 - Performance optimization (bundle size, lazy loading)
 "@
-        }
-        "testing" {
-            $scpoContext = @"
+    }
+    "testing" {
+      $scpoContext = @"
 ROLE: Test Engineering Specialist using SCPO methodology
 TASK: $CodeTask  
 CONSTRAINTS: Comprehensive coverage, maintainable tests, clear documentation
@@ -130,9 +131,9 @@ SCPO_TESTING_APPROACH:
 - Coverage analysis and reporting
 - Continuous testing integration
 "@
-        }
-        "optimization" {
-            $scpoContext = @"
+    }
+    "optimization" {
+      $scpoContext = @"
 ROLE: Performance Engineer using SCPO methodology
 TASK: $CodeTask
 CONSTRAINTS: Measurable improvements, profiling data, scalability focus
@@ -146,9 +147,9 @@ SCPO_OPTIMIZATION_APPROACH:
 - Load testing and scaling analysis
 - Memory and resource optimization
 "@
-        }
-        "documentation" {
-            $scpoContext = @"
+    }
+    "documentation" {
+      $scpoContext = @"
 ROLE: Technical Writer using SCPO methodology
 TASK: $CodeTask
 CONSTRAINTS: Clear for newcomers, actionable steps, maintainable docs
@@ -162,9 +163,9 @@ SCPO_DOCUMENTATION_APPROACH:
 - Code commenting strategies
 - Knowledge transfer documentation
 "@
-        }
-        "mobile" {
-            $scpoContext = @"
+    }
+    "mobile" {
+      $scpoContext = @"
 ROLE: Mobile Developer using SCPO methodology
 TASK: $CodeTask
 CONSTRAINTS: Native performance, platform guidelines, offline capabilities
@@ -178,9 +179,9 @@ SCPO_MOBILE_APPROACH:
 - Security and data protection
 - Performance optimization for mobile
 "@
-        }
-        "database" {
-            $scpoContext = @"
+    }
+    "database" {
+      $scpoContext = @"
 ROLE: Database Engineer using SCPO methodology
 TASK: $CodeTask
 CONSTRAINTS: ACID compliance, performance, scalability, security
@@ -194,9 +195,9 @@ SCPO_DATABASE_APPROACH:
 - Data migration planning
 - Performance monitoring and tuning
 "@
-        }
-        default {
-            $scpoContext = @"
+    }
+    default {
+      $scpoContext = @"
 ROLE: Full Stack Developer using SCPO methodology
 TASK: $CodeTask
 CONSTRAINTS: Best practices, maintainable code, production ready
@@ -210,8 +211,8 @@ SCPO_GENERAL_APPROACH:
 - Testing strategies
 - Documentation standards
 "@
-        }
     }
+  }
 }
 
 # Gerar código baseado na linguagem e contexto SCPO
@@ -222,10 +223,10 @@ $generatedCode = ""
 $suggestedFileName = ""
 
 switch ($projectType) {
-    "python" {
-        Write-Host "🐍 Gerando código Python com padrões SCPO..." -ForegroundColor Yellow
+  "python" {
+    Write-Host "🐍 Gerando código Python com padrões SCPO..." -ForegroundColor Yellow
         
-        $generatedCode = @"
+    $generatedCode = @"
 #!/usr/bin/env python3
 """
 MultiAgent + SCPO Generated Code
@@ -439,14 +440,14 @@ if __name__ == "__main__":
     result = asyncio.run(main())
     exit(0 if result["success"] else 1)
 "@
-        $suggestedFileName = "scpo_$(($CodeTask -replace '[^a-zA-Z0-9]', '_').ToLower()).py"
-        $codeGenerated = $true
-    }
+    $suggestedFileName = "scpo_$(($CodeTask -replace '[^a-zA-Z0-9]', '_').ToLower()).py"
+    $codeGenerated = $true
+  }
     
-    "javascript" {
-        Write-Host "🟨 Gerando código JavaScript com padrões SCPO..." -ForegroundColor Yellow
+  "javascript" {
+    Write-Host "🟨 Gerando código JavaScript com padrões SCPO..." -ForegroundColor Yellow
         
-        $generatedCode = @"
+    $generatedCode = @"
 /**
  * MultiAgent + SCPO Generated Code
  * ===============================
@@ -751,14 +752,14 @@ if (require.main === module) {
         });
 }
 "@
-        $suggestedFileName = "scpo-$(($CodeTask -replace '[^a-zA-Z0-9]', '-').ToLower()).js"
-        $codeGenerated = $true
-    }
+    $suggestedFileName = "scpo-$(($CodeTask -replace '[^a-zA-Z0-9]', '-').ToLower()).js"
+    $codeGenerated = $true
+  }
     
-    default {
-        Write-Host "📄 Gerando código genérico com estrutura SCPO..." -ForegroundColor Yellow
+  default {
+    Write-Host "📄 Gerando código genérico com estrutura SCPO..." -ForegroundColor Yellow
         
-        $generatedCode = @"
+    $generatedCode = @"
 /*
 MultiAgent + SCPO Generated Code
 ===============================
@@ -1006,96 +1007,99 @@ if (typeof module !== 'undefined') {
     };
 }
 "@
-        $suggestedFileName = "scpo-task-$(Get-Date -Format 'yyyyMMdd-HHmmss').js"
-        $codeGenerated = $true
-    }
+    $suggestedFileName = "scpo-task-$(Get-Date -Format 'yyyyMMdd-HHmmss').js"
+    $codeGenerated = $true
+  }
 }
 
 # Salvar código gerado
 if ($codeGenerated) {
-    if ([string]::IsNullOrEmpty($OutputFile)) {
-        $OutputFile = $suggestedFileName
-    }
+  if ([string]::IsNullOrEmpty($OutputFile)) {
+    $OutputFile = $suggestedFileName
+  }
     
-    $generatedCode | Set-Content $OutputFile
-    Write-Host "📁 Código SCPO salvo em: $OutputFile" -ForegroundColor Green
+  $generatedCode | Set-Content $OutputFile
+  Write-Host "📁 Código SCPO salvo em: $OutputFile" -ForegroundColor Green
     
-    # Log da geração
-    Add-Content $logFile "`nSCPO Code generated in: $OutputFile"
-    Add-Content $logFile "Lines: $(($generatedCode -split "`n").Count)"
-    Add-Content $logFile "Domain: $Domain"
-    Add-Content $logFile "SCPO Context Applied: $($scpoContext -ne '')"
+  # Log da geração
+  Add-Content $logFile "`nSCPO Code generated in: $OutputFile"
+  Add-Content $logFile "Lines: $(($generatedCode -split "`n").Count)"
+  Add-Content $logFile "Domain: $Domain"
+  Add-Content $logFile "SCPO Context Applied: $($scpoContext -ne '')"
 }
 
 # Agente Reviewer SCPO: Análise integrada
 if ($Review -and $codeGenerated) {
-    Write-Host ""
-    Write-Host "🔍 Agente SCPO-Reviewer analisando..." -ForegroundColor Cyan
+  Write-Host ""
+  Write-Host "🔍 Agente SCPO-Reviewer analisando..." -ForegroundColor Cyan
     
-    $reviewResults = @()
+  $reviewResults = @()
     
-    # Verificar padrões SCPO
-    $lines = $generatedCode -split "`n"
-    $linesCount = $lines.Count
+  # Verificar padrões SCPO
+  $lines = $generatedCode -split "`n"
+  $linesCount = $lines.Count
     
-    # Análise SCPO específica
-    if ($generatedCode -match "SCPO|SCPOTaskExecutor|TaskConfig") {
-        $reviewResults += "✅ Padrões SCPO implementados corretamente"
-    } else {
-        $reviewResults += "⚠️  Padrões SCPO não detectados"
-    }
+  # Análise SCPO específica
+  if ($generatedCode -match "SCPO|SCPOTaskExecutor|TaskConfig") {
+    $reviewResults += "✅ Padrões SCPO implementados corretamente"
+  }
+  else {
+    $reviewResults += "⚠️  Padrões SCPO não detectados"
+  }
     
-    # Verificar estrutura de classes/funções
-    $structurePattern = switch ($projectType) {
-        "python" { "class|def |async def" }
-        "javascript" { "class |function |async " }
-        default { "function|class|struct" }
-    }
+  # Verificar estrutura de classes/funções
+  $structurePattern = switch ($projectType) {
+    "python" { "class|def |async def" }
+    "javascript" { "class |function |async " }
+    default { "function|class|struct" }
+  }
     
-    if ($generatedCode -match $structurePattern) {
-        $reviewResults += "✅ Estrutura de código bem definida"
-    }
+  if ($generatedCode -match $structurePattern) {
+    $reviewResults += "✅ Estrutura de código bem definida"
+  }
     
-    # Verificar documentação
-    $docPattern = switch ($projectType) {
-        "python" { '"""' }
-        "javascript" { "/\*\*" }
-        default { "/\*|#|//" }
-    }
+  # Verificar documentação
+  $docPattern = switch ($projectType) {
+    "python" { '"""' }
+    "javascript" { "/\*\*" }
+    default { "/\*|#|//" }
+  }
     
-    if ($generatedCode -match $docPattern) {
-        $reviewResults += "✅ Documentação presente"
-    } else {
-        $reviewResults += "⚠️  Documentação insuficiente"
-    }
+  if ($generatedCode -match $docPattern) {
+    $reviewResults += "✅ Documentação presente"
+  }
+  else {
+    $reviewResults += "⚠️  Documentação insuficiente"
+  }
     
-    # Verificar error handling
-    if ($generatedCode -match "try|catch|except|Error|Exception") {
-        $reviewResults += "✅ Tratamento de erros implementado"
-    } else {
-        $reviewResults += "⚠️  Tratamento de erros ausente"
-    }
+  # Verificar error handling
+  if ($generatedCode -match "try|catch|except|Error|Exception") {
+    $reviewResults += "✅ Tratamento de erros implementado"
+  }
+  else {
+    $reviewResults += "⚠️  Tratamento de erros ausente"
+  }
     
-    # Verificar logging
-    if ($generatedCode -match "log|Log|logger|console\.") {
-        $reviewResults += "✅ Sistema de logging presente"
-    }
+  # Verificar logging
+  if ($generatedCode -match "log|Log|logger|console\.") {
+    $reviewResults += "✅ Sistema de logging presente"
+  }
     
-    # Análise de otimização SCPO
-    $optimizationScore = 0
-    if ($generatedCode -match "validate|Validate") { $optimizationScore += 2 }
-    if ($generatedCode -match "async|await|Promise") { $optimizationScore += 2 }
-    if ($generatedCode -match "const |final |readonly") { $optimizationScore += 1 }
-    if ($generatedCode -match "TODO|FIXME|NOTE") { $optimizationScore += 1 }
+  # Análise de otimização SCPO
+  $optimizationScore = 0
+  if ($generatedCode -match "validate|Validate") { $optimizationScore += 2 }
+  if ($generatedCode -match "async|await|Promise") { $optimizationScore += 2 }
+  if ($generatedCode -match "const |final |readonly") { $optimizationScore += 1 }
+  if ($generatedCode -match "TODO|FIXME|NOTE") { $optimizationScore += 1 }
     
-    $reviewResults += "📊 Pontuação SCPO: $optimizationScore/6"
+  $reviewResults += "📊 Pontuação SCPO: $optimizationScore/6"
     
-    Write-Host "Resultado da Análise SCPO:" -ForegroundColor Cyan
-    $reviewResults | ForEach-Object { Write-Host "  $_" -ForegroundColor White }
+  Write-Host "Resultado da Análise SCPO:" -ForegroundColor Cyan
+  $reviewResults | ForEach-Object { Write-Host "  $_" -ForegroundColor White }
     
-    # Salvar review SCPO
-    $reviewFile = "$cacheDir\scpo-review-$sessionId.md"
-    @"
+  # Salvar review SCPO
+  $reviewFile = "$cacheDir\scpo-review-$sessionId.md"
+  @"
 # SCPO Code Review Report
 **File:** $OutputFile  
 **Session:** $sessionId  
@@ -1120,7 +1124,7 @@ $($reviewResults -join "`n")
 Generated with MultiAgent + SCPO integration v1.0
 "@ | Set-Content $reviewFile
     
-    Write-Host "📝 Review SCPO salvo em: $reviewFile" -ForegroundColor Green
+  Write-Host "📝 Review SCPO salvo em: $reviewFile" -ForegroundColor Green
 }
 
 # Relatório final integrado
@@ -1135,9 +1139,10 @@ Write-Host "Arquivo: $OutputFile" -ForegroundColor White
 Write-Host "Log: $logFile" -ForegroundColor White
 
 if ($Review) {
-    Write-Host "Review SCPO: ✅ Executado" -ForegroundColor Green
-} else {
-    Write-Host "Review SCPO: ⏭️ Pulado" -ForegroundColor Gray
+  Write-Host "Review SCPO: ✅ Executado" -ForegroundColor Green
+}
+else {
+  Write-Host "Review SCPO: ⏭️ Pulado" -ForegroundColor Gray
 }
 
 Write-Host ""
