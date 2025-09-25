@@ -3,7 +3,7 @@
 # ==================================================================
 
 param(
-    [string]$CaminhoProjeto = "."
+  [string]$CaminhoProjeto = "."
 )
 
 $promptsOriginais = "$PSScriptRoot\prompts"
@@ -15,14 +15,14 @@ Write-Host ""
 
 # Verificar se pasta de prompts origem existe
 if (-not (Test-Path $promptsOriginais)) {
-    Write-Host "❌ Pasta de prompts não encontrada: $promptsOriginais" -ForegroundColor Red
-    exit 1
+  Write-Host "❌ Pasta de prompts não encontrada: $promptsOriginais" -ForegroundColor Red
+  exit 1
 }
 
 # Criar pasta destino se não existir
 if (-not (Test-Path $promptsDestino)) {
-    New-Item -ItemType Directory -Path $promptsDestino -Force | Out-Null
-    Write-Host "📁 Pasta prompts criada: $promptsDestino" -ForegroundColor Yellow
+  New-Item -ItemType Directory -Path $promptsDestino -Force | Out-Null
+  Write-Host "📁 Pasta prompts criada: $promptsDestino" -ForegroundColor Yellow
 }
 
 # Copiar todos os prompts
@@ -32,16 +32,16 @@ $promptsCopiados = 0
 $promptsExistentes = Get-ChildItem -Path $promptsOriginais -Filter "*.md"
 
 foreach ($prompt in $promptsExistentes) {
-    $destino = Join-Path $promptsDestino $prompt.Name
-    Copy-Item $prompt.FullName $destino -Force
-    Write-Host "  ✅ $($prompt.Name)" -ForegroundColor Green
-    $promptsCopiados++
+  $destino = Join-Path $promptsDestino $prompt.Name
+  Copy-Item $prompt.FullName $destino -Force
+  Write-Host "  ✅ $($prompt.Name)" -ForegroundColor Green
+  $promptsCopiados++
 }
 
 # Verificar se README.md existe
 $readmePath = Join-Path $promptsDestino "README.md"
 if (-not (Test-Path $readmePath)) {
-    @"
+  @"
 # Prompts SCPO - Sistema Multiagente
 
 Esta pasta contém os prompts especializados para diferentes tipos de desenvolvimento:
@@ -72,8 +72,8 @@ Esta pasta contém os prompts especializados para diferentes tipos de desenvolvi
 
 Você pode modificar qualquer prompt para se adequar às suas necessidades específicas.
 "@ | Set-Content $readmePath
-    Write-Host "  ✅ README.md criado" -ForegroundColor Green
-    $promptsCopiados++
+  Write-Host "  ✅ README.md criado" -ForegroundColor Green
+  $promptsCopiados++
 }
 
 Write-Host ""
