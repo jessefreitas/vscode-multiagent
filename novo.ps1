@@ -44,9 +44,12 @@ Write-Host "🤖 Configurando Agente Principal..." -ForegroundColor Yellow
 # Copiar arquivos essenciais
 $arquivosEssenciais = @(
   "$PSScriptRoot\ma.ps1",
-  "$PSScriptRoot\quero.ps1", 
-  "$PSScriptRoot\super-agent.ps1",
-  "$PSScriptRoot\generate-code-scpo.ps1"
+  "$PSScriptRoot\anti-erros.ps1",
+  "$PSScriptRoot\sistema-anti-erros.ps1",
+  "$PSScriptRoot\validacao-tempo-real.ps1",
+  "$PSScriptRoot\gerar-codigo-seguro.ps1",
+  "$PSScriptRoot\corrigir-prompts.ps1",
+  "$PSScriptRoot\reparar-projeto.ps1"
 )
 
 foreach ($arquivo in $arquivosEssenciais) {
@@ -114,19 +117,19 @@ Write-Host "🤖 Agora vou gerar seu código automaticamente..." -ForegroundColo
 Write-Host ""
 
 # Executar geração automática
-if (Test-Path ".\quero.ps1") {
+if (Test-Path ".\gerar-codigo-seguro.ps1") {
   Write-Host "🚀 Iniciando Agente Principal..." -ForegroundColor Green
-  & ".\quero.ps1" $descricao
+  & ".\gerar-codigo-seguro.ps1" 
 }
 else {
-  Write-Host "⚠️  Agente não encontrado. Execute manualmente:" -ForegroundColor Yellow
-  Write-Host "   quero '$descricao'" -ForegroundColor White
+  Write-Host "⚠️  Para gerar código, execute:" -ForegroundColor Yellow
+  Write-Host "   .\gerar-codigo-seguro.ps1" -ForegroundColor White
 }
 
 Write-Host ""
 Write-Host "🎉 PROJETO '$NomeProjeto' CRIADO COM SUCESSO!" -ForegroundColor Green
 Write-Host ""
 Write-Host "📁 Localização: $(Get-Location)" -ForegroundColor Gray
-Write-Host "💡 Para modificar: quero 'nova funcionalidade'" -ForegroundColor Gray
-Write-Host "🔧 Para otimizar: quero 'otimizar código'" -ForegroundColor Gray
+Write-Host "💡 Para gerar código: .\gerar-codigo-seguro.ps1" -ForegroundColor Gray
+Write-Host "🔧 Para verificar sistema: .\ma.ps1 check" -ForegroundColor Gray
 Write-Host ""

@@ -7,6 +7,22 @@
 
 > **🚀 Sistema completo de desenvolvimento com IA! Crie projetos profissionais com 1 comando.**
 
+## 📥 **CLONE E USE IMEDIATAMENTE**
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/jessefreitas/vscode-multiagent.git
+cd vscode-multiagent
+
+# 2. Abra no VS Code (configuração automática!)
+code .
+
+# 3. OU execute manualmente:
+.\inicializar.ps1
+```
+
+**✅ PRONTO!** O sistema se configura automaticamente ao abrir no VS Code.
+
 ---
 
 ## 🎯 **COMANDOS ESSENCIAIS**

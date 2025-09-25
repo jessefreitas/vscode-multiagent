@@ -19,6 +19,31 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "🚀 Inicializar Projeto (Auto)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        ".\\inicializar.ps1"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "🎉 SEXTA-FEIRA: Ativar Projeto Novo",
       "type": "shell",
       "command": "pwsh",
@@ -26,10 +51,7 @@
         "-Command",
         "& { Write-Host '🎉 SEXTA-FEIRA ATIVAR PROJETO!' -ForegroundColor Magenta; Write-Host 'Criando projeto completo automaticamente...' -ForegroundColor Green; Write-Host ''; $nome = Read-Host '📝 Nome do projeto'; $desc = Read-Host '💭 Descrição do projeto'; ./sexta-feira.ps1 $nome $desc }"
       ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
+      "group": "build",
       "presentation": {
         "echo": true,
         "reveal": "always",
