@@ -310,6 +310,7 @@ Write-SextaMessage "Baixando configurações e templates..." "⚙️"
 $auxiliares = @{
   "diagnostico-sexta.ps1"    = "$sistemaUrl/diagnostico-sexta.ps1"
   "instalar-sexta-global.ps1" = "$sistemaUrl/instalar-sexta-global.ps1"
+  "auto-reparacao.ps1"       = "$sistemaUrl/auto-reparacao.ps1"
   "STATUS-FINAL-SEXTA-FEIRA.md" = "$sistemaUrl/STATUS-FINAL-SEXTA-FEIRA.md"
   "SEXTA-FEIRA-GUIA-LEIGOS.md" = "$sistemaUrl/SEXTA-FEIRA-GUIA-LEIGOS.md"
 }
@@ -324,6 +325,96 @@ foreach ($aux in $auxiliares.Keys) {
     # Ignorar erros - são arquivos opcionais
   }
 }
+
+# 4.9. VERIFICAÇÃO E FALLBACK - GARANTIR PROJETO COMPLETO
+Write-SextaMessage "Verificando integridade do projeto..." "🔍"
+
+# Lista de arquivos essenciais que DEVEM existir
+$arquivosEssenciais = @(
+  "ma.ps1", "quero.ps1", "agente.ps1", "generate-code-scpo.ps1", 
+  "generate-code.ps1", "review-code.ps1", "execute-code.ps1",
+  "multiagent.json", ".gitignore", "README.md"
+)
+
+# Lista de prompts essenciais
+$promptsEssenciais = @(
+  "prompts/agente-principal-arroba.md",
+  "prompts/backend-architecture.md", 
+  "prompts/ui-design.md",
+  "prompts/web-development.md",
+  "prompts/code-optimization.md",
+  "prompts/README.md"
+)
+
+# Verificar e reparar arquivos faltantes
+$arquivosFaltando = @()
+$promptsFaltando = @()
+
+foreach ($arquivo in $arquivosEssenciais) {
+  if (-not (Test-Path $arquivo)) {
+    $arquivosFaltando += $arquivo
+  }
+}
+
+foreach ($prompt in $promptsEssenciais) {
+  if (-not (Test-Path $prompt)) {
+    $promptsFaltando += $prompt
+  }
+}
+
+# Executar reparação se necessário
+if ($arquivosFaltando.Count -gt 0 -or $promptsFaltando.Count -gt 0) {
+  Write-SextaMessage "⚠️  Detectados $($arquivosFaltando.Count + $promptsFaltando.Count) arquivos faltando - executando reparação..." "🔧"
+  
+  # Reparar scripts faltantes
+  foreach ($arquivo in $arquivosFaltando) {
+    try {
+      $url = $arquivos[$arquivo]
+      if ($url) {
+        Write-SextaMessage "Reparando $arquivo..." "🔧"
+        Invoke-WebRequest -Uri $url -OutFile $arquivo -UseBasicParsing -TimeoutSec 30
+        Write-SextaSuccess "✅ $arquivo reparado!"
+      }
+    }
+    catch {
+      Write-SextaError "❌ Falha ao reparar $arquivo"  
+    }
+  }
+  
+  # Reparar prompts faltantes
+  foreach ($prompt in $promptsFaltando) {
+    try {
+      $url = $prompts[$prompt]
+      if ($url) {
+        Write-SextaMessage "Reparando $prompt..." "🔧"
+        # Garantir que pasta prompts existe
+        if (-not (Test-Path "prompts")) {
+          New-Item -ItemType Directory -Path "prompts" -Force | Out-Null
+        }
+        Invoke-WebRequest -Uri $url -OutFile $prompt -UseBasicParsing -TimeoutSec 30
+        Write-SextaSuccess "✅ $prompt reparado!"
+      }
+    }
+    catch {
+      Write-SextaError "❌ Falha ao reparar $prompt"
+    }
+  }
+  
+} else {
+  Write-SextaSuccess "✅ Todos os arquivos essenciais estão presentes!"
+}
+
+# Relatório final de integridade
+$totalArquivos = (Get-ChildItem -Recurse -File | Measure-Object).Count
+$totalPrompts = if (Test-Path "prompts") { (Get-ChildItem "prompts" -Filter "*.md" | Measure-Object).Count } else { 0 }
+
+Write-Host ""
+Write-SextaSuccess "📊 RELATÓRIO DE INTEGRIDADE DO PROJETO:"
+Write-Host "   📁 Total de arquivos: $totalArquivos" -ForegroundColor Green
+Write-Host "   📚 Prompts SCPO: $totalPrompts" -ForegroundColor Green
+Write-Host "   🤖 Scripts de agente: $(($arquivosEssenciais | Where-Object { Test-Path $_ }).Count)/$($arquivosEssenciais.Count)" -ForegroundColor Green
+Write-Host "   🔧 Sistema: $(if ($totalArquivos -ge 20 -and $totalPrompts -ge 5) { "✅ COMPLETO" } else { "⚠️  INCOMPLETO" })" -ForegroundColor $(if ($totalArquivos -ge 20 -and $totalPrompts -ge 5) { "Green" } else { "Yellow" })
+Write-Host ""
 
 # 4.5. INICIALIZAR PROJETO MULTIAGENT
 Write-SextaMessage "Inicializando projeto MultiAgent..." "🔧"
@@ -570,9 +661,10 @@ Write-Host "   2. Ou digite: quero 'funcionalidade que você quer'" -ForegroundC
 Write-Host "   3. Relaxe enquanto o agente trabalha! 😎" -ForegroundColor White
 Write-Host ""
 Write-Host "💡 COMANDOS DISPONÍVEIS:" -ForegroundColor Yellow
-Write-Host "   quero 'criar um site'    - Desenvolvimento automático" -ForegroundColor Gray
-Write-Host "   ma 'otimizar código'     - Otimização automática" -ForegroundColor Gray
-Write-Host "   ma 'fazer deploy'        - Deploy automático" -ForegroundColor Gray
+Write-Host "   quero 'criar um site'      - Desenvolvimento automático" -ForegroundColor Gray
+Write-Host "   ma 'otimizar código'       - Otimização automática" -ForegroundColor Gray
+Write-Host "   ma 'fazer deploy'          - Deploy automático" -ForegroundColor Gray
+Write-Host "   .\auto-reparacao.ps1       - Verificar/reparar projeto" -ForegroundColor Gray
 Write-Host ""
 Write-Host "🎯 Local do projeto: $pastaProjeto" -ForegroundColor Cyan
 Write-Host ""
