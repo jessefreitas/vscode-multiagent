@@ -10,8 +10,8 @@ Write-Host ""
 # Criar pasta para scripts globais
 $globalPath = "$env:USERPROFILE\.vscode-sexta"
 if (-not (Test-Path $globalPath)) {
-    New-Item -ItemType Directory -Path $globalPath -Force | Out-Null
-    Write-Host "✅ Pasta global criada: $globalPath" -ForegroundColor Green
+  New-Item -ItemType Directory -Path $globalPath -Force | Out-Null
+  Write-Host "✅ Pasta global criada: $globalPath" -ForegroundColor Green
 }
 
 # Copiar script principal
@@ -33,13 +33,20 @@ function Sexta-Feira-Ativar-Projeto {
         [switch]`$Force = `$false
     )
     
-    & "$globalPath\sexta-feira.ps1" `$NomeProjeto `$DescricaoProjeto -Private:`$Private -Force:`$Force
+    # Formar a descrição completa
+    `$descricaoCompleta = `$DescricaoProjeto -join " "
+    
+    if (`$descricaoCompleta) {
+        & "$globalPath\sexta-feira.ps1" `$NomeProjeto `$descricaoCompleta -Private:`$Private -Force:`$Force
+    } else {
+        & "$globalPath\sexta-feira.ps1" `$NomeProjeto -Private:`$Private -Force:`$Force
+    }
 }
 
 # Alias mais curto
 function sexta {
     param(
-        [Parameter(Position = 0)]
+        [Parameter(Position = 0, Mandatory = `$false)]
         [string]`$NomeProjeto = "",
         
         [Parameter(Position = 1, ValueFromRemainingArguments = `$true)]
@@ -49,7 +56,14 @@ function sexta {
         [switch]`$Force = `$false
     )
     
-    Sexta-Feira-Ativar-Projeto `$NomeProjeto `$DescricaoProjeto -Private:`$Private -Force:`$Force
+    # Formar a descrição completa
+    `$descricaoCompleta = `$DescricaoProjeto -join " "
+    
+    if (`$descricaoCompleta) {
+        & "$globalPath\sexta-feira.ps1" `$NomeProjeto `$descricaoCompleta -Private:`$Private -Force:`$Force
+    } else {
+        & "$globalPath\sexta-feira.ps1" `$NomeProjeto -Private:`$Private -Force:`$Force
+    }
 }
 
 Write-Host "🎉 Comando 'Sexta-Feira Ativar Projeto' carregado!" -ForegroundColor Magenta
@@ -60,18 +74,19 @@ $aliasScript | Set-Content "$globalPath\alias.ps1"
 # Adicionar ao perfil do PowerShell
 $profilePath = $PROFILE
 if (-not (Test-Path $profilePath)) {
-    New-Item -ItemType File -Path $profilePath -Force | Out-Null
+  New-Item -ItemType File -Path $profilePath -Force | Out-Null
 }
 
 $profileContent = Get-Content $profilePath -ErrorAction SilentlyContinue
 $sourceCommand = ". `"$globalPath\alias.ps1`""
 
 if ($profileContent -notcontains $sourceCommand) {
-    Add-Content $profilePath "`n# Sexta-Feira Ativar Projeto"
-    Add-Content $profilePath $sourceCommand
-    Write-Host "✅ Comando adicionado ao perfil do PowerShell" -ForegroundColor Green
-} else {
-    Write-Host "✅ Comando já existe no perfil do PowerShell" -ForegroundColor Green
+  Add-Content $profilePath "`n# Sexta-Feira Ativar Projeto"
+  Add-Content $profilePath $sourceCommand
+  Write-Host "✅ Comando adicionado ao perfil do PowerShell" -ForegroundColor Green
+}
+else {
+  Write-Host "✅ Comando já existe no perfil do PowerShell" -ForegroundColor Green
 }
 
 # Criar comando para terminal integrado do VS Code

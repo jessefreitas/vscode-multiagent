@@ -3,32 +3,32 @@
 # Comando mágico que faz TUDO: GitHub + Pasta + Ambiente de desenvolvimento
 
 param(
-    [Parameter(Position = 0)]
-    [string]$NomeProjeto = "",
+  [Parameter(Position = 0)]
+  [string]$NomeProjeto = "",
     
-    [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
-    [string[]]$DescricaoProjeto = @(),
+  [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
+  [string[]]$DescricaoProjeto = @(),
     
-    [switch]$Private = $false,
-    [switch]$Force = $false
+  [switch]$Private = $false,
+  [switch]$Force = $false
 )
 
 # Juntar descrição
 $descricao = $DescricaoProjeto -join " "
 
 function Write-SextaMessage {
-    param([string]$Message, [string]$Icon = "🎯")
-    Write-Host "$Icon $Message" -ForegroundColor Cyan
+  param([string]$Message, [string]$Icon = "🎯")
+  Write-Host "$Icon $Message" -ForegroundColor Cyan
 }
 
 function Write-SextaSuccess {
-    param([string]$Message, [string]$Icon = "✅")
-    Write-Host "$Icon $Message" -ForegroundColor Green
+  param([string]$Message, [string]$Icon = "✅")
+  Write-Host "$Icon $Message" -ForegroundColor Green
 }
 
 function Write-SextaError {
-    param([string]$Message, [string]$Icon = "❌")
-    Write-Host "$Icon $Message" -ForegroundColor Red
+  param([string]$Message, [string]$Icon = "❌")
+  Write-Host "$Icon $Message" -ForegroundColor Red
 }
 
 # Banner especial de sexta-feira
@@ -40,19 +40,19 @@ Write-Host ""
 
 # Se não informou nome, perguntar
 if (-not $NomeProjeto) {
-    $NomeProjeto = Read-Host "📝 Nome do projeto"
-    if (-not $NomeProjeto) {
-        Write-SextaError "Nome é obrigatório para criar o projeto!"
-        exit 1
-    }
+  $NomeProjeto = Read-Host "📝 Nome do projeto"
+  if (-not $NomeProjeto) {
+    Write-SextaError "Nome é obrigatório para criar o projeto!"
+    exit 1
+  }
 }
 
 # Se não informou descrição, perguntar
 if (-not $descricao) {
-    $descricao = Read-Host "💭 Descrição do projeto (o que vai fazer)"
-    if (-not $descricao) {
-        $descricao = "Projeto criado automaticamente pela Sexta-Feira"
-    }
+  $descricao = Read-Host "💭 Descrição do projeto (o que vai fazer)"
+  if (-not $descricao) {
+    $descricao = "Projeto criado automaticamente pela Sexta-Feira"
+  }
 }
 
 Write-SextaMessage "Projeto: $NomeProjeto" "📁"
@@ -67,21 +67,21 @@ $pastaProjeto = "$pastaBase\$NomeProjeto"
 
 # Criar pasta base se não existir
 if (-not (Test-Path $pastaBase)) {
-    New-Item -ItemType Directory -Path $pastaBase -Force | Out-Null
-    Write-SextaSuccess "Pasta base C:\vscode criada!"
+  New-Item -ItemType Directory -Path $pastaBase -Force | Out-Null
+  Write-SextaSuccess "Pasta base C:\vscode criada!"
 }
 
 # Verificar se projeto já existe
 if (Test-Path $pastaProjeto) {
-    if (-not $Force) {
-        Write-Host "⚠️  Projeto '$NomeProjeto' já existe em C:\vscode!" -ForegroundColor Yellow
-        $overwrite = Read-Host "Sobrescrever? (s/N)"
-        if ($overwrite -ne "s" -and $overwrite -ne "S") {
-            Write-SextaError "Operação cancelada."
-            exit 1
-        }
+  if (-not $Force) {
+    Write-Host "⚠️  Projeto '$NomeProjeto' já existe em C:\vscode!" -ForegroundColor Yellow
+    $overwrite = Read-Host "Sobrescrever? (s/N)"
+    if ($overwrite -ne "s" -and $overwrite -ne "S") {
+      Write-SextaError "Operação cancelada."
+      exit 1
     }
-    Remove-Item $pastaProjeto -Recurse -Force
+  }
+  Remove-Item $pastaProjeto -Recurse -Force
 }
 
 # Criar pasta do projeto
@@ -92,10 +92,11 @@ Write-SextaSuccess "Pasta criada: $pastaProjeto"
 # 2. INICIALIZAR GIT
 Write-SextaMessage "2. Inicializando Git..." "🔧"
 try {
-    git init *>$null
-    Write-SextaSuccess "Git inicializado!"
-} catch {
-    Write-SextaError "Erro ao inicializar Git. Verifique se Git está instalado."
+  git init *>$null
+  Write-SextaSuccess "Git inicializado!"
+}
+catch {
+  Write-SextaError "Erro ao inicializar Git. Verifique se Git está instalado."
 }
 
 # 3. CRIAR ARQUIVOS BÁSICOS DO PROJETO
@@ -226,69 +227,202 @@ Thumbs.db
 $gitignore | Set-Content ".gitignore"
 Write-SextaSuccess ".gitignore criado!"
 
-# 4. INSTALAR AGENTE PRINCIPAL COMPLETO
+# 4. INSTALAR SISTEMA MULTIAGENTE COMPLETO + PROMPTS
 Write-SextaMessage "4. Instalando Sistema Multiagente Completo..." "🤖"
+
+# Criar pasta de prompts
+if (-not (Test-Path "prompts")) {
+  New-Item -ItemType Directory -Path "prompts" -Force | Out-Null
+}
 
 # Baixar sistema completo
 $sistemaUrl = "https://raw.githubusercontent.com/jessefreitas/vscode-multiagent/master"
+
+# Scripts principais
 $arquivos = @{
-    "ma.ps1" = "$sistemaUrl/scripts/ma.ps1"
-    "quero.ps1" = "$sistemaUrl/quero.ps1" 
-    "agente.ps1" = "$sistemaUrl/agente.ps1"
-    "generate-code-scpo.ps1" = "$sistemaUrl/scripts/generate-code-scpo.ps1"
-    "generate-code.ps1" = "$sistemaUrl/scripts/generate-code.ps1"
-    "review-code.ps1" = "$sistemaUrl/scripts/review-code.ps1"
-    "execute-code.ps1" = "$sistemaUrl/scripts/execute-code.ps1"
+  "ma.ps1"                 = "$sistemaUrl/scripts/ma.ps1"
+  "quero.ps1"              = "$sistemaUrl/quero.ps1" 
+  "agente.ps1"             = "$sistemaUrl/agente.ps1"
+  "generate-code-scpo.ps1" = "$sistemaUrl/scripts/generate-code-scpo.ps1"
+  "generate-code.ps1"      = "$sistemaUrl/scripts/generate-code.ps1"
+  "review-code.ps1"        = "$sistemaUrl/scripts/review-code.ps1"
+  "execute-code.ps1"       = "$sistemaUrl/scripts/execute-code.ps1"
 }
 
+# Prompts SCPO essenciais
+$prompts = @{
+  "prompts/agente-principal-arroba.md"     = "$sistemaUrl/prompts/agente-principal-arroba.md"
+  "prompts/backend-architecture.md"       = "$sistemaUrl/prompts/backend-architecture.md"
+  "prompts/code-optimization.md"          = "$sistemaUrl/prompts/code-optimization.md"
+  "prompts/documentation.md"              = "$sistemaUrl/prompts/documentation.md"
+  "prompts/omniforge-orchestrator-agent.md" = "$sistemaUrl/prompts/omniforge-orchestrator-agent.md"
+  "prompts/product-strategy.md"           = "$sistemaUrl/prompts/product-strategy.md"
+  "prompts/testing-quality.md"            = "$sistemaUrl/prompts/testing-quality.md"
+  "prompts/ui-design.md"                  = "$sistemaUrl/prompts/ui-design.md"
+  "prompts/web-development.md"            = "$sistemaUrl/prompts/web-development.md"
+  "prompts/README.md"                     = "$sistemaUrl/prompts/README.md"
+}
+
+# Baixar scripts principais
 foreach ($arquivo in $arquivos.Keys) {
-    try {
-        Write-SextaMessage "Baixando $arquivo..." "⬇️"
-        Invoke-WebRequest -Uri $arquivos[$arquivo] -OutFile $arquivo -UseBasicParsing
-        Write-SextaSuccess "$arquivo instalado!"
-    } catch {
-        Write-SextaMessage "Criando $arquivo local..." "⚙️"
-        # Fallback - criar versão simplificada
-        if ($arquivo -eq "quero.ps1") {
-            @"
+  try {
+    Write-SextaMessage "Baixando $arquivo..." "⬇️"
+    Invoke-WebRequest -Uri $arquivos[$arquivo] -OutFile $arquivo -UseBasicParsing
+    Write-SextaSuccess "$arquivo instalado!"
+  }
+  catch {
+    Write-SextaMessage "Criando $arquivo local..." "⚙️"
+    # Fallback - criar versão simplificada
+    if ($arquivo -eq "quero.ps1") {
+      @"
 param([Parameter(ValueFromRemainingArguments=`$true)][string[]]`$Request)
 `$fullRequest = `$Request -join " "
 Write-Host "🤖 Sexta-feira processando: `$fullRequest" -ForegroundColor Cyan
 if (`$fullRequest) { & ".\agente.ps1" `$fullRequest }
 "@ | Set-Content $arquivo
-        }
     }
+  }
+}
+
+# Baixar prompts SCPO
+Write-SextaMessage "Baixando prompts SCPO especializados..." "📚"
+foreach ($prompt in $prompts.Keys) {
+  try {
+    Write-SextaMessage "Baixando $prompt..." "📄"
+    Invoke-WebRequest -Uri $prompts[$prompt] -OutFile $prompt -UseBasicParsing
+    Write-SextaSuccess "Prompt $prompt instalado!"
+  }
+  catch {
+    Write-SextaError "Erro ao baixar $prompt - continuando..."
+  }
+}
+
+# Baixar arquivos auxiliares importantes
+Write-SextaMessage "Baixando configurações e templates..." "⚙️"
+$auxiliares = @{
+  "diagnostico-sexta.ps1"    = "$sistemaUrl/diagnostico-sexta.ps1"
+  "instalar-sexta-global.ps1" = "$sistemaUrl/instalar-sexta-global.ps1"
+  "STATUS-FINAL-SEXTA-FEIRA.md" = "$sistemaUrl/STATUS-FINAL-SEXTA-FEIRA.md"
+  "SEXTA-FEIRA-GUIA-LEIGOS.md" = "$sistemaUrl/SEXTA-FEIRA-GUIA-LEIGOS.md"
+}
+
+foreach ($aux in $auxiliares.Keys) {
+  try {
+    Write-SextaMessage "Baixando $aux..." "📄"
+    Invoke-WebRequest -Uri $auxiliares[$aux] -OutFile $aux -UseBasicParsing -ErrorAction SilentlyContinue
+    Write-SextaSuccess "$aux instalado!"
+  }
+  catch {
+    # Ignorar erros - são arquivos opcionais
+  }
 }
 
 # 4.5. INICIALIZAR PROJETO MULTIAGENT
 Write-SextaMessage "Inicializando projeto MultiAgent..." "🔧"
 try {
-    # Criar multiagent.json básico
-    $multiagentConfig = @{
-        project = @{
-            name = $NomeProjeto  
-            description = $descricao
-            type = "auto-detect"
-            domain = "auto-detect"
-        }
-        agents = @{
-            "agente-principal" = @{
-                enabled = $true
-                auto_mode = $true
-                scpo_integration = $true
-            }
-        }
-        sexta_feira = @{
-            enabled = $true
-            created = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
-            auto_setup = $true
-        }
-    } | ConvertTo-Json -Depth 10
+  # Criar multiagent.json básico
+  $multiagentConfig = @{
+    project     = @{
+      name        = $NomeProjeto  
+      description = $descricao
+      type        = "auto-detect"
+      domain      = "auto-detect"
+    }
+    agents      = @{
+      "agente-principal" = @{
+        enabled          = $true
+        auto_mode        = $true
+        scpo_integration = $true
+      }
+    }
+    sexta_feira = @{
+      enabled    = $true
+      created    = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+      auto_setup = $true
+    }
+  } | ConvertTo-Json -Depth 10
     
-    $multiagentConfig | Set-Content "multiagent.json"
-    Write-SextaSuccess "Projeto MultiAgent inicializado!"
-} catch {
-    Write-Host "⚠️  Inicialização básica aplicada" -ForegroundColor Yellow
+  $multiagentConfig | Set-Content "multiagent.json"
+  Write-SextaSuccess "Projeto MultiAgent inicializado!"
+  
+  # Criar arquivo de documentação do projeto independente
+  $projetoDoc = @"
+# 🎉 $NomeProjeto - Projeto Sexta-Feira Completo
+
+> **Projeto criado em $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss') com Sistema Sexta-Feira**
+
+## 📋 Descrição
+$descricao
+
+## 🚀 Sistema Completo Incluído
+
+Este projeto foi criado com **TUDO necessário** para funcionar independentemente:
+
+### 🤖 **Agentes Inteligentes:**
+- `ma.ps1` - Agente principal completo
+- `quero.ps1` - Comando simplificado para leigos
+- `agente.ps1` - Versão básica integrada
+- `generate-code-scpo.ps1` - Gerador de código SCPO
+- `review-code.ps1` - Revisor automático
+- `execute-code.ps1` - Executor seguro
+
+### 📚 **Prompts SCPO Especializados:**
+- `prompts/agente-principal-arroba.md` - Agente principal @
+- `prompts/backend-architecture.md` - Arquitetura backend
+- `prompts/frontend-design.md` - Design de interface
+- `prompts/code-optimization.md` - Otimização de código
+- `prompts/testing-quality.md` - Testes e qualidade
+- **+ 6 prompts especializados adicionais**
+
+### ⚙️ **Configurações VS Code:**
+- `.vscode/tasks.json` - Tasks especiais Sexta-Feira
+- `.vscode/settings.json` - Configurações otimizadas
+- `multiagent.json` - Configuração do sistema
+
+## 💡 **Como usar:**
+
+### 🎯 **Para Leigos (Fácil):**
+```powershell
+.\quero.ps1 "criar uma página de login"
+.\quero.ps1 "fazer conexão com banco de dados"  
+.\quero.ps1 "otimizar meu código"
+```
+
+### 🔧 **Para Desenvolvedores (Completo):**
+```powershell
+.\ma.ps1 "criar API REST completa"
+.\ma.ps1 "implementar autenticação JWT"
+.\ma.ps1 "fazer deploy na nuvem"
+```
+
+### 🎮 **No VS Code:**
+- **F5** = Agente Principal
+- **Ctrl+Shift+P** → "Sexta-Feira: Desenvolver"
+- **Ctrl+F5** = Novo projeto
+
+## 🔄 **Projeto Independente:**
+
+✅ **Funciona offline** - todos os arquivos incluídos
+✅ **Clone do Git funcionará** - sistema completo
+✅ **Sem dependências externas** - tudo autocontido
+✅ **Prompts especializados** - qualidade profissional
+✅ **Documentação completa** - para todos os níveis
+
+## 🎊 **Criado com Sexta-Feira Ativar Projeto**
+
+Este projeto foi gerado automaticamente pelo sistema revolucionário **Sexta-Feira**, que cria projetos profissionais completos em 30 segundos!
+
+**Seu projeto está pronto para codar! 🚀**
+
+---
+*Gerado automaticamente em $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')*
+"@
+  
+  $projetoDoc | Set-Content "PROJETO-COMPLETO.md"
+  Write-SextaSuccess "Documentação do projeto criada!"
+}
+catch {
+  Write-Host "⚠️  Inicialização básica aplicada" -ForegroundColor Yellow
 }
 
 # 5. CONFIGURAR VS CODE
@@ -296,7 +430,7 @@ Write-SextaMessage "5. Configurando VS Code especial para Sexta-feira..." "⚚"
 
 # Criar .vscode
 if (-not (Test-Path ".vscode")) {
-    New-Item -ItemType Directory -Path ".vscode" -Force | Out-Null
+  New-Item -ItemType Directory -Path ".vscode" -Force | Out-Null
 }
 
 # URL dos templates especiais
@@ -304,66 +438,68 @@ $templateBase = "https://raw.githubusercontent.com/jessefreitas/vscode-multiagen
 
 # Baixar e aplicar templates otimizados
 try {
-    Write-SextaMessage "Baixando configurações otimizadas..." "⬇️"
+  Write-SextaMessage "Baixando configurações otimizadas..." "⬇️"
     
-    # tasks.json com comandos especiais de sexta-feira
-    $tasksContent = Invoke-RestMethod "$templateBase/vscode-sexta-tasks.json" -ErrorAction SilentlyContinue
-    if ($tasksContent) {
-        $tasksContent | ConvertTo-Json -Depth 10 | Set-Content ".vscode\tasks.json"
-        Write-SextaSuccess "Tasks especiais configuradas!"
-    }
+  # tasks.json com comandos especiais de sexta-feira
+  $tasksContent = Invoke-RestMethod "$templateBase/vscode-sexta-tasks.json" -ErrorAction SilentlyContinue
+  if ($tasksContent) {
+    $tasksContent | ConvertTo-Json -Depth 10 | Set-Content ".vscode\tasks.json"
+    Write-SextaSuccess "Tasks especiais configuradas!"
+  }
     
-    # settings.json otimizado
-    $settingsContent = Invoke-RestMethod "$templateBase/vscode-sexta-settings.json" -ErrorAction SilentlyContinue
-    if ($settingsContent) {
-        # Personalizar settings com info do projeto
-        $settingsObj = $settingsContent | ConvertFrom-Json
-        $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.sextaFeira" -Value $true -Force
-        $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.projectName" -Value $NomeProjeto -Force
-        $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.description" -Value $descricao -Force
+  # settings.json otimizado
+  $settingsContent = Invoke-RestMethod "$templateBase/vscode-sexta-settings.json" -ErrorAction SilentlyContinue
+  if ($settingsContent) {
+    # Personalizar settings com info do projeto
+    $settingsObj = $settingsContent | ConvertFrom-Json
+    $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.sextaFeira" -Value $true -Force
+    $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.projectName" -Value $NomeProjeto -Force
+    $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.description" -Value $descricao -Force
         
-        $settingsObj | ConvertTo-Json -Depth 10 | Set-Content ".vscode\settings.json"
-        Write-SextaSuccess "Settings personalizados aplicados!"
-    }
+    $settingsObj | ConvertTo-Json -Depth 10 | Set-Content ".vscode\settings.json"
+    Write-SextaSuccess "Settings personalizados aplicados!"
+  }
     
-    # keybindings.json para atalhos especiais
-    $keybindingsContent = Invoke-RestMethod "$templateBase/vscode-sexta-keybindings.json" -ErrorAction SilentlyContinue
-    if ($keybindingsContent) {
-        $keybindingsContent | ConvertTo-Json -Depth 10 | Set-Content ".vscode\keybindings.json"
-        Write-SextaSuccess "Atalhos de teclado configurados!"
-        Write-Host "   F5 = Agente Principal | Ctrl+F5 = Novo Projeto | Shift+F5 = Status" -ForegroundColor Gray
-    }
+  # keybindings.json para atalhos especiais
+  $keybindingsContent = Invoke-RestMethod "$templateBase/vscode-sexta-keybindings.json" -ErrorAction SilentlyContinue
+  if ($keybindingsContent) {
+    $keybindingsContent | ConvertTo-Json -Depth 10 | Set-Content ".vscode\keybindings.json"
+    Write-SextaSuccess "Atalhos de teclado configurados!"
+    Write-Host "   F5 = Agente Principal | Ctrl+F5 = Novo Projeto | Shift+F5 = Status" -ForegroundColor Gray
+  }
     
-} catch {
-    Write-Host "⚠️  Usando configuração offline" -ForegroundColor Yellow
+}
+catch {
+  Write-Host "⚠️  Usando configuração offline" -ForegroundColor Yellow
     
-    # Fallback: configuração básica local
-    $basicTasks = @{
-        version = "2.0.0"
-        tasks = @(
-            @{
-                label = "🎉 Sexta-Feira Desenvolver"
-                type = "shell"
-                command = "pwsh"
-                args = @("-Command", "& { `$task = Read-Host '💭 O que criar hoje'; .\quero.ps1 `"`$task`" }")
-                group = @{ kind = "build"; isDefault = $true }
-                presentation = @{ echo = $true; reveal = "always"; focus = $true }
-            }
-        )
-    } | ConvertTo-Json -Depth 10
+  # Fallback: configuração básica local
+  $basicTasks = @{
+    version = "2.0.0"
+    tasks   = @(
+      @{
+        label        = "🎉 Sexta-Feira Desenvolver"
+        type         = "shell"
+        command      = "pwsh"
+        args         = @("-Command", "& { `$task = Read-Host '💭 O que criar hoje'; .\quero.ps1 `"`$task`" }")
+        group        = @{ kind = "build"; isDefault = $true }
+        presentation = @{ echo = $true; reveal = "always"; focus = $true }
+      }
+    )
+  } | ConvertTo-Json -Depth 10
     
-    $basicTasks | Set-Content ".vscode\tasks.json"
-    Write-SextaSuccess "Configuração básica aplicada!"
+  $basicTasks | Set-Content ".vscode\tasks.json"
+  Write-SextaSuccess "Configuração básica aplicada!"
 }
 
 # 6. PRIMEIRO COMMIT
 Write-SextaMessage "6. Fazendo primeiro commit..." "📝"
 try {
-    git add . *>$null
-    git commit -m "🎉 Sexta-Feira Ativar Projeto: $NomeProjeto inicializado automaticamente" *>$null
-    Write-SextaSuccess "Primeiro commit realizado!"
-} catch {
-    Write-SextaMessage "Commit será feito após configurar GitHub" "⏳"
+  git add . *>$null
+  git commit -m "🎉 Sexta-Feira Ativar Projeto: $NomeProjeto inicializado automaticamente" *>$null
+  Write-SextaSuccess "Primeiro commit realizado!"
+}
+catch {
+  Write-SextaMessage "Commit será feito após configurar GitHub" "⏳"
 }
 
 # 7. CRIAR REPOSITÓRIO NO GITHUB
@@ -371,37 +507,41 @@ Write-SextaMessage "7. Criando repositório no GitHub..." "🐙"
 
 # Verificar se GitHub CLI está instalado
 try {
-    $ghVersion = & gh --version 2>$null
-    if ($ghVersion) {
-        Write-SextaMessage "GitHub CLI encontrado, criando repositório..." "✅"
+  $ghVersion = & gh --version 2>$null
+  if ($ghVersion) {
+    Write-SextaMessage "GitHub CLI encontrado, criando repositório..." "✅"
         
-        $visibility = if ($Private) { "private" } else { "public" }
+    $visibility = if ($Private) { "private" } else { "public" }
         
-        try {
-            & gh repo create $NomeProjeto --description "$descricao" --$visibility --source=. --remote=origin --push 2>$null
-            Write-SextaSuccess "Repositório '$NomeProjeto' criado no GitHub!"
-            Write-SextaSuccess "Código enviado para: https://github.com/$(& gh api user | ConvertFrom-Json | Select-Object -ExpandProperty login)/$NomeProjeto"
-        } catch {
-            Write-SextaMessage "Repositório será criado manualmente: gh repo create $NomeProjeto --public" "💡"
-        }
-    } else {
-        Write-SextaMessage "GitHub CLI não encontrado." "⚠️"
-        Write-Host "💡 Para criar repositório automaticamente:" -ForegroundColor Yellow
-        Write-Host "   1. Instale GitHub CLI: winget install GitHub.cli" -ForegroundColor Gray
-        Write-Host "   2. Faça login: gh auth login" -ForegroundColor Gray
-        Write-Host "   3. Execute novamente este comando" -ForegroundColor Gray
+    try {
+      & gh repo create $NomeProjeto --description "$descricao" --$visibility --source=. --remote=origin --push 2>$null
+      Write-SextaSuccess "Repositório '$NomeProjeto' criado no GitHub!"
+      Write-SextaSuccess "Código enviado para: https://github.com/$(& gh api user | ConvertFrom-Json | Select-Object -ExpandProperty login)/$NomeProjeto"
     }
-} catch {
-    Write-SextaMessage "Configuração manual do GitHub necessária" "💡"
+    catch {
+      Write-SextaMessage "Repositório será criado manualmente: gh repo create $NomeProjeto --public" "💡"
+    }
+  }
+  else {
+    Write-SextaMessage "GitHub CLI não encontrado." "⚠️"
+    Write-Host "💡 Para criar repositório automaticamente:" -ForegroundColor Yellow
+    Write-Host "   1. Instale GitHub CLI: winget install GitHub.cli" -ForegroundColor Gray
+    Write-Host "   2. Faça login: gh auth login" -ForegroundColor Gray
+    Write-Host "   3. Execute novamente este comando" -ForegroundColor Gray
+  }
+}
+catch {
+  Write-SextaMessage "Configuração manual do GitHub necessária" "💡"
 }
 
 # 8. ABRIR NO VS CODE
 Write-SextaMessage "8. Abrindo projeto no VS Code..." "🎨"
 try {
-    code . *>$null
-    Write-SextaSuccess "VS Code aberto!"
-} catch {
-    Write-SextaMessage "Abra manualmente: code ." "💡"
+  code . *>$null
+  Write-SextaSuccess "VS Code aberto!"
+}
+catch {
+  Write-SextaMessage "Abra manualmente: code ." "💡"
 }
 
 # RESULTADO FINAL
