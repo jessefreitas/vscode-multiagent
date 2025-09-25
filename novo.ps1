@@ -4,11 +4,11 @@
 # Uso: novo MeuProjeto "um site de vendas"
 
 param(
-    [Parameter(Position = 0, Mandatory = $true)]
-    [string]$NomeProjeto,
+  [Parameter(Position = 0, Mandatory = $true)]
+  [string]$NomeProjeto,
     
-    [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
-    [string[]]$OQueVoceQuer
+  [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
+  [string[]]$OQueVoceQuer
 )
 
 # Junta a descrição
@@ -24,13 +24,13 @@ Write-Host ""
 
 # Verificar se pasta já existe
 if (Test-Path $NomeProjeto) {
-    Write-Host "⚠️  Pasta '$NomeProjeto' já existe!" -ForegroundColor Yellow
-    $resposta = Read-Host "Quer sobrescrever? (s/N)"
-    if ($resposta -ne "s" -and $resposta -ne "S") {
-        Write-Host "❌ Operação cancelada." -ForegroundColor Red
-        exit 1
-    }
-    Remove-Item $NomeProjeto -Recurse -Force
+  Write-Host "⚠️  Pasta '$NomeProjeto' já existe!" -ForegroundColor Yellow
+  $resposta = Read-Host "Quer sobrescrever? (s/N)"
+  if ($resposta -ne "s" -and $resposta -ne "S") {
+    Write-Host "❌ Operação cancelada." -ForegroundColor Red
+    exit 1
+  }
+  Remove-Item $NomeProjeto -Recurse -Force
 }
 
 # Criar pasta do projeto
@@ -43,30 +43,30 @@ Write-Host "🤖 Configurando Agente Principal..." -ForegroundColor Yellow
 
 # Copiar arquivos essenciais
 $arquivosEssenciais = @(
-    "$PSScriptRoot\ma.ps1",
-    "$PSScriptRoot\quero.ps1", 
-    "$PSScriptRoot\super-agent.ps1",
-    "$PSScriptRoot\generate-code-scpo.ps1"
+  "$PSScriptRoot\ma.ps1",
+  "$PSScriptRoot\quero.ps1", 
+  "$PSScriptRoot\super-agent.ps1",
+  "$PSScriptRoot\generate-code-scpo.ps1"
 )
 
 foreach ($arquivo in $arquivosEssenciais) {
-    if (Test-Path $arquivo) {
-        $nomeArquivo = Split-Path $arquivo -Leaf
-        Copy-Item $arquivo ".\$nomeArquivo" -Force
-        Write-Host "  ✅ $nomeArquivo copiado" -ForegroundColor Gray
-    }
+  if (Test-Path $arquivo) {
+    $nomeArquivo = Split-Path $arquivo -Leaf
+    Copy-Item $arquivo ".\$nomeArquivo" -Force
+    Write-Host "  ✅ $nomeArquivo copiado" -ForegroundColor Gray
+  }
 }
 
 # Copiar pasta de prompts
 if (Test-Path "$PSScriptRoot\..\prompts") {
-    Copy-Item "$PSScriptRoot\..\prompts" ".\prompts" -Recurse -Force
-    Write-Host "  ✅ Prompts SCPO copiados" -ForegroundColor Gray
+  Copy-Item "$PSScriptRoot\..\prompts" ".\prompts" -Recurse -Force
+  Write-Host "  ✅ Prompts SCPO copiados" -ForegroundColor Gray
 }
 
 # Copiar configurações
 if (Test-Path "$PSScriptRoot\..\settings") {
-    Copy-Item "$PSScriptRoot\..\settings" ".\settings" -Recurse -Force
-    Write-Host "  ✅ Configurações copiadas" -ForegroundColor Gray
+  Copy-Item "$PSScriptRoot\..\settings" ".\settings" -Recurse -Force
+  Write-Host "  ✅ Configurações copiadas" -ForegroundColor Gray
 }
 
 # Criar arquivo de projeto
@@ -96,11 +96,12 @@ Write-Host ""
 
 # Executar geração automática
 if (Test-Path ".\quero.ps1") {
-    Write-Host "🚀 Iniciando Agente Principal..." -ForegroundColor Green
-    & ".\quero.ps1" $descricao
-} else {
-    Write-Host "⚠️  Agente não encontrado. Execute manualmente:" -ForegroundColor Yellow
-    Write-Host "   quero '$descricao'" -ForegroundColor White
+  Write-Host "🚀 Iniciando Agente Principal..." -ForegroundColor Green
+  & ".\quero.ps1" $descricao
+}
+else {
+  Write-Host "⚠️  Agente não encontrado. Execute manualmente:" -ForegroundColor Yellow
+  Write-Host "   quero '$descricao'" -ForegroundColor White
 }
 
 Write-Host ""

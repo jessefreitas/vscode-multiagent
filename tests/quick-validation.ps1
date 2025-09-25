@@ -17,10 +17,12 @@ function Test-Component {
         if ($result) {
             Write-Host "✅ $Name" -ForegroundColor Green
             $global:passed++
-        } else {
+        }
+        else {
             Write-Host "❌ $Name" -ForegroundColor Red
         }
-    } catch {
+    }
+    catch {
         Write-Host "❌ $Name - $($_.Exception.Message)" -ForegroundColor Red
     }
 }
@@ -56,7 +58,7 @@ Test-Component "Comando Status" {
 
 # Resultados
 Write-Host ""
-Write-Host "📊 RESULTADO: $passed/$total testes passaram" -ForegroundColor $(if($passed -eq $total){"Green"}else{"Yellow"})
+Write-Host "📊 RESULTADO: $passed/$total testes passaram" -ForegroundColor $(if ($passed -eq $total) { "Green" }else { "Yellow" })
 
 if ($passed -eq $total) {
     Write-Host ""
@@ -67,7 +69,8 @@ if ($passed -eq $total) {
     Write-Host "   • Use: ma 'sua tarefa' para comando inteligente" -ForegroundColor White
     Write-Host "   • Pressione Ctrl+Shift+P → Tasks para workflows VS Code" -ForegroundColor White
     Write-Host "   • Digite '@' no editor para snippets SCPO" -ForegroundColor White
-} else {
+}
+else {
     Write-Host ""
     Write-Host "⚠️  Alguns componentes precisam ajuste" -ForegroundColor Yellow
 }

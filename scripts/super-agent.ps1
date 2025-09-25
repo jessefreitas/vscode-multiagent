@@ -10,14 +10,14 @@ param(
 
 # Configurações automáticas (usuário nunca precisa mexer)
 $global:AutoConfig = @{
-    AutoExecute = $true           # Executa código automaticamente 
-    AutoReview = $false          # Não para para review (confuso para leigo)
-    AutoFix = $true              # Corrige erros automaticamente
-    AutoDeploy = $true           # Faz deploy automaticamente
+    AutoExecute             = $true           # Executa código automaticamente 
+    AutoReview              = $false          # Não para para review (confuso para leigo)
+    AutoFix                 = $true              # Corrige erros automaticamente
+    AutoDeploy              = $true           # Faz deploy automaticamente
     AutoInstallDependencies = $true # Instala dependências sozinho
-    VerboseOutput = $false       # Saída limpa (sem detalhes técnicos)
-    LearnFromUser = $true        # Aprende com o usuário
-    TrustLevel = "maximum"       # Confiança máxima no agente
+    VerboseOutput           = $false       # Saída limpa (sem detalhes técnicos)
+    LearnFromUser           = $true        # Aprende com o usuário
+    TrustLevel              = "maximum"       # Confiança máxima no agente
 }
 
 function Write-FriendlyMessage {
@@ -76,11 +76,11 @@ function Detect-UserIntent {
     param([string]$request)
     
     $patterns = @{
-        "CreateAPI" = @("api", "backend", "servidor", "banco de dados", "base de dados")
-        "CreateWebsite" = @("site", "website", "página", "web", "html", "frontend")
-        "CreateApp" = @("app", "aplicativo", "programa", "software", "ferramenta")
-        "OptimizeCode" = @("otimizar", "melhorar", "acelerar", "performance", "rápido")
-        "FixProblem" = @("corrigir", "consertar", "erro", "bug", "problema", "não funciona")
+        "CreateAPI"      = @("api", "backend", "servidor", "banco de dados", "base de dados")
+        "CreateWebsite"  = @("site", "website", "página", "web", "html", "frontend")
+        "CreateApp"      = @("app", "aplicativo", "programa", "software", "ferramenta")
+        "OptimizeCode"   = @("otimizar", "melhorar", "acelerar", "performance", "rápido")
+        "FixProblem"     = @("corrigir", "consertar", "erro", "bug", "problema", "não funciona")
         "LearnSomething" = @("aprender", "estudar", "como fazer", "tutorial", "ensinar")
     }
     
@@ -88,8 +88,8 @@ function Detect-UserIntent {
         foreach ($pattern in $patterns[$type]) {
             if ($request -match $pattern) {
                 return @{
-                    Type = $type
-                    Details = $request
+                    Type       = $type
+                    Details    = $request
                     Confidence = "high"
                 }
             }
@@ -97,8 +97,8 @@ function Detect-UserIntent {
     }
     
     return @{
-        Type = "general"
-        Details = $request
+        Type       = "general"
+        Details    = $request
         Confidence = "medium"
     }
 }
@@ -144,10 +144,10 @@ function Smart-AutoSolution {
     
     # Detecta automaticamente o melhor domínio
     $bestDomain = if ($request -match "(web|site|html|css)") { "frontend" }
-                  elseif ($request -match "(api|server|database|banco)") { "backend" }
-                  elseif ($request -match "(test|erro|bug)") { "testing" }
-                  elseif ($request -match "(rápido|performance|otimi)") { "optimization" }
-                  else { "general" }
+    elseif ($request -match "(api|server|database|banco)") { "backend" }
+    elseif ($request -match "(test|erro|bug)") { "testing" }
+    elseif ($request -match "(rápido|performance|otimi)") { "optimization" }
+    else { "general" }
     
     & "$PSScriptRoot\generate-code-scpo.ps1" -Task $request -Domain $bestDomain -AutoMode -NoReview
     
@@ -165,7 +165,8 @@ function Auto-InstallDependencies {
         if (Test-Path "package.json") { npm install *>$null }
         if (Test-Path "requirements.txt") { pip install -r requirements.txt *>$null }
         if (Test-Path "*.csproj") { dotnet restore *>$null }
-    } catch {
+    }
+    catch {
         # Falha silenciosa - usuário não precisa saber
     }
 }
@@ -175,7 +176,8 @@ function Auto-TestCode {
     # Testa sem mostrar detalhes técnicos
     try {
         & "$PSScriptRoot\execute-code.ps1" -AutoTest *>$null
-    } catch {
+    }
+    catch {
         # Auto-corrige se houver erro
         Auto-FixCode
     }

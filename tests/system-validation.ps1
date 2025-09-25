@@ -23,7 +23,8 @@ function Write-TestResult {
     if ($Passed) {
         $global:passedTests++
         Write-Host "✅ $TestName" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host "❌ $TestName" -ForegroundColor Red
         if ($Message) { Write-Host "   $Message" -ForegroundColor Yellow }
     }
@@ -33,10 +34,10 @@ function Write-TestResult {
     }
     
     $global:testResults += [PSCustomObject]@{
-        Name = $TestName
-        Passed = $Passed
-        Message = $Message
-        Details = $Details
+        Name      = $TestName
+        Passed    = $Passed
+        Message   = $Message
+        Details   = $Details
         Timestamp = Get-Date
     }
 }
@@ -75,7 +76,8 @@ try {
     $helpOutput = & ".\scripts\ma.ps1" "help" 2>&1
     $helpWorking = $helpOutput -match "AGENTE PRINCIPAL"
     Write-TestResult "Comando 'ma help' funciona" $helpWorking "Help exibe informações do Agente Principal"
-} catch {
+}
+catch {
     Write-TestResult "Comando 'ma help' funciona" $false "Erro: $($_.Exception.Message)"
 }
 
@@ -83,7 +85,8 @@ try {
     $statusOutput = & ".\scripts\ma.ps1" "status" 2>&1
     $statusWorking = $statusOutput -match "MultiAgent.*Status" 
     Write-TestResult "Comando 'ma status' funciona" $statusWorking "Status mostra informações do sistema"
-} catch {
+}
+catch {
     Write-TestResult "Comando 'ma status' funciona" $false "Erro: $($_.Exception.Message)"
 }
 
@@ -101,7 +104,8 @@ if (Test-Path ".vscode\tasks.json") {
     $tasksContent = Get-Content ".vscode\tasks.json" -Raw
     $agentTaskExists = $tasksContent -match "Agente Principal"
     Write-TestResult "Task do Agente Principal existe" $agentTaskExists
-} else {
+}
+else {
     Write-TestResult "Task do Agente Principal existe" $false "Arquivo tasks.json não encontrado"
 }
 
@@ -109,7 +113,8 @@ if (Test-Path ".vscode\settings.json") {
     $settingsContent = Get-Content ".vscode\settings.json" -Raw
     $scpoEnabled = $settingsContent -match "scpo.enabled.*true"
     Write-TestResult "SCPO habilitado nas configurações" $scpoEnabled
-} else {
+}
+else {
     Write-TestResult "SCPO habilitado nas configurações" $false "Arquivo settings.json não encontrado"
 }
 
@@ -122,7 +127,8 @@ if ($Full) {
         $generateScript = Get-Content "scripts\generate-code-scpo.ps1" -Raw
         $scpoPatterns = $generateScript -match "SCPO"
         Write-TestResult "Script de geração tem padrões SCPO" $scpoPatterns
-    } catch {
+    }
+    catch {
         Write-TestResult "Script de geração tem padrões SCPO" $false "Erro ao verificar script"
     }
 }
@@ -134,7 +140,8 @@ if (Test-Path "scripts\agent-principal.ps1") {
     $agentContent = Get-Content "scripts\agent-principal.ps1" -Raw
     $intelligentMode = $agentContent -match "intelligent|automático|principal"
     Write-TestResult "Agente Principal tem modo inteligente" $intelligentMode
-} else {
+}
+else {
     Write-TestResult "Agente Principal existe" $false "Script não encontrado"
 }
 
@@ -145,7 +152,8 @@ if (Test-Path "vscode-extension-scpo\package.json") {
     $packageContent = Get-Content "vscode-extension-scpo\package.json" -Raw | ConvertFrom-Json
     $hasSnippets = $packageContent.contributes.snippets.Count -gt 0
     Write-TestResult "Extensão tem snippets configurados" $hasSnippets "Encontrados $($packageContent.contributes.snippets.Count) tipos de snippets"
-} else {
+}
+else {
     Write-TestResult "Extensão SCPO existe" $false "package.json não encontrado"
 }
 
@@ -165,10 +173,12 @@ if ($successRate -ge 90) {
     Write-Host ""
     Write-Host "🎉 SISTEMA FUNCIONANDO PERFEITAMENTE!" -ForegroundColor Green
     Write-Host "🚀 Pronto para produção e uso avançado!" -ForegroundColor Green
-} elseif ($successRate -ge 70) {
+}
+elseif ($successRate -ge 70) {
     Write-Host ""
     Write-Host "⚠️  Sistema funcionando com alguns ajustes necessários" -ForegroundColor Yellow
-} else {
+}
+else {
     Write-Host ""
     Write-Host "❌ Sistema precisa de correções antes do uso" -ForegroundColor Red
 }

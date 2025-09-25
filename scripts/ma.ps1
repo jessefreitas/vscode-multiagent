@@ -490,7 +490,8 @@ $success = switch ($Command.ToLower()) {
       # Chama o super agente automático
       & "$PSScriptRoot\super-agent.ps1" "$Command"
       $true
-    } catch {
+    }
+    catch {
       Write-Host "🤖 Ops! Deixe-me tentar de outra forma..." -ForegroundColor Yellow
       
       # Fallback: modo inteligente tradicional
@@ -500,7 +501,8 @@ $success = switch ($Command.ToLower()) {
         
         # Chama o gerador SCPO diretamente
         & "$PSScriptRoot\generate-code-scpo.ps1" -CodeTask $Command -Domain "auto" -AutoMode -NoReview -Execute
-      } else {
+      }
+      else {
         Write-Host ""
         Write-Host "💬 Não entendi exatamente. Tente assim:" -ForegroundColor Yellow
         Write-Host "   ma 'quero fazer um site'" -ForegroundColor White
