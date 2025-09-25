@@ -39,6 +39,16 @@ Write-Host ""
 Write-ColorOutput "🤖 MultiAgent Quick Command" "Info"
 Write-ColorOutput "===========================" "Info"
 
+# Verificar e corrigir prompts se necessário
+if (-not (Test-Path "prompts") -or (Get-ChildItem "prompts" -Filter "*.md" -ErrorAction SilentlyContinue).Count -lt 5) {
+    Write-ColorOutput "🔧 Verificando prompts SCPO..." "Warning"
+    $corretorPath = Join-Path $PSScriptRoot "corrigir-prompts.ps1"
+    if (Test-Path $corretorPath) {
+        & $corretorPath "." 2>$null | Out-Null
+        Write-ColorOutput "✅ Prompts verificados!" "Success"
+    }
+}
+
 # Verificar se sistema está instalado
 $installPath = "$env:USERPROFILE\.vscode-multiagent"
 if (-not (Test-Path $installPath)) {

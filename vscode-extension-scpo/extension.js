@@ -16,7 +16,7 @@ class SCPOExtension {
      * Ativa a extensão
      */
     activate(context) {
-        console.log('SCPO Toolkit ativado!');
+        // console.log // REMOVIDO AUTOMATICAMENTE('SCPO Toolkit ativado!');
 
         // Criar status bar item
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);

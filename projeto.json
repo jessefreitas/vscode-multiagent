@@ -1,0 +1,14 @@
+{
+  "projeto": {
+    "nome": "vscode-multiagent-setup",
+    "descricao": "Projeto MultiAgent reparado automaticamente",
+    "reparado": "2025-09-25 18:09:26",
+    "sistema": "MultiAgent v2.1"
+  },
+  "configuracoes": {
+    "autoCorrecao": true,
+    "validacaoTempo": true,
+    "templates": true,
+    "antiErros": true
+  }
+}
