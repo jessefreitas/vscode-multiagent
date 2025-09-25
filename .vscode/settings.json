@@ -1,0 +1,94 @@
+{
+    "// MultiAgent + SCPO VS Code Integration": "Unified settings for optimal development experience",
+    
+    "// SCPO Configuration": "",
+    "scpo.enabled": true,
+    "scpo.autoSuggest": true,
+    "scpo.domainContext": "backend",
+    "scpo.tokenOptimization": true,
+    "scpo.promptDirectory": "./prompts",
+    
+    "// MultiAgent Integration": "",
+    "multiagent.scriptsPath": "./scripts",
+    "multiagent.cacheDirectory": "./.multiagent-cache",
+    "multiagent.autoReview": true,
+    "multiagent.sandboxExecution": true,
+    
+    "// File Associations": "",
+    "files.associations": {
+        "*.scpo": "markdown",
+        "multiagent.json": "jsonc",
+        "*.ma": "powershell"
+    },
+    
+    "// Terminal Integration": "",
+    "terminal.integrated.shell.windows": "pwsh.exe",
+    "terminal.integrated.shellArgs.windows": [
+        "-NoExit",
+        "-Command",
+        "& { Write-Host '🤖 MultiAgent + SCPO Terminal Ready!' -ForegroundColor Cyan; Write-Host 'Use: ma <command> for MultiAgent operations' -ForegroundColor Yellow; Write-Host 'Example: ma generate \"your task\" backend' -ForegroundColor Gray }"
+    ],
+    
+    "// Snippets and IntelliSense": "",
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.tabCompletion": "on",
+    "editor.snippetSuggestions": "top",
+    "editor.wordBasedSuggestions": "matchingDocuments",
+    "editor.quickSuggestions": {
+        "strings": true,
+        "comments": true,
+        "other": true
+    },
+    
+    "// Code Generation Settings": "",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    
+    "// SCPO Quality Settings": "",
+    "editor.rulers": [80, 120],
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    
+    "// MultiAgent Workflow Settings": "",
+    "tasks.autoDetect": "on",
+    "problems.decorations.enabled": true,
+    "workbench.editor.enablePreview": false,
+    
+    "// Git Integration for SCPO": "",
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": true
+    },
+    
+    "// Language-specific SCPO settings": "",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        }
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    },
+    "[powershell]": {
+        "editor.defaultFormatter": "ms-vscode.powershell"
+    },
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        }
+    },
+    
+    "// Extensions Integration": "",
+    "extensions.ignoreRecommendations": false
+}

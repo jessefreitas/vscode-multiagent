@@ -1,0 +1,33 @@
+{
+    "recommendations": [
+        "ms-vscode.powershell",
+        "ms-python.python",
+        "ms-python.black-formatter", 
+        "ms-python.pylint",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-json",
+        "yzhang.markdown-all-in-one",
+        "shd101wyy.markdown-preview-enhanced",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode.vscode-eslint",
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-vsliveshare.vsliveshare",
+        "eamodio.gitlens",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-wsl",
+        "humao.rest-client",
+        "formulahendry.code-runner",
+        "ms-vscode.vscode-task-runner",
+        "aaron-bond.better-comments",
+        "oderwat.indent-rainbow",
+        "PKief.material-icon-theme",
+        "zhuangtongfa.Material-theme",
+        "ms-vscode.theme-tomorrowkit"
+    ],
+    "unwantedRecommendations": [
+        "ms-vscode.vscode-typescript",
+        "hookyqr.beautify"
+    ]
+}

@@ -1,0 +1,158 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "MultiAgent: Generate Code",
+            "type": "shell", 
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                "& { $task = Read-Host 'Describe what to generate'; $domain = Read-Host 'Domain (backend/frontend/testing/optimization/documentation/mobile/database)'; .\\scripts\\ma.ps1 generate \"$task\" $domain }"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "MultiAgent: Review Current File",
+            "type": "shell",
+            "command": "pwsh", 
+            "args": [
+                "-Command",
+                ".\\scripts\\ma.ps1 review \"${file}\" --scpo"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "MultiAgent: Execute Current File (Dry Run)",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command", 
+                ".\\scripts\\ma.ps1 execute \"${file}\" --dry-run"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always", 
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "MultiAgent: Project Status",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                ".\\scripts\\ma.ps1 status"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SCPO: List Available Prompts",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                ".\\scripts\\ma.ps1 scpo list"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SCPO: Search Prompts",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                "& { $term = Read-Host 'Search term'; .\\scripts\\ma.ps1 prompts search \"$term\" }"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "MultiAgent: Initialize Project with SCPO",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                ".\\scripts\\ma.ps1 init --scpo"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "MultiAgent: Backup Project",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                ".\\scripts\\ma.ps1 backup"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "MultiAgent: Clean Cache",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                ".\\scripts\\ma.ps1 clean"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

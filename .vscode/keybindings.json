@@ -1,0 +1,76 @@
+[
+    {
+        "key": "ctrl+shift+m g",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma generate \"\u0008\" "
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+m r",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma review ${file} --scpo\r"
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+m e",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma execute ${file} --dry-run\r"
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+m s",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma status\r"
+        }
+    },
+    {
+        "key": "ctrl+shift+m l",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma scpo list\r"
+        }
+    },
+    {
+        "key": "ctrl+shift+m p",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma prompts search \"\u0008\" "
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+m i",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma init --scpo\r"
+        }
+    },
+    {
+        "key": "ctrl+shift+m h",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma help\r"
+        }
+    },
+    {
+        "key": "ctrl+shift+m b",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma backup\r"
+        }
+    },
+    {
+        "key": "ctrl+shift+m c",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma clean\r"
+        }
+    }
+]

@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MultiAgent: Debug Generate Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/scripts/generate-code-scpo.ps1",
+            "args": [
+                "-CodeTask", "\"Debug test task\"",
+                "-Domain", "backend",
+                "-Review"
+            ],
+            "cwd": "${workspaceFolder}",
+            "createTemporaryIntegratedConsole": false
+        },
+        {
+            "name": "MultiAgent: Debug Review Script", 
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/scripts/review-code.ps1",
+            "args": [
+                "-FilePath", "${file}",
+                "-UseSCPO"
+            ],
+            "cwd": "${workspaceFolder}",
+            "createTemporaryIntegratedConsole": false
+        },
+        {
+            "name": "MultiAgent: Debug MA Command",
+            "type": "PowerShell", 
+            "request": "launch",
+            "script": "${workspaceFolder}/scripts/ma.ps1",
+            "args": [
+                "status"
+            ],
+            "cwd": "${workspaceFolder}",
+            "createTemporaryIntegratedConsole": false
+        }
+    ]
+}

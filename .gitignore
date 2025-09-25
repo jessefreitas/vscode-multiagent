@@ -1,37 +1,34 @@
-# Logs e cache
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Extension build outputs  
+vscode-extension-scpo/out/
+vscode-extension-scpo/dist/
+*.vsix
+
+# Cache and logs
 .multiagent-cache/
-multiagent-logs/
-*.multiagent-temp
+*.log
 
-# Backups
-*.zip
-backup-*/
-
-# Configurações locais
-.vscode/settings.json.local
-multiagent.json.local
-
-# Windows
-Thumbs.db
-Desktop.ini
-
-# macOS
+# OS generated files
 .DS_Store
-.AppleDouble
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Linux
-*~
+# VS Code
+.vscode/launch.json
+.vscode/settings.json
 
-# Temporários
+# Temporary files
 *.tmp
 *.temp
-temp/
-
-# IDE
-.idea/
 *.swp
 *.swo
-
-# Logs
-*.log
-logs/
+*~
