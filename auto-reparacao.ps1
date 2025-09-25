@@ -3,23 +3,23 @@
 # Verifica e repara projetos criados com Sexta-Feira
 
 param(
-    [string]$ProjectPath = ".",
-    [switch]$Verbose = $false
+  [string]$ProjectPath = ".",
+  [switch]$Verbose = $false
 )
 
 function Write-RepairMessage {
-    param([string]$Message, [string]$Icon = "🔧")
-    Write-Host "$Icon $Message" -ForegroundColor Cyan
+  param([string]$Message, [string]$Icon = "🔧")
+  Write-Host "$Icon $Message" -ForegroundColor Cyan
 }
 
 function Write-RepairSuccess {
-    param([string]$Message, [string]$Icon = "✅")
-    Write-Host "$Icon $Message" -ForegroundColor Green
+  param([string]$Message, [string]$Icon = "✅")
+  Write-Host "$Icon $Message" -ForegroundColor Green
 }
 
 function Write-RepairError {
-    param([string]$Message, [string]$Icon = "❌")
-    Write-Host "$Icon $Message" -ForegroundColor Red
+  param([string]$Message, [string]$Icon = "❌")
+  Write-Host "$Icon $Message" -ForegroundColor Red
 }
 
 Write-Host ""
@@ -29,21 +29,22 @@ Write-Host ""
 
 # Navegar para pasta do projeto
 if ($ProjectPath -ne ".") {
-    if (Test-Path $ProjectPath) {
-        Set-Location $ProjectPath
-        Write-RepairMessage "Verificando projeto: $ProjectPath"
-    } else {
-        Write-RepairError "Pasta não encontrada: $ProjectPath"
-        exit 1
-    }
+  if (Test-Path $ProjectPath) {
+    Set-Location $ProjectPath
+    Write-RepairMessage "Verificando projeto: $ProjectPath"
+  }
+  else {
+    Write-RepairError "Pasta não encontrada: $ProjectPath"
+    exit 1
+  }
 }
 
 # Verificar se é um projeto Sexta-Feira
 if (-not (Test-Path "multiagent.json")) {
-    Write-RepairError "Este não parece ser um projeto Sexta-Feira (multiagent.json não encontrado)"
-    Write-Host "💡 Para criar um projeto Sexta-Feira:" -ForegroundColor Yellow
-    Write-Host "   sexta NomeProjeto 'descrição'" -ForegroundColor White
-    exit 1
+  Write-RepairError "Este não parece ser um projeto Sexta-Feira (multiagent.json não encontrado)"
+  Write-Host "💡 Para criar um projeto Sexta-Feira:" -ForegroundColor Yellow
+  Write-Host "   sexta NomeProjeto 'descrição'" -ForegroundColor White
+  exit 1
 }
 
 Write-RepairSuccess "Projeto Sexta-Feira detectado!"
@@ -53,33 +54,33 @@ $sistemaUrl = "https://raw.githubusercontent.com/jessefreitas/vscode-multiagent/
 
 # Definir arquivos essenciais
 $arquivosEssenciais = @{
-    "ma.ps1" = "$sistemaUrl/scripts/ma.ps1"
-    "quero.ps1" = "$sistemaUrl/quero.ps1"
-    "agente.ps1" = "$sistemaUrl/agente.ps1"
-    "generate-code-scpo.ps1" = "$sistemaUrl/scripts/generate-code-scpo.ps1"
-    "generate-code.ps1" = "$sistemaUrl/scripts/generate-code.ps1"
-    "review-code.ps1" = "$sistemaUrl/scripts/review-code.ps1"
-    "execute-code.ps1" = "$sistemaUrl/scripts/execute-code.ps1"
+  "ma.ps1"                 = "$sistemaUrl/scripts/ma.ps1"
+  "quero.ps1"              = "$sistemaUrl/quero.ps1"
+  "agente.ps1"             = "$sistemaUrl/agente.ps1"
+  "generate-code-scpo.ps1" = "$sistemaUrl/scripts/generate-code-scpo.ps1"
+  "generate-code.ps1"      = "$sistemaUrl/scripts/generate-code.ps1"
+  "review-code.ps1"        = "$sistemaUrl/scripts/review-code.ps1"
+  "execute-code.ps1"       = "$sistemaUrl/scripts/execute-code.ps1"
 }
 
 $promptsEssenciais = @{
-    "prompts/agente-principal-arroba.md" = "$sistemaUrl/prompts/agente-principal-arroba.md"
-    "prompts/backend-architecture.md" = "$sistemaUrl/prompts/backend-architecture.md"
-    "prompts/ui-design.md" = "$sistemaUrl/prompts/ui-design.md"
-    "prompts/web-development.md" = "$sistemaUrl/prompts/web-development.md"
-    "prompts/code-optimization.md" = "$sistemaUrl/prompts/code-optimization.md"
-    "prompts/documentation.md" = "$sistemaUrl/prompts/documentation.md"
-    "prompts/testing-quality.md" = "$sistemaUrl/prompts/testing-quality.md"
-    "prompts/product-strategy.md" = "$sistemaUrl/prompts/product-strategy.md"
-    "prompts/omniforge-orchestrator-agent.md" = "$sistemaUrl/prompts/omniforge-orchestrator-agent.md"
-    "prompts/README.md" = "$sistemaUrl/prompts/README.md"
+  "prompts/agente-principal-arroba.md"      = "$sistemaUrl/prompts/agente-principal-arroba.md"
+  "prompts/backend-architecture.md"         = "$sistemaUrl/prompts/backend-architecture.md"
+  "prompts/ui-design.md"                    = "$sistemaUrl/prompts/ui-design.md"
+  "prompts/web-development.md"              = "$sistemaUrl/prompts/web-development.md"
+  "prompts/code-optimization.md"            = "$sistemaUrl/prompts/code-optimization.md"
+  "prompts/documentation.md"                = "$sistemaUrl/prompts/documentation.md"
+  "prompts/testing-quality.md"              = "$sistemaUrl/prompts/testing-quality.md"
+  "prompts/product-strategy.md"             = "$sistemaUrl/prompts/product-strategy.md"
+  "prompts/omniforge-orchestrator-agent.md" = "$sistemaUrl/prompts/omniforge-orchestrator-agent.md"
+  "prompts/README.md"                       = "$sistemaUrl/prompts/README.md"
 }
 
 $auxiliares = @{
-    "diagnostico-sexta.ps1" = "$sistemaUrl/diagnostico-sexta.ps1"
-    "instalar-sexta-global.ps1" = "$sistemaUrl/instalar-sexta-global.ps1"
-    "SEXTA-FEIRA-GUIA-LEIGOS.md" = "$sistemaUrl/SEXTA-FEIRA-GUIA-LEIGOS.md"
-    "STATUS-FINAL-SEXTA-FEIRA.md" = "$sistemaUrl/STATUS-FINAL-SEXTA-FEIRA.md"
+  "diagnostico-sexta.ps1"       = "$sistemaUrl/diagnostico-sexta.ps1"
+  "instalar-sexta-global.ps1"   = "$sistemaUrl/instalar-sexta-global.ps1"
+  "SEXTA-FEIRA-GUIA-LEIGOS.md"  = "$sistemaUrl/SEXTA-FEIRA-GUIA-LEIGOS.md"
+  "STATUS-FINAL-SEXTA-FEIRA.md" = "$sistemaUrl/STATUS-FINAL-SEXTA-FEIRA.md"
 }
 
 # Verificar arquivos
@@ -90,109 +91,109 @@ $promptsFaltando = @()
 $auxiliaresFaltando = @()
 
 foreach ($arquivo in $arquivosEssenciais.Keys) {
-    if (-not (Test-Path $arquivo)) {
-        $arquivosFaltando += $arquivo
-    }
+  if (-not (Test-Path $arquivo)) {
+    $arquivosFaltando += $arquivo
+  }
 }
 
 foreach ($prompt in $promptsEssenciais.Keys) {
-    if (-not (Test-Path $prompt)) {
-        $promptsFaltando += $prompt
-    }
+  if (-not (Test-Path $prompt)) {
+    $promptsFaltando += $prompt
+  }
 }
 
 foreach ($aux in $auxiliares.Keys) {
-    if (-not (Test-Path $aux)) {
-        $auxiliaresFaltando += $aux
-    }
+  if (-not (Test-Path $aux)) {
+    $auxiliaresFaltando += $aux
+  }
 }
 
 $totalFaltando = $arquivosFaltando.Count + $promptsFaltando.Count + $auxiliaresFaltando.Count
 
 if ($totalFaltando -eq 0) {
-    Write-RepairSuccess "✅ Todos os arquivos estão presentes! Projeto está completo."
+  Write-RepairSuccess "✅ Todos os arquivos estão presentes! Projeto está completo."
     
-    # Mostrar estatísticas
-    $totalArquivos = (Get-ChildItem -Recurse -File | Measure-Object).Count
-    $totalPrompts = if (Test-Path "prompts") { (Get-ChildItem "prompts" -Filter "*.md" | Measure-Object).Count } else { 0 }
+  # Mostrar estatísticas
+  $totalArquivos = (Get-ChildItem -Recurse -File | Measure-Object).Count
+  $totalPrompts = if (Test-Path "prompts") { (Get-ChildItem "prompts" -Filter "*.md" | Measure-Object).Count } else { 0 }
     
-    Write-Host ""
-    Write-RepairSuccess "📊 ESTATÍSTICAS DO PROJETO:"
-    Write-Host "   📁 Total de arquivos: $totalArquivos" -ForegroundColor Green
-    Write-Host "   📚 Prompts SCPO: $totalPrompts" -ForegroundColor Green
-    Write-Host "   🤖 Scripts essenciais: $($arquivosEssenciais.Count)" -ForegroundColor Green
-    Write-Host "   📄 Arquivos auxiliares: $($auxiliares.Count - $auxiliaresFaltando.Count)" -ForegroundColor Green
-    Write-Host ""
-    Write-RepairSuccess "🎉 Projeto pronto para usar!"
+  Write-Host ""
+  Write-RepairSuccess "📊 ESTATÍSTICAS DO PROJETO:"
+  Write-Host "   📁 Total de arquivos: $totalArquivos" -ForegroundColor Green
+  Write-Host "   📚 Prompts SCPO: $totalPrompts" -ForegroundColor Green
+  Write-Host "   🤖 Scripts essenciais: $($arquivosEssenciais.Count)" -ForegroundColor Green
+  Write-Host "   📄 Arquivos auxiliares: $($auxiliares.Count - $auxiliaresFaltando.Count)" -ForegroundColor Green
+  Write-Host ""
+  Write-RepairSuccess "🎉 Projeto pronto para usar!"
     
-    exit 0
+  exit 0
 }
 
 Write-RepairMessage "⚠️  Encontrados $totalFaltando arquivos faltando - iniciando reparação..."
 
 # Reparar scripts essenciais
 if ($arquivosFaltando.Count -gt 0) {
-    Write-RepairMessage "Reparando $($arquivosFaltando.Count) scripts essenciais..."
-    foreach ($arquivo in $arquivosFaltando) {
-        try {
-            Write-RepairMessage "Baixando $arquivo..." "⬇️"
-            Invoke-WebRequest -Uri $arquivosEssenciais[$arquivo] -OutFile $arquivo -UseBasicParsing -TimeoutSec 30
-            Write-RepairSuccess "$arquivo reparado!"
-        }
-        catch {
-            Write-RepairError "Falha ao reparar $arquivo`: $($_.Exception.Message)"
-        }
+  Write-RepairMessage "Reparando $($arquivosFaltando.Count) scripts essenciais..."
+  foreach ($arquivo in $arquivosFaltando) {
+    try {
+      Write-RepairMessage "Baixando $arquivo..." "⬇️"
+      Invoke-WebRequest -Uri $arquivosEssenciais[$arquivo] -OutFile $arquivo -UseBasicParsing -TimeoutSec 30
+      Write-RepairSuccess "$arquivo reparado!"
     }
+    catch {
+      Write-RepairError "Falha ao reparar $arquivo`: $($_.Exception.Message)"
+    }
+  }
 }
 
 # Reparar prompts
 if ($promptsFaltando.Count -gt 0) {
-    Write-RepairMessage "Reparando $($promptsFaltando.Count) prompts SCPO..."
+  Write-RepairMessage "Reparando $($promptsFaltando.Count) prompts SCPO..."
     
-    # Garantir pasta prompts
-    if (-not (Test-Path "prompts")) {
-        New-Item -ItemType Directory -Path "prompts" -Force | Out-Null
-        Write-RepairSuccess "Pasta prompts criada!"
-    }
+  # Garantir pasta prompts
+  if (-not (Test-Path "prompts")) {
+    New-Item -ItemType Directory -Path "prompts" -Force | Out-Null
+    Write-RepairSuccess "Pasta prompts criada!"
+  }
     
-    foreach ($prompt in $promptsFaltando) {
-        try {
-            Write-RepairMessage "Baixando $prompt..." "📄"
-            Invoke-WebRequest -Uri $promptsEssenciais[$prompt] -OutFile $prompt -UseBasicParsing -TimeoutSec 30
-            Write-RepairSuccess "$prompt reparado!"
-        }
-        catch {
-            Write-RepairError "Falha ao reparar $prompt`: $($_.Exception.Message)"
-        }
+  foreach ($prompt in $promptsFaltando) {
+    try {
+      Write-RepairMessage "Baixando $prompt..." "📄"
+      Invoke-WebRequest -Uri $promptsEssenciais[$prompt] -OutFile $prompt -UseBasicParsing -TimeoutSec 30
+      Write-RepairSuccess "$prompt reparado!"
     }
+    catch {
+      Write-RepairError "Falha ao reparar $prompt`: $($_.Exception.Message)"
+    }
+  }
 }
 
 # Reparar auxiliares (opcionais)
 if ($auxiliaresFaltando.Count -gt 0) {
-    Write-RepairMessage "Reparando $($auxiliaresFaltando.Count) arquivos auxiliares..."
-    foreach ($aux in $auxiliaresFaltando) {
-        try {
-            Write-RepairMessage "Baixando $aux..." "📄"
-            Invoke-WebRequest -Uri $auxiliares[$aux] -OutFile $aux -UseBasicParsing -TimeoutSec 30
-            Write-RepairSuccess "$aux reparado!"
-        }
-        catch {
-            if ($Verbose) {
-                Write-RepairError "Falha ao reparar $aux (opcional)"
-            }
-        }
+  Write-RepairMessage "Reparando $($auxiliaresFaltando.Count) arquivos auxiliares..."
+  foreach ($aux in $auxiliaresFaltando) {
+    try {
+      Write-RepairMessage "Baixando $aux..." "📄"
+      Invoke-WebRequest -Uri $auxiliares[$aux] -OutFile $aux -UseBasicParsing -TimeoutSec 30
+      Write-RepairSuccess "$aux reparado!"
     }
+    catch {
+      if ($Verbose) {
+        Write-RepairError "Falha ao reparar $aux (opcional)"
+      }
+    }
+  }
 }
 
 # Criar documentação se não existe
 if (-not (Test-Path "PROJETO-COMPLETO.md")) {
-    Write-RepairMessage "Criando documentação do projeto..."
+  Write-RepairMessage "Criando documentação do projeto..."
     
-    $config = Get-Content "multiagent.json" | ConvertFrom-Json
-    $nomeProjeto = $config.project.name
-    $descricao = $config.project.description
+  $config = Get-Content "multiagent.json" | ConvertFrom-Json
+  $nomeProjeto = $config.project.name
+  $descricao = $config.project.description
     
-    $projetoDoc = @"
+  $projetoDoc = @"
 # 🎉 $nomeProjeto - Projeto Sexta-Feira Completo
 
 > **Projeto reparado em $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss') com Auto-Reparação Sexta-Feira**
@@ -235,8 +236,8 @@ Para verificar e reparar novamente:
 *Reparado automaticamente em $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')*
 "@
     
-    $projetoDoc | Set-Content "PROJETO-COMPLETO.md"
-    Write-RepairSuccess "Documentação criada!"
+  $projetoDoc | Set-Content "PROJETO-COMPLETO.md"
+  Write-RepairSuccess "Documentação criada!"
 }
 
 # Relatório final

@@ -251,16 +251,16 @@ $arquivos = @{
 
 # Prompts SCPO essenciais
 $prompts = @{
-  "prompts/agente-principal-arroba.md"     = "$sistemaUrl/prompts/agente-principal-arroba.md"
-  "prompts/backend-architecture.md"       = "$sistemaUrl/prompts/backend-architecture.md"
-  "prompts/code-optimization.md"          = "$sistemaUrl/prompts/code-optimization.md"
-  "prompts/documentation.md"              = "$sistemaUrl/prompts/documentation.md"
+  "prompts/agente-principal-arroba.md"      = "$sistemaUrl/prompts/agente-principal-arroba.md"
+  "prompts/backend-architecture.md"         = "$sistemaUrl/prompts/backend-architecture.md"
+  "prompts/code-optimization.md"            = "$sistemaUrl/prompts/code-optimization.md"
+  "prompts/documentation.md"                = "$sistemaUrl/prompts/documentation.md"
   "prompts/omniforge-orchestrator-agent.md" = "$sistemaUrl/prompts/omniforge-orchestrator-agent.md"
-  "prompts/product-strategy.md"           = "$sistemaUrl/prompts/product-strategy.md"
-  "prompts/testing-quality.md"            = "$sistemaUrl/prompts/testing-quality.md"
-  "prompts/ui-design.md"                  = "$sistemaUrl/prompts/ui-design.md"
-  "prompts/web-development.md"            = "$sistemaUrl/prompts/web-development.md"
-  "prompts/README.md"                     = "$sistemaUrl/prompts/README.md"
+  "prompts/product-strategy.md"             = "$sistemaUrl/prompts/product-strategy.md"
+  "prompts/testing-quality.md"              = "$sistemaUrl/prompts/testing-quality.md"
+  "prompts/ui-design.md"                    = "$sistemaUrl/prompts/ui-design.md"
+  "prompts/web-development.md"              = "$sistemaUrl/prompts/web-development.md"
+  "prompts/README.md"                       = "$sistemaUrl/prompts/README.md"
 }
 
 # Baixar scripts principais
@@ -294,7 +294,8 @@ foreach ($prompt in $prompts.Keys) {
     if (Test-Path $prompt) {
       Write-SextaSuccess "Prompt $prompt instalado!"
       $promptsOk++
-    } else {
+    }
+    else {
       Write-SextaError "Arquivo $prompt não foi criado"
     }
   }
@@ -308,11 +309,11 @@ Write-SextaMessage "$promptsOk de $($prompts.Count) prompts instalados" "📊"
 # Baixar arquivos auxiliares importantes
 Write-SextaMessage "Baixando configurações e templates..." "⚙️"
 $auxiliares = @{
-  "diagnostico-sexta.ps1"    = "$sistemaUrl/diagnostico-sexta.ps1"
-  "instalar-sexta-global.ps1" = "$sistemaUrl/instalar-sexta-global.ps1"
-  "auto-reparacao.ps1"       = "$sistemaUrl/auto-reparacao.ps1"
+  "diagnostico-sexta.ps1"       = "$sistemaUrl/diagnostico-sexta.ps1"
+  "instalar-sexta-global.ps1"   = "$sistemaUrl/instalar-sexta-global.ps1"
+  "auto-reparacao.ps1"          = "$sistemaUrl/auto-reparacao.ps1"
   "STATUS-FINAL-SEXTA-FEIRA.md" = "$sistemaUrl/STATUS-FINAL-SEXTA-FEIRA.md"
-  "SEXTA-FEIRA-GUIA-LEIGOS.md" = "$sistemaUrl/SEXTA-FEIRA-GUIA-LEIGOS.md"
+  "SEXTA-FEIRA-GUIA-LEIGOS.md"  = "$sistemaUrl/SEXTA-FEIRA-GUIA-LEIGOS.md"
 }
 
 foreach ($aux in $auxiliares.Keys) {
@@ -400,7 +401,8 @@ if ($arquivosFaltando.Count -gt 0 -or $promptsFaltando.Count -gt 0) {
     }
   }
   
-} else {
+}
+else {
   Write-SextaSuccess "✅ Todos os arquivos essenciais estão presentes!"
 }
 
