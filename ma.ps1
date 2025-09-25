@@ -1,7 +1,7 @@
 # MultiAgent Quick Command - Comando rápido para tarefas comuns
 param(
     [Parameter(Position=0, Mandatory=$true)]
-    [ValidateSet("init", "generate", "review", "execute", "template")]
+    [ValidateSet("init", "generate", "review", "execute", "template", "safe-code", "check", "fix")]
     [string]$Command,
     
     [Parameter(Position=1)]
@@ -17,7 +17,7 @@ param(
     [switch]$DryRun,
     
     [Parameter()]
-    [switch]$Verbose
+    [switch]$DetailedOutput
 )
 
 # Cores para output
@@ -90,7 +90,7 @@ switch ($Command) {
         Write-ColorOutput "🔍 Revisando código em: $Target" "Info"
         
         $params = @{ FilePath = $Target }
-        if ($Verbose) { $params.Detailed = $true }
+        if ($DetailedOutput) { $params.Detailed = $true }
         
         & "$installPath\scripts\review-code.ps1" @params
     }
@@ -110,7 +110,7 @@ switch ($Command) {
         
         $params = @{ FilePath = $Target }
         if ($DryRun) { $params.DryRun = $true }
-        if ($Verbose) { $params.Verbose = $true }
+        if ($DetailedOutput) { $params.Verbose = $true }
         
         & "$installPath\scripts\execute-code.ps1" @params
     }
@@ -142,6 +142,52 @@ switch ($Command) {
             }
         }
     }
+    
+    "safe-code" {
+        Write-ColorOutput "🛡️ Gerando código seguro..." "Info"
+        
+        if (Test-Path "gerar-codigo-seguro.ps1") {
+            $linguagem = if ([string]::IsNullOrEmpty($Type)) { "js" } else { $Type }
+            $nome = if ([string]::IsNullOrEmpty($Target)) { 
+                Read-Host "Nome da função/componente" 
+            } else { 
+                $Target 
+            }
+            
+            & .\gerar-codigo-seguro.ps1 -Tipo "funcao" -Nome $nome -Linguagem $linguagem
+        } else {
+            Write-ColorOutput "❌ Script gerar-codigo-seguro.ps1 não encontrado!" "Error"
+            Write-ColorOutput "Execute: ma fix" "Warning"
+        }
+    }
+    
+    "check" {
+        Write-ColorOutput "🔍 Executando verificação completa..." "Info"
+        
+        # Verificar scripts anti-erros
+        if (Test-Path "sistema-anti-erros.ps1") {
+            & .\sistema-anti-erros.ps1 verificar
+        } else {
+            Write-ColorOutput "⚠️ Sistema anti-erros não encontrado" "Warning"
+            Write-ColorOutput "Execute: ma fix" "Warning"
+        }
+    }
+    
+    "fix" {
+        Write-ColorOutput "🔧 Reparando sistema..." "Info"
+        
+        # Auto-reparação
+        if (Test-Path "auto-reparacao.ps1") {
+            & .\auto-reparacao.ps1
+        }
+        
+        # Instalar sistema anti-erros
+        if (Test-Path "sistema-anti-erros.ps1") {
+            & .\sistema-anti-erros.ps1 instalar
+        }
+        
+        Write-ColorOutput "✅ Sistema reparado!" "Success"
+    }
 }
 
 Write-Host ""
@@ -150,8 +196,9 @@ Write-ColorOutput "✅ Comando executado!" "Success"
 # Dicas de uso
 if ($Command -eq "init" -and -not $Interactive) {
     Write-Host ""
-    Write-ColorOutput "💡 Dicas de uso:" "Info"
-    Write-ColorOutput "• Use -Interactive para configuração guiada" "Highlight"
+    Write-ColorOutput "💡 Próximos passos:" "Info"
+    Write-ColorOutput "• ma safe-code MinhaFuncao -Type js" "Highlight"
+    Write-ColorOutput "• ma check (verificar sistema)" "Highlight"
+    Write-ColorOutput "• ma fix (reparar problemas)" "Highlight"
     Write-ColorOutput "• Reinicie o VS Code para carregar as configurações" "Highlight"
-    Write-ColorOutput "• Pressione Ctrl+Shift+P e digite 'MultiAgent'" "Highlight"
 }
