@@ -18,6 +18,18 @@
 
 ## 🚀 Início Rápido
 
+### **🎯 Para LEIGOS (Zero conhecimento técnico):**
+```powershell
+# Criar projeto novo automaticamente
+novo MinhaLoja "uma loja online completa"
+novo MeuApp "um app de lista de tarefas"
+
+# Usar em pasta existente
+quero "um site de vendas"
+quero "uma API para mobile"
+```
+
+### **🛠️ Para Desenvolvedores:**
 ```powershell
 # Clone e instale
 git clone https://github.com/jessefreitas/vscode-multiagent.git
@@ -26,10 +38,9 @@ cd vscode-multiagent
 
 # Use em qualquer projeto
 ma init                              # Configurar projeto
-ma generate "criar API REST"         # Gerar código
+ma "criar API REST Python"          # Gerar código inteligente
 ma review arquivo.py                 # Revisar qualidade
 ma execute script.py                 # Executar com segurança
-ma template datascience              # Criar template
 ```
 
 ## 🎯 Casos de Uso

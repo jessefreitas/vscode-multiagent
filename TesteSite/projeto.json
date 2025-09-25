@@ -1,0 +1,16 @@
+{
+  "projeto": {
+    "nome": "TesteSite",
+    "descricao": "um site simples de apresentação",
+    "criado": "2025-09-25 13:17:25",
+    "agente": "principal-v2",
+    "modo": "ultra-automatico"
+  },
+  "configuracoes": {
+    "autoExecutar": true,
+    "autoCorrigir": true,
+    "autoInstalar": true,
+    "modoLeigo": true,
+    "semRevisao": true
+  }
+}

@@ -32,3 +32,8 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# MultiAgent System
+.multiagent-cache/
+multiagent-logs/
+*.multiagent-temp

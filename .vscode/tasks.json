@@ -1,174 +1,51 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "🤖 Agente Principal: Gerar Código",
-            "type": "shell", 
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                "& { $task = Read-Host '🤖 Descreva sua tarefa (Agente interpretará automaticamente)'; .\\scripts\\ma.ps1 \"$task\" }"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "😊 SUPER FÁCIL: Só me diga o que quer!",
-            "type": "shell",
-            "command": "pwsh", 
-            "args": [
-                "-Command",
-                "& { Write-Host '😊 Me diga o que você quer (em linguagem normal):' -ForegroundColor Green; Write-Host 'Exemplos: quero um site, preciso de uma API, fazer um app' -ForegroundColor Gray; $want = Read-Host 'O que você quer'; .\\quero.ps1 \"$want\" }"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "new"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "MultiAgent: Review Current File",
-            "type": "shell",
-            "command": "pwsh", 
-            "args": [
-                "-Command",
-                ".\\scripts\\ma.ps1 review \"${file}\" --scpo"
-            ],
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "MultiAgent: Execute Current File (Dry Run)",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command", 
-                ".\\scripts\\ma.ps1 execute \"${file}\" --dry-run"
-            ],
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always", 
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "MultiAgent: Project Status",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                ".\\scripts\\ma.ps1 status"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "SCPO: List Available Prompts",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                ".\\scripts\\ma.ps1 scpo list"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "SCPO: Search Prompts",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                "& { $term = Read-Host 'Search term'; .\\scripts\\ma.ps1 prompts search \"$term\" }"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "new"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "MultiAgent: Initialize Project with SCPO",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                ".\\scripts\\ma.ps1 init --scpo"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "new"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "MultiAgent: Backup Project",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                ".\\scripts\\ma.ps1 backup"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "MultiAgent: Clean Cache",
-            "type": "shell",
-            "command": "pwsh",
-            "args": [
-                "-Command",
-                ".\\scripts\\ma.ps1 clean"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        }
-    ]
+  "inputs": [
+    {
+      "id": "codeTask",
+      "type": "promptString",
+      "description": "Descreva o código que deseja gerar"
+    }
+  ],
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "group": "build",
+      "command": "pwsh",
+      "label": "MultiAgent: Generate Code",
+      "args": [
+        "-File",
+        "C:\\Users\\Jessé Freitas\\.vscode-multiagent\\scripts\\generate-code.ps1",
+        "${input:codeTask}"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "args": [
+        "-File",
+        "C:\\Users\\Jessé Freitas\\.vscode-multiagent\\scripts\\review-code.ps1",
+        "${file}"
+      ],
+      "label": "MultiAgent: Review Code",
+      "type": "shell",
+      "group": "test",
+      "command": "pwsh"
+    },
+    {
+      "args": [
+        "-File",
+        "C:\\Users\\Jessé Freitas\\.vscode-multiagent\\scripts\\execute-code.ps1",
+        "${file}"
+      ],
+      "label": "MultiAgent: Execute Safely",
+      "type": "shell",
+      "group": "build",
+      "command": "pwsh"
+    }
+  ]
 }
