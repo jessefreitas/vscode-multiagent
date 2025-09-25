@@ -1,7 +1,6 @@
-# MultiAgent + SCPO: Unified Command Interface
+# 🤖 AGENTE PRINCIPAL - MultiAgent + SCPO + OmniForge
 param(
   [Parameter(Position = 0)]
-  [ValidateSet("init", "generate", "review", "execute", "config", "status", "help", "clean", "backup", "scpo", "prompts")]
   [string]$Command = "help",
     
   [Parameter(Position = 1)]
@@ -35,15 +34,27 @@ function Write-MALog {
   }
 }
 
+function Show-AgentBanner {
+  if ($Command -ne "help" -and $Command -ne "status") {
+    Write-Host ""
+    Write-Host "🤖 AGENTE PRINCIPAL v2.0" -ForegroundColor Cyan -NoNewline
+    Write-Host " - MultiAgent + SCPO + OmniForge" -ForegroundColor Gray
+  }
+}
+
 function Show-Help {
   Write-Host ""
-  Write-Host "🤖 MultiAgent + SCPO - Unified Development Assistant" -ForegroundColor Cyan
-  Write-Host "===================================================" -ForegroundColor Cyan
+  Write-Host "🤖 AGENTE PRINCIPAL - MultiAgent + SCPO + OmniForge" -ForegroundColor Cyan
+  Write-Host "=====================================================" -ForegroundColor Cyan
+  Write-Host "🚀 Agente Inteligente que assume controle automaticamente" -ForegroundColor Green
   Write-Host ""
-  Write-Host "USAGE:" -ForegroundColor White
-  Write-Host "  ma <command> [target] [options]" -ForegroundColor Gray
+  Write-Host "MODO INTELIGENTE (Recomendado):" -ForegroundColor White
+  Write-Host "  ma 'sua tarefa aqui'                # Agente interpreta automaticamente" -ForegroundColor Yellow
+  Write-Host "  ma 'criar API REST Python'          # Gera código automaticamente" -ForegroundColor Gray
+  Write-Host "  ma 'otimizar performance'           # Otimiza automaticamente" -ForegroundColor Gray
+  Write-Host "  ma 'revisar segurança código.py'    # Analisa automaticamente" -ForegroundColor Gray
   Write-Host ""
-  Write-Host "COMMANDS:" -ForegroundColor White
+  Write-Host "COMANDOS CLÁSSICOS:" -ForegroundColor White
   Write-Host "  init       Initialize MultiAgent project" -ForegroundColor Green
   Write-Host "  generate   Generate code using SCPO patterns" -ForegroundColor Green
   Write-Host "  review     Review code with SCPO analysis" -ForegroundColor Green
@@ -446,7 +457,8 @@ function Invoke-Backup {
 
 # Main execution
 Write-Host ""
-Write-Host "🤖 MultiAgent + SCPO v1.0" -ForegroundColor Cyan
+# Mostrar banner do agente
+Show-AgentBanner
 
 $success = switch ($Command.ToLower()) {
   "init" { Invoke-Init }
@@ -461,9 +473,34 @@ $success = switch ($Command.ToLower()) {
   "backup" { Invoke-Backup }
   "help" { Show-Help; $true }
   default { 
-    Write-MALog "Unknown command: $Command" "Error" "❌"
-    Show-Help
-    $false
+    # 🤖 AGENTE PRINCIPAL ASSUME CONTROLE DIRETO
+    Write-MALog "Agente Principal assumindo controle: '$Command'" "Info" "🤖"
+    
+    # Detectar se é uma tarefa ou comando desconhecido
+    if ($Command -match "(criar|gerar|implementar|desenvolver|build|make|code|otimizar|melhorar|fix|corrigir|revisar|analisar|testar|test|deploy)") {
+      Write-MALog "Interpretando como tarefa de desenvolvimento..." "Info" "⚡"
+      
+      # Usar como comando de geração automática
+      $global:Target = $Command
+      $global:Command = "generate"
+      Invoke-Generate
+    } else {
+      Write-MALog "Comando não reconhecido. Agente sugerindo alternativas..." "Warning" "💡"
+      Write-Host "`n🤖 AGENTE PRINCIPAL - SUGESTÕES INTELIGENTES:" -ForegroundColor Cyan
+      Write-Host "================================================" -ForegroundColor Cyan
+      Write-Host ""
+      Write-Host "📝 Talvez você queria:" -ForegroundColor Yellow
+      Write-Host "   ma generate '$Command'     # Para gerar código" -ForegroundColor White
+      Write-Host "   ma review '$Command'       # Para revisar arquivo" -ForegroundColor White
+      Write-Host "   ma execute '$Command'      # Para executar arquivo" -ForegroundColor White
+      Write-Host ""
+      Write-Host "💡 Ou tente comandos diretos:" -ForegroundColor Green
+      Write-Host "   ma 'criar API REST Python'" -ForegroundColor White
+      Write-Host "   ma 'otimizar este código'" -ForegroundColor White
+      Write-Host "   ma 'revisar segurança'" -ForegroundColor White
+      Show-Help
+      $false
+    }
   }
 }
 

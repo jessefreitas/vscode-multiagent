@@ -2,12 +2,12 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "MultiAgent: Generate Code",
+            "label": "🤖 Agente Principal: Gerar Código",
             "type": "shell", 
             "command": "pwsh",
             "args": [
                 "-Command",
-                "& { $task = Read-Host 'Describe what to generate'; $domain = Read-Host 'Domain (backend/frontend/testing/optimization/documentation/mobile/database)'; .\\scripts\\ma.ps1 generate \"$task\" $domain }"
+                "& { $task = Read-Host '🤖 Descreva sua tarefa (Agente interpretará automaticamente)'; .\\scripts\\ma.ps1 \"$task\" }"
             ],
             "group": "build",
             "presentation": {

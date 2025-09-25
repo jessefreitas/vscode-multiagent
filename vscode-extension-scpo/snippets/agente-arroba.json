@@ -1,0 +1,122 @@
+{
+  "Agente @ - API REST": {
+    "prefix": "@api",
+    "body": [
+      "// 🤖 AGENTE @ - Gerando API REST otimizada...",
+      "// @ \"criar API REST ${1:descrição}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para criar API REST"
+  },
+  
+  "Agente @ - Frontend": {
+    "prefix": "@frontend",
+    "body": [
+      "// 🤖 AGENTE @ - Gerando frontend moderno...",
+      "// @ \"criar frontend ${1:descrição}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para frontend"
+  },
+  
+  "Agente @ - Backend": {
+    "prefix": "@backend", 
+    "body": [
+      "// 🤖 AGENTE @ - Gerando backend otimizado...",
+      "// @ \"criar backend ${1:descrição}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para backend"
+  },
+  
+  "Agente @ - Otimizar": {
+    "prefix": "@otimizar",
+    "body": [
+      "// 🤖 AGENTE @ - Otimizando código...",
+      "// @ \"otimizar ${1:código/arquivo}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para otimização"
+  },
+  
+  "Agente @ - Segurança": {
+    "prefix": "@seguro",
+    "body": [
+      "// 🤖 AGENTE @ - Analisando segurança...",
+      "// @ \"revisar segurança ${1:código}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para segurança"
+  },
+  
+  "Agente @ - Economia": {
+    "prefix": "@economizar",
+    "body": [
+      "// 🤖 AGENTE @ - Economizando recursos...",
+      "// @ \"economizar recursos ${1:descrição}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para economia"
+  },
+  
+  "Agente @ - Fullstack": {
+    "prefix": "@fullstack",
+    "body": [
+      "// 🤖 AGENTE @ - Gerando aplicação completa...",
+      "// @ \"criar fullstack ${1:descrição}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para aplicação completa"
+  },
+  
+  "Agente @ - Testar": {
+    "prefix": "@testar",
+    "body": [
+      "// 🤖 AGENTE @ - Gerando testes...",
+      "// @ \"testar ${1:função/módulo}\"", 
+      "$0"
+    ],
+    "description": "Ativar agente @ para testes"
+  },
+  
+  "Agente @ - Deploy": {
+    "prefix": "@deploy",
+    "body": [
+      "// 🤖 AGENTE @ - Configurando deploy...",
+      "// @ \"deploy ${1:aplicação}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para deploy"
+  },
+  
+  "Agente @ - Clean Code": {
+    "prefix": "@clean",
+    "body": [
+      "// 🤖 AGENTE @ - Aplicando clean code...",
+      "// @ \"clean code ${1:arquivo}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para clean code"
+  },
+  
+  "Agente @ - Documentar": {
+    "prefix": "@docs",
+    "body": [
+      "// 🤖 AGENTE @ - Gerando documentação...",
+      "// @ \"documentar ${1:código/API}\"",
+      "$0"
+    ],
+    "description": "Ativar agente @ para documentação"
+  },
+  
+  "Agente @ - Comando Personalizado": {
+    "prefix": "@",
+    "body": [
+      "// 🤖 AGENTE @ PRINCIPAL - Sistema MultiAgent + SCPO + OmniForge",
+      "// @ \"${1:descreva sua tarefa aqui}\"",
+      "// 📊 Qualidade: >9/10 | 💰 Economia: >40% | 🛡️ Segurança: ✅",
+      "$0"
+    ],
+    "description": "Ativar agente @ com comando personalizado"
+  }
+}

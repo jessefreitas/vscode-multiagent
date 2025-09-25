@@ -1,5 +1,5 @@
 {
-    "// MultiAgent + SCPO VS Code Integration": "Unified settings for optimal development experience",
+    "// MultiAgent + SCPO VS& { Write-Host '🤖 AGENTE PRINCIPAL Ready!' -ForegroundColor Cyan; Write-Host 'Use: ma "sua tarefa" - Agente interpreta automaticamente!' -ForegroundColor Yellow; Write-Host 'Exemplos: ma "criar API REST", ma "otimizar código"' -ForegroundColor Gray } { Write-Host '🤖 AGENTE PRINCIPAL Ready!' -ForegroundColor Cyan; Write-Host 'Use: ma "sua tarefa" - Agente interpreta automaticamente!' -ForegroundColor Yellow; Write-Host 'Exemplos: ma "criar API REST", ma "otimizar código"' -ForegroundColor Gray }Code Integration": "Unified settings for optimal development experience",
     
     "// SCPO Configuration": "",
     "scpo.enabled": true,
@@ -8,11 +8,14 @@
     "scpo.tokenOptimization": true,
     "scpo.promptDirectory": "./prompts",
     
-    "// MultiAgent Integration": "",
+    "// MultiAgent Integration - Agente Principal": "",
     "multiagent.scriptsPath": "./scripts",
     "multiagent.cacheDirectory": "./.multiagent-cache",
     "multiagent.autoReview": true,
     "multiagent.sandboxExecution": true,
+    "multiagent.agentMode": "intelligent",
+    "multiagent.autoInterpret": true,
+    "multiagent.principalAgent": true,
     
     "// File Associations": "",
     "files.associations": {

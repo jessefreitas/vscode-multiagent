@@ -3,7 +3,7 @@
         "key": "ctrl+shift+m g",
         "command": "workbench.action.terminal.sendSequence",
         "args": {
-            "text": "ma generate \"\u0008\" "
+            "text": "ma \"\u0008\" "
         },
         "when": "terminalFocus"
     },

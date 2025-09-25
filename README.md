@@ -8,13 +8,13 @@
 
 ## ✨ Características
 
-- 🤖 **Agentes Especializados**: Coder, Reviewer, Executor, Security
+- 🤖 **Agente Principal Integrado**: Sistema automático inteligente que assume controle total
 - 🚀 **Instalação Automática**: Um comando configura tudo
 - 🔒 **Execução Segura**: Sandbox com timeout e validação
 - 📊 **Análise de Qualidade**: Pontuação 0-10 automática
 - 🎯 **Multi-linguagem**: Python, JavaScript, C#, PowerShell, HTML, React, Node.js
 - 📋 **Templates Prontos**: Data Science, Web API, CLI tools
-- ⚡ **Comando Unificado**: `ma` para todas as operações
+- ⚡ **Agente Inteligente**: Assume comando automaticamente para máxima produtividade
 
 ## 🚀 Início Rápido
 
