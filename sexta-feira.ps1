@@ -286,16 +286,24 @@ if (`$fullRequest) { & ".\agente.ps1" `$fullRequest }
 
 # Baixar prompts SCPO
 Write-SextaMessage "Baixando prompts SCPO especializados..." "📚"
+$promptsOk = 0
 foreach ($prompt in $prompts.Keys) {
   try {
     Write-SextaMessage "Baixando $prompt..." "📄"
-    Invoke-WebRequest -Uri $prompts[$prompt] -OutFile $prompt -UseBasicParsing
-    Write-SextaSuccess "Prompt $prompt instalado!"
+    Invoke-WebRequest -Uri $prompts[$prompt] -OutFile $prompt -UseBasicParsing -TimeoutSec 30
+    if (Test-Path $prompt) {
+      Write-SextaSuccess "Prompt $prompt instalado!"
+      $promptsOk++
+    } else {
+      Write-SextaError "Arquivo $prompt não foi criado"
+    }
   }
   catch {
-    Write-SextaError "Erro ao baixar $prompt - continuando..."
+    Write-SextaError "Erro ao baixar $prompt`: $($_.Exception.Message)"
+    Write-Host "   URL: $($prompts[$prompt])" -ForegroundColor Gray
   }
 }
+Write-SextaMessage "$promptsOk de $($prompts.Count) prompts instalados" "📊"
 
 # Baixar arquivos auxiliares importantes
 Write-SextaMessage "Baixando configurações e templates..." "⚙️"
