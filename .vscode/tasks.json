@@ -44,12 +44,12 @@
       "problemMatcher": []
     },
     {
-      "label": "🎉 SEXTA-FEIRA: Ativar Projeto Novo",
+      "label": "🎉 SEXTA-FEIRA: Criar Projeto Completo",
       "type": "shell",
       "command": "pwsh",
       "args": [
         "-Command",
-        "& { Write-Host '🎉 SEXTA-FEIRA ATIVAR PROJETO!' -ForegroundColor Magenta; Write-Host 'Criando projeto completo automaticamente...' -ForegroundColor Green; Write-Host ''; $nome = Read-Host '📝 Nome do projeto'; $desc = Read-Host '💭 Descrição do projeto'; ./sexta-feira.ps1 $nome $desc }"
+        "& { Write-Host '🎉 SEXTA-FEIRA: CRIADOR DE PROJETOS!' -ForegroundColor Magenta; Write-Host 'Sistema que clona diretamente do GitHub para garantir arquivos atualizados' -ForegroundColor Green; Write-Host ''; $nome = Read-Host '📝 Nome do projeto'; $desc = Read-Host '💭 Descrição do projeto (opcional)'; if ([string]::IsNullOrWhiteSpace($desc)) { $desc = 'Projeto criado pela Sexta-Feira' }; Write-Host ''; Write-Host '🚀 Iniciando criação...' -ForegroundColor Cyan; ./sexta-feira.ps1 \"$nome\" \"$desc\" }"
       ],
       "group": "build",
       "presentation": {
