@@ -598,8 +598,8 @@ try {
     $mcpServers = @{
       "memory" = @{
         "command" = "npx"
-        "args" = @("@modelcontextprotocol/server-memory")
-        "env" = @{
+        "args"    = @("@modelcontextprotocol/server-memory")
+        "env"     = @{
           "MEMORY_STORAGE_PATH" = "./mcp-memory.db"
         }
       }
