@@ -1,16 +1,16 @@
 # Script MultiAgent: Geração de Código
 param(
-    [Parameter(Mandatory=$true)]
-    [string]$CodeTask,
+  [Parameter(Mandatory = $true)]
+  [string]$CodeTask,
     
-    [Parameter(Mandatory=$false)]
-    [string]$OutputFile = "",
+  [Parameter(Mandatory = $false)]
+  [string]$OutputFile = "",
     
-    [Parameter(Mandatory=$false)]
-    [switch]$Review = $false,
+  [Parameter(Mandatory = $false)]
+  [switch]$Review = $false,
     
-    [Parameter(Mandatory=$false)]
-    [switch]$Execute = $false
+  [Parameter(Mandatory = $false)]
+  [switch]$Execute = $false
 )
 
 Write-Host "🤖 MultiAgent Code Generator" -ForegroundColor Cyan
@@ -18,8 +18,8 @@ Write-Host "📝 Tarefa: $CodeTask" -ForegroundColor Gray
 
 # Verificar se é um projeto MultiAgent
 if (-not (Test-Path "multiagent.json")) {
-    Write-Host "❌ Este não é um projeto MultiAgent. Execute init-project.ps1 primeiro." -ForegroundColor Red
-    exit 1
+  Write-Host "❌ Este não é um projeto MultiAgent. Execute init-project.ps1 primeiro." -ForegroundColor Red
+  exit 1
 }
 
 # Carregar configuração
@@ -29,7 +29,7 @@ $projectType = $config.project.type
 # Criar diretório de cache se não existir
 $cacheDir = ".multiagent-cache"
 if (-not (Test-Path $cacheDir)) {
-    New-Item -ItemType Directory -Path $cacheDir | Out-Null
+  New-Item -ItemType Directory -Path $cacheDir | Out-Null
 }
 
 # Gerar timestamp para sessão
@@ -57,11 +57,11 @@ $generatedCode = ""
 $suggestedFileName = ""
 
 switch ($projectType) {
-    "python" {
-        Write-Host "🐍 Gerando código Python..." -ForegroundColor Yellow
+  "python" {
+    Write-Host "🐍 Gerando código Python..." -ForegroundColor Yellow
         
-        # Estrutura base Python com boas práticas
-        $generatedCode = @"
+    # Estrutura base Python com boas práticas
+    $generatedCode = @"
 #!/usr/bin/env python3
 """
 Código gerado pelo MultiAgent System
@@ -153,14 +153,14 @@ def main():
 if __name__ == "__main__":
     exit(main())
 "@
-        $suggestedFileName = "generated_$(($CodeTask -replace '[^a-zA-Z0-9]', '_').ToLower()).py"
-        $codeGenerated = $true
-    }
+    $suggestedFileName = "generated_$(($CodeTask -replace '[^a-zA-Z0-9]', '_').ToLower()).py"
+    $codeGenerated = $true
+  }
     
-    "javascript" {
-        Write-Host "🟨 Gerando código JavaScript..." -ForegroundColor Yellow
+  "javascript" {
+    Write-Host "🟨 Gerando código JavaScript..." -ForegroundColor Yellow
         
-        $generatedCode = @"
+    $generatedCode = @"
 /**
  * Código gerado pelo MultiAgent System
  * Tarefa: $CodeTask
@@ -260,14 +260,14 @@ if (require.main === module) {
 
 module.exports = GeneratedCode;
 "@
-        $suggestedFileName = "generated-$(($CodeTask -replace '[^a-zA-Z0-9]', '-').ToLower()).js"
-        $codeGenerated = $true
-    }
+    $suggestedFileName = "generated-$(($CodeTask -replace '[^a-zA-Z0-9]', '-').ToLower()).js"
+    $codeGenerated = $true
+  }
     
-    "csharp" {
-        Write-Host "🔷 Gerando código C#..." -ForegroundColor Yellow
+  "csharp" {
+    Write-Host "🔷 Gerando código C#..." -ForegroundColor Yellow
         
-        $generatedCode = @"
+    $generatedCode = @"
 /*
  * Código gerado pelo MultiAgent System
  * Tarefa: $CodeTask
@@ -402,14 +402,14 @@ namespace MultiAgentGenerated
     }
 }
 "@
-        $suggestedFileName = "Generated$(($CodeTask -replace '[^a-zA-Z0-9]', '').ToLower() -replace '^(.)', { $_.Value.ToUpper() }).cs"
-        $codeGenerated = $true
-    }
+    $suggestedFileName = "Generated$(($CodeTask -replace '[^a-zA-Z0-9]', '').ToLower() -replace '^(.)', { $_.Value.ToUpper() }).cs"
+    $codeGenerated = $true
+  }
     
-    default {
-        Write-Host "📄 Gerando código genérico..." -ForegroundColor Yellow
+  default {
+    Write-Host "📄 Gerando código genérico..." -ForegroundColor Yellow
         
-        $generatedCode = @"
+    $generatedCode = @"
 // Código gerado pelo MultiAgent System
 // Tarefa: $CodeTask
 // Timestamp: $(Get-Date)
@@ -443,63 +443,65 @@ console.log("🤖 Código gerado para: $CodeTask");
 console.log("📅 Timestamp: $(Get-Date)");
 console.log("⚠️  Lembre-se de revisar e adaptar este código!");
 "@
-        $suggestedFileName = "generated-code-$(Get-Date -Format 'yyyyMMdd-HHmmss').txt"
-        $codeGenerated = $true
-    }
+    $suggestedFileName = "generated-code-$(Get-Date -Format 'yyyyMMdd-HHmmss').txt"
+    $codeGenerated = $true
+  }
 }
 
 # Salvar código gerado
 if ($codeGenerated) {
-    if ([string]::IsNullOrEmpty($OutputFile)) {
-        $OutputFile = $suggestedFileName
-    }
+  if ([string]::IsNullOrEmpty($OutputFile)) {
+    $OutputFile = $suggestedFileName
+  }
     
-    $generatedCode | Set-Content $OutputFile
-    Write-Host "📁 Código salvo em: $OutputFile" -ForegroundColor Green
+  $generatedCode | Set-Content $OutputFile
+  Write-Host "📁 Código salvo em: $OutputFile" -ForegroundColor Green
     
-    # Log da geração
-    Add-Content $logFile "`nCódigo gerado em: $OutputFile"
-    Add-Content $logFile "Linhas: $(($generatedCode -split "`n").Count)"
+  # Log da geração
+  Add-Content $logFile "`nCódigo gerado em: $OutputFile"
+  Add-Content $logFile "Linhas: $(($generatedCode -split "`n").Count)"
 }
 
 # Agente Reviewer: Revisar código se solicitado
 if ($Review -and $codeGenerated) {
-    Write-Host ""
-    Write-Host "🔍 Agente Reviewer analisando..." -ForegroundColor Cyan
+  Write-Host ""
+  Write-Host "🔍 Agente Reviewer analisando..." -ForegroundColor Cyan
     
-    $reviewResults = @()
+  $reviewResults = @()
     
-    # Análises básicas
-    $lines = $generatedCode -split "`n"
-    $linesCount = $lines.Count
+  # Análises básicas
+  $lines = $generatedCode -split "`n"
+  $linesCount = $lines.Count
     
-    # Verificar estrutura básica
-    if ($lines -match "class|function|def ") {
-        $reviewResults += "✅ Estrutura de código detectada"
-    } else {
-        $reviewResults += "⚠️  Nenhuma classe/função detectada"
-    }
+  # Verificar estrutura básica
+  if ($lines -match "class|function|def ") {
+    $reviewResults += "✅ Estrutura de código detectada"
+  }
+  else {
+    $reviewResults += "⚠️  Nenhuma classe/função detectada"
+  }
     
-    # Verificar comentários/documentação
-    $commentLines = ($lines | Where-Object { $_ -match "^\s*(#|//|\*|/\*)" }).Count
-    if ($commentLines -gt ($linesCount * 0.1)) {
-        $reviewResults += "✅ Documentação adequada ($commentLines comentários)"
-    } else {
-        $reviewResults += "⚠️  Pouca documentação ($commentLines comentários)"
-    }
+  # Verificar comentários/documentação
+  $commentLines = ($lines | Where-Object { $_ -match "^\s*(#|//|\*|/\*)" }).Count
+  if ($commentLines -gt ($linesCount * 0.1)) {
+    $reviewResults += "✅ Documentação adequada ($commentLines comentários)"
+  }
+  else {
+    $reviewResults += "⚠️  Pouca documentação ($commentLines comentários)"
+  }
     
-    # Verificar TODOs
-    $todoCount = ($lines | Where-Object { $_ -match "TODO" }).Count
-    if ($todoCount -gt 0) {
-        $reviewResults += "⚠️  $todoCount itens TODO encontrados"
-    }
+  # Verificar TODOs
+  $todoCount = ($lines | Where-Object { $_ -match "TODO" }).Count
+  if ($todoCount -gt 0) {
+    $reviewResults += "⚠️  $todoCount itens TODO encontrados"
+  }
     
-    Write-Host "Resultado da Revisão:" -ForegroundColor Cyan
-    $reviewResults | ForEach-Object { Write-Host "  $_" -ForegroundColor White }
+  Write-Host "Resultado da Revisão:" -ForegroundColor Cyan
+  $reviewResults | ForEach-Object { Write-Host "  $_" -ForegroundColor White }
     
-    # Salvar review
-    $reviewFile = "$cacheDir\review-$sessionId.txt"
-    @"
+  # Salvar review
+  $reviewFile = "$cacheDir\review-$sessionId.txt"
+  @"
 MultiAgent Code Review
 =====================
 Arquivo: $OutputFile
@@ -516,39 +518,41 @@ Sugestões de Melhoria:
 - Considerar padrões de design apropriados
 "@ | Set-Content $reviewFile
     
-    Write-Host "📝 Review salvo em: $reviewFile" -ForegroundColor Green
+  Write-Host "📝 Review salvo em: $reviewFile" -ForegroundColor Green
 }
 
 # Agente Executor: Executar código se solicitado (sandbox)
 if ($Execute -and $codeGenerated) {
-    Write-Host ""
-    Write-Host "🚀 Agente Executor (Modo Sandbox)..." -ForegroundColor Cyan
+  Write-Host ""
+  Write-Host "🚀 Agente Executor (Modo Sandbox)..." -ForegroundColor Cyan
     
-    $maxExecutionTime = $config.safety.maxExecutionTime
-    Write-Host "⏱️  Tempo limite: $maxExecutionTime ms" -ForegroundColor Gray
+  $maxExecutionTime = $config.safety.maxExecutionTime
+  Write-Host "⏱️  Tempo limite: $maxExecutionTime ms" -ForegroundColor Gray
     
-    switch ($projectType) {
-        "python" {
-            if (Get-Command python -ErrorAction SilentlyContinue) {
-                Write-Host "🐍 Executando Python em sandbox..." -ForegroundColor Yellow
-                $executeCmd = "python -c `"import sys; sys.exit(0)`""
-                Write-Host "⚠️  Execução simulada (segurança)" -ForegroundColor Yellow
-            } else {
-                Write-Host "❌ Python não encontrado" -ForegroundColor Red
-            }
-        }
-        "javascript" {
-            if (Get-Command node -ErrorAction SilentlyContinue) {
-                Write-Host "🟨 Executando Node.js em sandbox..." -ForegroundColor Yellow
-                Write-Host "⚠️  Execução simulada (segurança)" -ForegroundColor Yellow
-            } else {
-                Write-Host "❌ Node.js não encontrado" -ForegroundColor Red
-            }
-        }
-        default {
-            Write-Host "⚠️  Tipo de projeto não suporta execução automática" -ForegroundColor Yellow
-        }
+  switch ($projectType) {
+    "python" {
+      if (Get-Command python -ErrorAction SilentlyContinue) {
+        Write-Host "🐍 Executando Python em sandbox..." -ForegroundColor Yellow
+        $executeCmd = "python -c `"import sys; sys.exit(0)`""
+        Write-Host "⚠️  Execução simulada (segurança)" -ForegroundColor Yellow
+      }
+      else {
+        Write-Host "❌ Python não encontrado" -ForegroundColor Red
+      }
     }
+    "javascript" {
+      if (Get-Command node -ErrorAction SilentlyContinue) {
+        Write-Host "🟨 Executando Node.js em sandbox..." -ForegroundColor Yellow
+        Write-Host "⚠️  Execução simulada (segurança)" -ForegroundColor Yellow
+      }
+      else {
+        Write-Host "❌ Node.js não encontrado" -ForegroundColor Red
+      }
+    }
+    default {
+      Write-Host "⚠️  Tipo de projeto não suporta execução automática" -ForegroundColor Yellow
+    }
+  }
 }
 
 # Relatório final
@@ -562,15 +566,17 @@ Write-Host "Arquivo Gerado: $OutputFile" -ForegroundColor White
 Write-Host "Log: $logFile" -ForegroundColor White
 
 if ($Review) {
-    Write-Host "Review: Executada" -ForegroundColor Green
-} else {
-    Write-Host "Review: Não executada" -ForegroundColor Gray
+  Write-Host "Review: Executada" -ForegroundColor Green
+}
+else {
+  Write-Host "Review: Não executada" -ForegroundColor Gray
 }
 
 if ($Execute) {
-    Write-Host "Execução: Simulada (sandbox)" -ForegroundColor Yellow
-} else {
-    Write-Host "Execução: Não executada" -ForegroundColor Gray
+  Write-Host "Execução: Simulada (sandbox)" -ForegroundColor Yellow
+}
+else {
+  Write-Host "Execução: Não executada" -ForegroundColor Gray
 }
 
 Write-Host ""

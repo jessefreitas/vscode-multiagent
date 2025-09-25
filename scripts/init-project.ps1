@@ -1,14 +1,14 @@
 # Script de Inicialização de Projeto MultiAgent
 param(
-    [Parameter(Mandatory=$false)]
-    [string]$ProjectPath = (Get-Location).Path,
+  [Parameter(Mandatory = $false)]
+  [string]$ProjectPath = (Get-Location).Path,
     
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("python", "javascript", "csharp", "generic")]
-    [string]$ProjectType = "generic",
+  [Parameter(Mandatory = $false)]
+  [ValidateSet("python", "javascript", "csharp", "generic")]
+  [string]$ProjectType = "generic",
     
-    [Parameter(Mandatory=$false)]
-    [switch]$Interactive
+  [Parameter(Mandatory = $false)]
+  [switch]$Interactive
 )
 
 Write-Host "🤖 Inicializando Projeto MultiAgent..." -ForegroundColor Cyan
@@ -17,54 +17,54 @@ Write-Host "🏷️  Tipo: $ProjectType" -ForegroundColor Gray
 
 # Verificar se é um diretório válido
 if (-not (Test-Path $ProjectPath -PathType Container)) {
-    Write-Host "❌ Caminho inválido: $ProjectPath" -ForegroundColor Red
-    exit 1
+  Write-Host "❌ Caminho inválido: $ProjectPath" -ForegroundColor Red
+  exit 1
 }
 
 Set-Location $ProjectPath
 
 # Verificar se já foi inicializado
 if (Test-Path ".vscode\settings.json") {
-    $settings = Get-Content ".vscode\settings.json" | ConvertFrom-Json -ErrorAction SilentlyContinue
-    if ($settings."multiagent.project.initialized" -eq $true) {
-        Write-Host "⚠️  Projeto já inicializado com MultiAgent" -ForegroundColor Yellow
-        $response = Read-Host "Deseja reconfigurar? (y/N)"
-        if ($response -ne "y" -and $response -ne "Y") {
-            Write-Host "❌ Operação cancelada." -ForegroundColor Red
-            exit 0
-        }
+  $settings = Get-Content ".vscode\settings.json" | ConvertFrom-Json -ErrorAction SilentlyContinue
+  if ($settings."multiagent.project.initialized" -eq $true) {
+    Write-Host "⚠️  Projeto já inicializado com MultiAgent" -ForegroundColor Yellow
+    $response = Read-Host "Deseja reconfigurar? (y/N)"
+    if ($response -ne "y" -and $response -ne "Y") {
+      Write-Host "❌ Operação cancelada." -ForegroundColor Red
+      exit 0
     }
+  }
 }
 
 # Modo interativo
 if ($Interactive) {
-    Write-Host ""
-    Write-Host "🔧 Configuração Interativa" -ForegroundColor Cyan
+  Write-Host ""
+  Write-Host "🔧 Configuração Interativa" -ForegroundColor Cyan
     
-    # Detectar tipo de projeto automaticamente
-    $detectedType = "generic"
-    if (Test-Path "*.py" -PathType Leaf) { $detectedType = "python" }
-    elseif (Test-Path "package.json") { $detectedType = "javascript" }
-    elseif (Test-Path "*.csproj" -PathType Leaf) { $detectedType = "csharp" }
+  # Detectar tipo de projeto automaticamente
+  $detectedType = "generic"
+  if (Test-Path "*.py" -PathType Leaf) { $detectedType = "python" }
+  elseif (Test-Path "package.json") { $detectedType = "javascript" }
+  elseif (Test-Path "*.csproj" -PathType Leaf) { $detectedType = "csharp" }
     
-    Write-Host "Tipo detectado: $detectedType" -ForegroundColor Gray
-    $ProjectType = Read-Host "Confirmar tipo de projeto [$detectedType]"
-    if ([string]::IsNullOrEmpty($ProjectType)) {
-        $ProjectType = $detectedType
-    }
+  Write-Host "Tipo detectado: $detectedType" -ForegroundColor Gray
+  $ProjectType = Read-Host "Confirmar tipo de projeto [$detectedType]"
+  if ([string]::IsNullOrEmpty($ProjectType)) {
+    $ProjectType = $detectedType
+  }
 }
 
 # Obter caminho da instalação
 $installPath = "$env:USERPROFILE\.vscode-multiagent"
 if (-not (Test-Path $installPath)) {
-    Write-Host "❌ Sistema MultiAgent não instalado. Execute install.ps1 primeiro." -ForegroundColor Red
-    exit 1
+  Write-Host "❌ Sistema MultiAgent não instalado. Execute install.ps1 primeiro." -ForegroundColor Red
+  exit 1
 }
 
 # Criar estrutura .vscode
 $vscodeDir = ".vscode"
 if (-not (Test-Path $vscodeDir)) {
-    New-Item -ItemType Directory -Path $vscodeDir | Out-Null
+  New-Item -ItemType Directory -Path $vscodeDir | Out-Null
 }
 
 # Copiar configurações base
@@ -73,26 +73,27 @@ $templatePath = "$installPath\templates\project-settings"
 # Settings.json
 $settingsTemplate = Get-Content "$templatePath\settings.json" -ErrorAction SilentlyContinue
 if ($settingsTemplate) {
-    $settings = $settingsTemplate | ConvertFrom-Json
-} else {
-    $settings = @{}
+  $settings = $settingsTemplate | ConvertFrom-Json
+}
+else {
+  $settings = @{}
 }
 
 # Configurações específicas do tipo de projeto
 switch ($ProjectType) {
-    "python" {
-        $settings | Add-Member -Name "python.defaultInterpreterPath" -Value "./venv/Scripts/python.exe" -Force
-        $settings | Add-Member -Name "python.analysis.extraPaths" -Value @("./src") -Force
-        $settings | Add-Member -Name "multiagent.project.language" -Value "python" -Force
-    }
-    "javascript" {
-        $settings | Add-Member -Name "typescript.preferences.includePackageJsonAutoImports" -Value "on" -Force
-        $settings | Add-Member -Name "multiagent.project.language" -Value "javascript" -Force
-    }
-    "csharp" {
-        $settings | Add-Member -Name "dotnet.server.useOmnisharp" -Value $true -Force
-        $settings | Add-Member -Name "multiagent.project.language" -Value "csharp" -Force
-    }
+  "python" {
+    $settings | Add-Member -Name "python.defaultInterpreterPath" -Value "./venv/Scripts/python.exe" -Force
+    $settings | Add-Member -Name "python.analysis.extraPaths" -Value @("./src") -Force
+    $settings | Add-Member -Name "multiagent.project.language" -Value "python" -Force
+  }
+  "javascript" {
+    $settings | Add-Member -Name "typescript.preferences.includePackageJsonAutoImports" -Value "on" -Force
+    $settings | Add-Member -Name "multiagent.project.language" -Value "javascript" -Force
+  }
+  "csharp" {
+    $settings | Add-Member -Name "dotnet.server.useOmnisharp" -Value $true -Force
+    $settings | Add-Member -Name "multiagent.project.language" -Value "csharp" -Force
+  }
 }
 
 # Configurações gerais do MultiAgent
@@ -105,43 +106,43 @@ Write-Host "⚙️  Configurações aplicadas" -ForegroundColor Green
 
 # Tasks.json
 $tasksTemplate = @{
-    version = "2.0.0"
-    tasks = @(
-        @{
-            label = "MultiAgent: Generate Code"
-            type = "shell"
-            command = "pwsh"
-            args = @("-File", "$installPath\scripts\generate-code.ps1", "`${input:codeTask}")
-            group = "build"
-            presentation = @{
-                echo = $true
-                reveal = "always"
-                focus = $false
-                panel = "shared"
-            }
-        },
-        @{
-            label = "MultiAgent: Review Code"
-            type = "shell"
-            command = "pwsh"
-            args = @("-File", "$installPath\scripts\review-code.ps1", "`${file}")
-            group = "test"
-        },
-        @{
-            label = "MultiAgent: Execute Safely"
-            type = "shell"
-            command = "pwsh"
-            args = @("-File", "$installPath\scripts\execute-code.ps1", "`${file}")
-            group = "build"
-        }
-    )
-    inputs = @(
-        @{
-            id = "codeTask"
-            description = "Descreva o código que deseja gerar"
-            type = "promptString"
-        }
-    )
+  version = "2.0.0"
+  tasks   = @(
+    @{
+      label        = "MultiAgent: Generate Code"
+      type         = "shell"
+      command      = "pwsh"
+      args         = @("-File", "$installPath\scripts\generate-code.ps1", "`${input:codeTask}")
+      group        = "build"
+      presentation = @{
+        echo   = $true
+        reveal = "always"
+        focus  = $false
+        panel  = "shared"
+      }
+    },
+    @{
+      label   = "MultiAgent: Review Code"
+      type    = "shell"
+      command = "pwsh"
+      args    = @("-File", "$installPath\scripts\review-code.ps1", "`${file}")
+      group   = "test"
+    },
+    @{
+      label   = "MultiAgent: Execute Safely"
+      type    = "shell"
+      command = "pwsh"
+      args    = @("-File", "$installPath\scripts\execute-code.ps1", "`${file}")
+      group   = "build"
+    }
+  )
+  inputs  = @(
+    @{
+      id          = "codeTask"
+      description = "Descreva o código que deseja gerar"
+      type        = "promptString"
+    }
+  )
 }
 
 $tasksTemplate | ConvertTo-Json -Depth 10 | Set-Content "$vscodeDir\tasks.json"
@@ -149,56 +150,56 @@ Write-Host "📋 Tasks configuradas" -ForegroundColor Green
 
 # Launch.json (apenas para debug)
 $launchTemplate = @{
-    version = "0.2.0"
-    configurations = @()
+  version        = "0.2.0"
+  configurations = @()
 }
 
 switch ($ProjectType) {
-    "python" {
-        $launchTemplate.configurations += @{
-            name = "Python: Current File"
-            type = "debugpy"
-            request = "launch"
-            program = "`${file}"
-            console = "integratedTerminal"
-        }
+  "python" {
+    $launchTemplate.configurations += @{
+      name    = "Python: Current File"
+      type    = "debugpy"
+      request = "launch"
+      program = "`${file}"
+      console = "integratedTerminal"
     }
-    "csharp" {
-        $launchTemplate.configurations += @{
-            name = ".NET Core Launch"
-            type = "coreclr"
-            request = "launch"
-            program = "`${workspaceFolder}/bin/Debug/net6.0/`${workspaceFolderBasename}.dll"
-            args = @()
-            cwd = "`${workspaceFolder}"
-            console = "internalConsole"
-            stopAtEntry = $false
-        }
+  }
+  "csharp" {
+    $launchTemplate.configurations += @{
+      name        = ".NET Core Launch"
+      type        = "coreclr"
+      request     = "launch"
+      program     = "`${workspaceFolder}/bin/Debug/net6.0/`${workspaceFolderBasename}.dll"
+      args        = @()
+      cwd         = "`${workspaceFolder}"
+      console     = "internalConsole"
+      stopAtEntry = $false
     }
+  }
 }
 
 if ($launchTemplate.configurations.Count -gt 0) {
-    $launchTemplate | ConvertTo-Json -Depth 10 | Set-Content "$vscodeDir\launch.json"
-    Write-Host "🐛 Debug configurado" -ForegroundColor Green
+  $launchTemplate | ConvertTo-Json -Depth 10 | Set-Content "$vscodeDir\launch.json"
+  Write-Host "🐛 Debug configurado" -ForegroundColor Green
 }
 
 # Criar arquivo de configuração do MultiAgent
 $multiagentConfig = @{
-    version = "1.0"
-    project = @{
-        name = (Split-Path $ProjectPath -Leaf)
-        type = $ProjectType
-        initialized = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
-    }
-    agents = @{
-        enabled = @("coder", "reviewer", "executor")
-        workflows = @("code-generation", "bug-fixing", "code-review")
-    }
-    safety = @{
-        sandboxEnabled = $true
-        maxExecutionTime = 30000
-        allowedOperations = @("read", "write", "execute")
-    }
+  version = "1.0"
+  project = @{
+    name        = (Split-Path $ProjectPath -Leaf)
+    type        = $ProjectType
+    initialized = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
+  }
+  agents  = @{
+    enabled   = @("coder", "reviewer", "executor")
+    workflows = @("code-generation", "bug-fixing", "code-review")
+  }
+  safety  = @{
+    sandboxEnabled    = $true
+    maxExecutionTime  = 30000
+    allowedOperations = @("read", "write", "execute")
+  }
 }
 
 $multiagentConfig | ConvertTo-Json -Depth 10 | Set-Content "multiagent.json"
@@ -213,9 +214,10 @@ multiagent-logs/
 "@
 
 if (Test-Path ".gitignore") {
-    Add-Content ".gitignore" "`n$gitignoreContent"
-} else {
-    $gitignoreContent | Set-Content ".gitignore"
+  Add-Content ".gitignore" "`n$gitignoreContent"
+}
+else {
+  $gitignoreContent | Set-Content ".gitignore"
 }
 
 Write-Host "📝 .gitignore atualizado" -ForegroundColor Green

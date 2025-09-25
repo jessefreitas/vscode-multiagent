@@ -35,6 +35,7 @@ ma template datascience              # Criar template
 ## 🎯 Casos de Uso
 
 ### 🔧 Desenvolvedor Individual
+
 ```powershell
 # Novo projeto Python
 mkdir meu-projeto && cd meu-projeto
@@ -44,6 +45,7 @@ ma review fibonacci.py
 ```
 
 ### 👥 Equipe de Desenvolvimento
+
 ```powershell
 # Padronizar configurações
 ma init                              # Em cada projeto
@@ -51,6 +53,7 @@ ma init                              # Em cada projeto
 ```
 
 ### 🎓 Estudante/Aprendizado
+
 ```powershell
 # Template completo para Data Science
 ma template datascience
@@ -60,14 +63,16 @@ ma template datascience
 ## 📊 Workflows de Agentes
 
 ### Geração de Código
+
 ```
 1. 🧠 Coder Agent    → Analisa requisitos e gera código
-2. 🔍 Reviewer Agent → Verifica qualidade e segurança  
+2. 🔍 Reviewer Agent → Verifica qualidade e segurança
 3. ⚡ Executor Agent → Testa em ambiente sandbox
 4. 📊 Report Agent  → Gera relatório com métricas
 ```
 
 ### Revisão de Código
+
 ```
 1. 🔒 Security Agent     → Detecta vulnerabilidades
 2. 📈 Performance Agent  → Analisa complexidade
@@ -78,18 +83,22 @@ ma template datascience
 ## 🛠️ Instalação Detalhada
 
 ### Pré-requisitos
+
 - Windows 10/11
 - PowerShell 5.1+
 - VS Code instalado
 - Git (opcional)
 
 ### Instalação
+
 1. **Clone o repositório**:
+
    ```powershell
    git clone https://github.com/jessefreitas/vscode-multiagent.git
    ```
 
 2. **Execute a instalação**:
+
    ```powershell
    cd vscode-multiagent
    .\install.ps1
@@ -99,20 +108,22 @@ ma template datascience
 
 ## 📋 Comandos Disponíveis
 
-| Comando | Descrição | Exemplo |
-|---------|-----------|---------|
-| `ma init` | Inicializar projeto MultiAgent | `ma init -Type python` |
+| Comando       | Descrição                         | Exemplo                           |
+| ------------- | --------------------------------- | --------------------------------- |
+| `ma init`     | Inicializar projeto MultiAgent    | `ma init -Type python`            |
 | `ma generate` | Gerar código baseado em descrição | `ma generate "criar classe User"` |
-| `ma review` | Analisar qualidade e segurança | `ma review app.py` |
-| `ma execute` | Executar código em sandbox | `ma execute script.py` |
-| `ma template` | Criar projeto com template | `ma template datascience` |
+| `ma review`   | Analisar qualidade e segurança    | `ma review app.py`                |
+| `ma execute`  | Executar código em sandbox        | `ma execute script.py`            |
+| `ma template` | Criar projeto com template        | `ma template datascience`         |
 
 ## 🎨 Templates Disponíveis
 
 ### 📊 Data Science
+
 ```powershell
 ma template datascience
 ```
+
 - Estrutura completa de projeto
 - Jupyter notebooks configurados
 - Bibliotecas essenciais (pandas, numpy, matplotlib)
@@ -120,26 +131,30 @@ ma template datascience
 - Virtual environment setup
 
 ### 🌐 Web API (Em desenvolvimento)
+
 - Flask/FastAPI estruture
 - Middleware configuration
 - Authentication setup
 - Database integration
 
 ### 🖥️ CLI Tool (Em desenvolvimento)
+
 - Argparse configuration
-- Logging setup  
+- Logging setup
 - Error handling
 - Package structure
 
 ## 🔒 Recursos de Segurança
 
 ### Análise Automática
+
 - ✅ Detecção de `eval()` e `exec()`
 - ✅ Verificação de comandos OS
 - ✅ Validação de imports perigosos
 - ✅ Análise de strings hardcoded
 
 ### Execução Sandbox
+
 - ✅ Timeout configurável (30s default)
 - ✅ Backup automático antes da execução
 - ✅ Logs detalhados de todas as operações
@@ -148,12 +163,14 @@ ma template datascience
 ## 📊 Métricas e Relatórios
 
 ### Pontuação de Qualidade (0-10)
+
 - **8-10**: Excelente qualidade
-- **6-7**: Boa qualidade  
+- **6-7**: Boa qualidade
 - **4-5**: Qualidade moderada
 - **0-3**: Necessita revisão
 
 ### Relatórios Gerados
+
 - 📁 `.multiagent-cache/` - Logs de sessão
 - 📊 Métricas de complexidade
 - 🔒 Relatórios de segurança
@@ -162,7 +179,9 @@ ma template datascience
 ## 🔧 Configuração Avançada
 
 ### Personalizar Agentes
+
 Edite `multiagent.json` no seu projeto:
+
 ```json
 {
   "agents": {
@@ -177,7 +196,9 @@ Edite `multiagent.json` no seu projeto:
 ```
 
 ### Configurações VS Code
+
 O sistema aplica automaticamente:
+
 - Settings otimizados por linguagem
 - Tasks personalizadas
 - Debug configurations
@@ -186,12 +207,14 @@ O sistema aplica automaticamente:
 ## 🤝 Contribuindo
 
 ### Adicionar Novos Templates
+
 1. Crie script em `/templates/create-[nome]-project.ps1`
 2. Adicione ao comando `ma template`
 3. Teste completamente
 4. Envie Pull Request
 
 ### Melhorar Agentes
+
 1. Modifique scripts em `/scripts/`
 2. Adicione novos padrões de detecção
 3. Teste com diferentes cenários
@@ -200,6 +223,7 @@ O sistema aplica automaticamente:
 ## 📝 Changelog
 
 ### v1.0.0 (2025-09-25)
+
 - ✅ Sistema base completo
 - ✅ Agentes Coder, Reviewer, Executor
 - ✅ Template Data Science
@@ -212,23 +236,27 @@ O sistema aplica automaticamente:
 ### Problemas Comuns
 
 **Comando `ma` não encontrado:**
+
 ```powershell
 # Recarregar perfil
 . $PROFILE
 ```
 
 **Erro de execução de scripts:**
+
 ```powershell
 # Como administrador
 Set-ExecutionPolicy RemoteSigned
 ```
 
 **VS Code não carrega configurações:**
+
 1. Feche completamente o VS Code
 2. Execute `ma init` novamente
 3. Reabra o projeto
 
 ### Obter Ajuda
+
 - 📋 [Guia de Uso Rápido](QUICK-START.md)
 - 🐛 [Reportar Bug](https://github.com/jessefreitas/vscode-multiagent/issues)
 - 💡 [Sugerir Funcionalidade](https://github.com/jessefreitas/vscode-multiagent/issues)

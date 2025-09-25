@@ -1,0 +1,95 @@
+{
+  "version": "2.0",
+  "project": {
+    "name": "MultiAgent-SCPO-System",
+    "type": "multiagent-scpo",
+    "description": "Unified MultiAgent system with SCPO integration for VS Code development automation",
+    "created": "2024-12-28",
+    "lastModified": "2024-12-28"
+  },
+  "scpo": {
+    "enabled": true,
+    "version": "1.0",
+    "promptsDirectory": "prompts",
+    "extensionPath": "vscode-extension-scpo",
+    "domains": [
+      "backend-architecture",
+      "frontend-development", 
+      "code-optimization",
+      "testing-strategy",
+      "documentation",
+      "mobile-development",
+      "database-design"
+    ],
+    "tokenOptimization": {
+      "enabled": true,
+      "maxTokens": 4096,
+      "compressionLevel": "medium"
+    }
+  },
+  "multiagent": {
+    "agents": {
+      "coder": {
+        "script": "generate-code-scpo.ps1",
+        "description": "Code generation with SCPO patterns",
+        "domains": ["backend", "frontend", "mobile", "database"]
+      },
+      "reviewer": {
+        "script": "review-code.ps1", 
+        "description": "SCPO-enhanced code review and analysis",
+        "features": ["quality-scoring", "scpo-compliance", "optimization-suggestions"]
+      },
+      "executor": {
+        "script": "execute-code.ps1",
+        "description": "Safe code execution with sandbox",
+        "security": ["sandbox", "validation", "monitoring"]
+      }
+    },
+    "workflows": {
+      "full-cycle": ["generate", "review", "execute"],
+      "scpo-generate": ["scpo-prompt-selection", "generate", "scpo-optimize"],
+      "quality-check": ["review", "scpo-analysis", "report"]
+    }
+  },
+  "vscode": {
+    "extension": {
+      "name": "vscode-extension-scpo",
+      "features": ["snippets", "commands", "templates"],
+      "commands": [
+        "scpo.generateCode",
+        "scpo.optimizeCode", 
+        "scpo.insertPrompt",
+        "scpo.analyzeProject"
+      ]
+    },
+    "settings": {
+      "files.associations": {
+        "*.scpo": "markdown",
+        "multiagent.json": "jsonc"
+      },
+      "snippets.suggestOnTab": true
+    }
+  },
+  "automation": {
+    "hooks": {
+      "pre-generate": "validate-scpo-context",
+      "post-generate": "scpo-quality-check",
+      "pre-commit": "multiagent-review"
+    },
+    "scheduling": {
+      "backup": "daily",
+      "cleanup": "weekly",
+      "prompt-updates": "monthly"
+    }
+  },
+  "cache": {
+    "directory": ".multiagent-cache",
+    "retention": "30d",
+    "compression": true
+  },
+  "logging": {
+    "level": "INFO",
+    "directory": ".multiagent-cache/logs",
+    "rotation": "daily"
+  }
+}

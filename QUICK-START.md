@@ -12,6 +12,7 @@
 ## 🚀 Uso Básico
 
 ### Novo Projeto
+
 ```powershell
 # Criar e configurar projeto
 mkdir MeuProjeto
@@ -23,18 +24,20 @@ ma template datascience
 ```
 
 ### Gerar Código
+
 ```powershell
 # Gerar código Python
 ma generate "criar função que calcula fibonacci"
 
 # Gerar código JavaScript
-ma generate "criar API REST com express" 
+ma generate "criar API REST com express"
 
 # Gerar código C#
 ma generate "criar serviço de autenticação"
 ```
 
 ### Revisar Código
+
 ```powershell
 # Análise completa de qualidade
 ma review meuarquivo.py
@@ -44,6 +47,7 @@ ma review meuarquivo.py -Verbose
 ```
 
 ### Executar com Segurança
+
 ```powershell
 # Teste seguro (dry run)
 ma execute meuarquivo.py -DryRun
@@ -54,27 +58,30 @@ ma execute meuarquivo.py
 
 ## 📋 Comandos Úteis
 
-| Comando | Descrição | Exemplo |
-|---------|-----------|---------|
-| `ma init` | Inicializar projeto | `ma init -Type python -Interactive` |
-| `ma generate` | Gerar código | `ma generate "criar classe User"` |
-| `ma review` | Revisar código | `ma review app.py` |
-| `ma execute` | Executar código | `ma execute script.py` |
-| `ma template` | Criar template | `ma template datascience` |
+| Comando       | Descrição           | Exemplo                             |
+| ------------- | ------------------- | ----------------------------------- |
+| `ma init`     | Inicializar projeto | `ma init -Type python -Interactive` |
+| `ma generate` | Gerar código        | `ma generate "criar classe User"`   |
+| `ma review`   | Revisar código      | `ma review app.py`                  |
+| `ma execute`  | Executar código     | `ma execute script.py`              |
+| `ma template` | Criar template      | `ma template datascience`           |
 
 ## 🎨 Templates Disponíveis
 
 ### Data Science
+
 ```powershell
 ma template datascience
 ```
+
 - Estrutura completa de projeto
-- Jupyter notebooks configurados  
+- Jupyter notebooks configurados
 - Bibliotecas essenciais (pandas, numpy, matplotlib)
 - Scripts de utilidades
 - Configuração de ambiente virtual
 
 ### Em Desenvolvimento
+
 - `webapp` - Aplicação web Flask/FastAPI
 - `cli` - Ferramenta linha de comando
 - `api` - API REST com testes
@@ -83,29 +90,35 @@ ma template datascience
 ## 🔧 Configuração Avançada
 
 ### Projeto Interativo
+
 ```powershell
 ma init -Interactive
 ```
+
 - Detecta automaticamente o tipo de projeto
 - Configuração guiada step-by-step
 - Personalização de agentes e workflows
 
 ### Configurações por Linguagem
+
 O sistema detecta automaticamente e aplica:
 
-**Python**: 
+**Python**:
+
 - Virtual environment
 - Linting com pylint
 - Formatação com autopep8
 - Testes com pytest
 
 **JavaScript/Node.js**:
+
 - NPM/Yarn support
 - ESLint integration
 - Prettier formatting
 - Jest testing
 
 **C#**:
+
 - .NET Core configuration
 - NuGet packages
 - Debug configuration
@@ -114,12 +127,14 @@ O sistema detecta automaticamente e aplica:
 ## 🛡️ Recursos de Segurança
 
 ### Análise Automática
+
 - Detecção de vulnerabilidades
 - Padrões de código perigoso
 - Validação de dependências
 - Relatórios de segurança
 
 ### Execução Sandbox
+
 - Timeout configurável
 - Ambiente isolado
 - Backup automático
@@ -128,12 +143,14 @@ O sistema detecta automaticamente e aplica:
 ## 📊 Relatórios e Métricas
 
 ### Review de Código
+
 - **Pontuação 0-10** baseada em qualidade
 - **Análise de segurança** com padrões perigosos
 - **Métricas de complexidade** ciclomática
 - **Sugestões de melhoria** automáticas
 
 ### Logs de Execução
+
 - Todos os logs em `.multiagent-cache/`
 - Sessões numeradas por timestamp
 - Output completo de stdout/stderr
@@ -142,11 +159,13 @@ O sistema detecta automaticamente e aplica:
 ## 🎯 Workflows MultiAgent
 
 ### Geração de Código
+
 1. **Coder Agent** → Análise e geração
-2. **Reviewer Agent** → Qualidade e segurança  
+2. **Reviewer Agent** → Qualidade e segurança
 3. **Optimizer Agent** → Performance e padrões
 
 ### Correção de Bugs
+
 1. **Analyzer Agent** → Identificar causa raiz
 2. **Fixer Agent** → Propor soluções
 3. **Validator Agent** → Testar correções
@@ -180,6 +199,7 @@ multiagent update
 ## 🆘 Solução de Problemas
 
 ### Comando `ma` não encontrado
+
 ```powershell
 # Recarregar perfil
 . $PROFILE
@@ -189,12 +209,14 @@ multiagent update
 ```
 
 ### Erro de execução de scripts
+
 ```powershell
 # Alterar política de execução (como admin)
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 ```
 
 ### VS Code não carrega configurações
+
 1. Feche completamente o VS Code
 2. Reabra o projeto
 3. Verifique se `.vscode/` foi criado
@@ -203,13 +225,14 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
 1. **Use `-Interactive`** para projetos novos
 2. **Sempre execute `ma review`** antes de commit
-3. **Use `ma execute -DryRun`** para testar segurança  
+3. **Use `ma execute -DryRun`** para testar segurança
 4. **Personalize `multiagent.json`** para suas necessidades
 5. **Monitore logs** em `.multiagent-cache/` para debug
 
 ## 🤝 Contribuindo
 
 Quer adicionar novos templates ou agentes?
+
 1. Fork o repositório
 2. Crie seu template em `/templates/`
 3. Adicione ao `ma.ps1`
