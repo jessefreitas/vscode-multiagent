@@ -12,5 +12,17 @@
   "multiagent.project.language": "python",
   "multiagent.project.initialized": false,
   "multiagent.project.type": "generic",
-  "multiagent.project.createdAt": ""
+  "multiagent.project.createdAt": "",
+  "chat.mcp.servers": {
+    "memory": {
+      "args": [
+        "@modelcontextprotocol/server-memory"
+      ],
+      "env": {
+        "MEMORY_STORAGE_PATH": "./mcp-memory.db"
+      },
+      "command": "npx"
+    }
+  },
+  "chat.mcp.autostart": "newAndOutdated"
 }

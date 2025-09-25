@@ -222,10 +222,45 @@ Thumbs.db
 
 # Sexta-feira temp
 .sexta-temp/
+
+# MCP Memory Database
+mcp-memory.db
+mcp-memory.db-journal
 "@
 
 $gitignore | Set-Content ".gitignore"
 Write-SextaSuccess ".gitignore criado!"
+
+# Criar script de inicialização MCP
+Write-SextaMessage "Configurando MCP Memory Server..." "🧠"
+$mcpInitScript = @"
+# 🧠 MCP Memory Server - Auto Inicialização
+# ========================================
+# Este arquivo garante que o MCP Memory Server inicie com o projeto
+
+Write-Host "🧠 Verificando MCP Memory Server..." -ForegroundColor Cyan
+
+try {
+    # Verificar se NPX está disponível
+    `$npxVersion = npx --version 2>`$null
+    if (-not `$npxVersion) {
+        Write-Host "⚠️  NPX não encontrado. MCP Memory Server não será iniciado." -ForegroundColor Yellow
+        Write-Host "💡 Para usar MCP Memory: Instale Node.js (https://nodejs.org)" -ForegroundColor Gray
+        exit 0
+    }
+    
+    Write-Host "✅ NPX encontrado: v`$npxVersion" -ForegroundColor Green
+    Write-Host "🧠 MCP Memory Server configurado automaticamente!" -ForegroundColor Green
+    Write-Host "📁 Database: ./mcp-memory.db" -ForegroundColor Gray
+    Write-Host "💡 O servidor iniciará automaticamente com o VS Code" -ForegroundColor Yellow
+    
+} catch {
+    Write-Host "⚠️  MCP Memory Server: `$(`$_.Exception.Message)" -ForegroundColor Yellow
+}
+"@
+
+$mcpInitScript | Set-Content "mcp-init.ps1" -Encoding UTF8
+Write-SextaSuccess "MCP Memory Server configurado!"
 
 # 4. INSTALAR SISTEMA MULTIAGENTE COMPLETO + PROMPTS
 Write-SextaMessage "4. Instalando Sistema Multiagente Completo..." "🤖"
@@ -312,6 +347,7 @@ $auxiliares = @{
   "diagnostico-sexta.ps1"       = "$sistemaUrl/diagnostico-sexta.ps1"
   "instalar-sexta-global.ps1"   = "$sistemaUrl/instalar-sexta-global.ps1"
   "auto-reparacao.ps1"          = "$sistemaUrl/auto-reparacao.ps1"
+  "verificar-mcp.ps1"           = "$sistemaUrl/verificar-mcp.ps1"
   "STATUS-FINAL-SEXTA-FEIRA.md" = "$sistemaUrl/STATUS-FINAL-SEXTA-FEIRA.md"
   "SEXTA-FEIRA-GUIA-LEIGOS.md"  = "$sistemaUrl/SEXTA-FEIRA-GUIA-LEIGOS.md"
 }
@@ -556,9 +592,23 @@ try {
     $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.sextaFeira" -Value $true -Force
     $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.projectName" -Value $NomeProjeto -Force
     $settingsObj | Add-Member -Type NoteProperty -Name "multiagent.description" -Value $descricao -Force
+    
+    # Configurar MCP Memory Server automaticamente
+    $settingsObj | Add-Member -Type NoteProperty -Name "chat.mcp.autostart" -Value "newAndOutdated" -Force
+    $mcpServers = @{
+      "memory" = @{
+        "command" = "npx"
+        "args" = @("@modelcontextprotocol/server-memory")
+        "env" = @{
+          "MEMORY_STORAGE_PATH" = "./mcp-memory.db"
+        }
+      }
+    }
+    $settingsObj | Add-Member -Type NoteProperty -Name "chat.mcp.servers" -Value $mcpServers -Force
         
     $settingsObj | ConvertTo-Json -Depth 10 | Set-Content ".vscode\settings.json"
     Write-SextaSuccess "Settings personalizados aplicados!"
+    Write-SextaSuccess "MCP Memory Server configurado automaticamente!"
   }
     
   # keybindings.json para atalhos especiais

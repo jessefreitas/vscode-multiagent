@@ -37,3 +37,7 @@ Thumbs.db
 .multiagent-cache/
 multiagent-logs/
 *.multiagent-temp
+
+# MCP Memory Database
+mcp-memory.db
+
