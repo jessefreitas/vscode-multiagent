@@ -3,29 +3,29 @@
 # ==============================================================
 
 param(
-    [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
-    [string[]]$Comando
+  [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
+  [string[]]$Comando
 )
 
 $ComandoCompleto = $Comando -join " "
 
 if (-not $ComandoCompleto) {
-    Write-Host ""
-    Write-Host "🤖 AGENTE PRINCIPAL - Assistente de Programação" -ForegroundColor Cyan
-    Write-Host "===============================================" -ForegroundColor Cyan
-    Write-Host "😊 Para quem não entende de código!" -ForegroundColor Green
-    Write-Host ""
-    Write-Host "💬 Como usar:" -ForegroundColor White
-    Write-Host "   .\agente.ps1 \"quero um site de vendas\"" -ForegroundColor Yellow
-    Write-Host "   .\agente.ps1 \"preciso de uma API\"" -ForegroundColor Yellow
-    Write-Host "   .\agente.ps1 \"otimizar meu código\"" -ForegroundColor Yellow
-    Write-Host ""
-    Write-Host "🎯 Exemplos:" -ForegroundColor White
-    Write-Host "   .\agente.ps1 \"criar um blog\"" -ForegroundColor Gray
-    Write-Host "   .\agente.ps1 \"fazer um app de tarefas\"" -ForegroundColor Gray
-    Write-Host "   .\agente.ps1 \"adicionar banco de dados\"" -ForegroundColor Gray
-    Write-Host ""
-    return
+  Write-Host ""
+  Write-Host "🤖 AGENTE PRINCIPAL - Assistente de Programação" -ForegroundColor Cyan
+  Write-Host "===============================================" -ForegroundColor Cyan
+  Write-Host "😊 Para quem não entende de código!" -ForegroundColor Green
+  Write-Host ""
+  Write-Host "💬 Como usar:" -ForegroundColor White
+  Write-Host "   .\agente.ps1 \"quero um site de vendas\"" -ForegroundColor Yellow
+  Write-Host "   .\agente.ps1 \"preciso de uma API\"" -ForegroundColor Yellow
+  Write-Host "   .\agente.ps1 \"otimizar meu código\"" -ForegroundColor Yellow
+  Write-Host ""
+  Write-Host "🎯 Exemplos:" -ForegroundColor White
+  Write-Host "   .\agente.ps1 \"criar um blog\"" -ForegroundColor Gray
+  Write-Host "   .\agente.ps1 \"fazer um app de tarefas\"" -ForegroundColor Gray
+  Write-Host "   .\agente.ps1 \"adicionar banco de dados\"" -ForegroundColor Gray
+  Write-Host ""
+  return
 }
 
 Write-Host ""
@@ -44,10 +44,10 @@ Write-Host "✅ Tipo detectado: $tipo" -ForegroundColor Green
 
 # Simular geração de código (versão simplificada)
 switch ($tipo) {
-    "website" {
-        Write-Host "🌐 Gerando website..." -ForegroundColor Cyan
+  "website" {
+    Write-Host "🌐 Gerando website..." -ForegroundColor Cyan
         
-        $html = @"
+    $html = @"
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -96,14 +96,14 @@ switch ($tipo) {
 </html>
 "@
         
-        $html | Set-Content "index.html"
-        Write-Host "✅ index.html criado!" -ForegroundColor Green
-    }
+    $html | Set-Content "index.html"
+    Write-Host "✅ index.html criado!" -ForegroundColor Green
+  }
     
-    "api" {
-        Write-Host "🔌 Gerando API..." -ForegroundColor Cyan
+  "api" {
+    Write-Host "🔌 Gerando API..." -ForegroundColor Cyan
         
-        $api = @"
+    $api = @"
 # 🤖 API Gerada pelo Agente Principal
 # Baseada em: $ComandoCompleto
 
@@ -142,23 +142,23 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 "@
         
-        $api | Set-Content "main.py"
+    $api | Set-Content "main.py"
         
-        $requirements = @"
+    $requirements = @"
 fastapi==0.104.1
 uvicorn==0.24.0
 "@
-        $requirements | Set-Content "requirements.txt"
+    $requirements | Set-Content "requirements.txt"
         
-        Write-Host "✅ main.py criado!" -ForegroundColor Green
-        Write-Host "✅ requirements.txt criado!" -ForegroundColor Green
-        Write-Host "💡 Para executar: python main.py" -ForegroundColor Yellow
-    }
+    Write-Host "✅ main.py criado!" -ForegroundColor Green
+    Write-Host "✅ requirements.txt criado!" -ForegroundColor Green
+    Write-Host "💡 Para executar: python main.py" -ForegroundColor Yellow
+  }
     
-    "app" {
-        Write-Host "📱 Gerando estrutura de app..." -ForegroundColor Cyan
+  "app" {
+    Write-Host "📱 Gerando estrutura de app..." -ForegroundColor Cyan
         
-        $app = @"
+    $app = @"
 # 🤖 App Gerado pelo Agente Principal
 # Baseado em: $ComandoCompleto
 
@@ -204,15 +204,15 @@ if __name__ == "__main__":
     root.mainloop()
 "@
         
-        $app | Set-Content "app.py"
-        Write-Host "✅ app.py criado!" -ForegroundColor Green
-        Write-Host "💡 Para executar: python app.py" -ForegroundColor Yellow
-    }
+    $app | Set-Content "app.py"
+    Write-Host "✅ app.py criado!" -ForegroundColor Green
+    Write-Host "💡 Para executar: python app.py" -ForegroundColor Yellow
+  }
     
-    default {
-        Write-Host "💡 Gerando solução personalizada..." -ForegroundColor Cyan
+  default {
+    Write-Host "💡 Gerando solução personalizada..." -ForegroundColor Cyan
         
-        $readme = @"
+    $readme = @"
 # 🤖 Projeto Gerado pelo Agente Principal
 
 ## 📋 Descrição
@@ -243,9 +243,9 @@ Você só precisa descrever o que quer e o agente faz o resto!
 *Gerado automaticamente pelo Agente Principal 🤖*
 "@
         
-        $readme | Set-Content "README.md"
-        Write-Host "✅ README.md criado!" -ForegroundColor Green
-    }
+    $readme | Set-Content "README.md"
+    Write-Host "✅ README.md criado!" -ForegroundColor Green
+  }
 }
 
 Write-Host ""

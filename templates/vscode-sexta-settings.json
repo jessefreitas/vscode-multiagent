@@ -1,0 +1,29 @@
+{
+    "python.defaultInterpreterPath": "./venv/Scripts/python",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        }
+    },
+    "files.associations": {
+        "*.ps1": "powershell",
+        "*.md": "markdown"
+    },
+    "workbench.colorTheme": "Dark+ (default dark)",
+    "editor.fontSize": 14,
+    "editor.fontFamily": "Cascadia Code, Consolas, monospace",
+    "editor.minimap.enabled": true,
+    "editor.wordWrap": "on",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "extensions.autoUpdate": true,
+    "workbench.startupEditor": "welcomePage",
+    "terminal.integrated.fontSize": 12,
+    "debug.console.fontSize": 12,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+}

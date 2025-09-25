@@ -1,0 +1,26 @@
+[
+    {
+        "key": "ctrl+shift+f5",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🎉 Sexta-Feira Ativar Projeto"
+    },
+    {
+        "key": "f5",
+        "command": "workbench.action.tasks.runTask", 
+        "args": "🤖 Agente Principal: Gerar Código"
+    },
+    {
+        "key": "ctrl+f5",
+        "command": "workbench.action.tasks.runTask",
+        "args": "⚡ Sexta Rápida: Novo Projeto"
+    },
+    {
+        "key": "shift+f5",
+        "command": "workbench.action.tasks.runTask",
+        "args": "📊 Status do Sistema"
+    },
+    {
+        "key": "ctrl+shift+p",
+        "command": "workbench.action.showCommands"
+    }
+]

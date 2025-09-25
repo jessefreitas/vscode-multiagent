@@ -4,10 +4,66 @@
       "id": "codeTask",
       "type": "promptString",
       "description": "Descreva o código que deseja gerar"
+    },
+    {
+      "id": "projectName",
+      "type": "promptString",
+      "description": "Nome do projeto"
+    },
+    {
+      "id": "projectDescription",
+      "type": "promptString", 
+      "description": "Descrição do projeto"
     }
   ],
   "version": "2.0.0",
   "tasks": [
+    {
+      "label": "🎉 SEXTA-FEIRA: Ativar Projeto Novo",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "& { Write-Host '🎉 SEXTA-FEIRA ATIVAR PROJETO!' -ForegroundColor Magenta; Write-Host 'Criando projeto completo automaticamente...' -ForegroundColor Green; Write-Host ''; $nome = Read-Host '📝 Nome do projeto'; $desc = Read-Host '💭 Descrição do projeto'; ./sexta-feira.ps1 $nome $desc }"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 Diagnóstico Sexta-Feira",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-File", "./diagnostico-sexta.ps1"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      }
+    },
+    {
+      "label": "⚡ Instalar Comando Global",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-File", "./instalar-sexta-global.ps1"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always", 
+        "focus": true
+      }
+    },
     {
       "type": "shell",
       "group": "build",

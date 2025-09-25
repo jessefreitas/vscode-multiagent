@@ -3,20 +3,20 @@
 # Este script instala o Agente Principal em qualquer projeto VS Code
 
 param(
-    [switch]$Force = $false,
-    [switch]$Quiet = $false
+  [switch]$Force = $false,
+  [switch]$Quiet = $false
 )
 
 function Write-InstallMessage {
-    param([string]$Message, [string]$Icon = "🚀")
-    if (-not $Quiet) {
-        Write-Host "$Icon $Message" -ForegroundColor Cyan
-    }
+  param([string]$Message, [string]$Icon = "🚀")
+  if (-not $Quiet) {
+    Write-Host "$Icon $Message" -ForegroundColor Cyan
+  }
 }
 
 function Test-ProjectSetup {
-    # Verifica se já está configurado
-    return (Test-Path "ma.ps1") -or (Test-Path "quero.ps1") -or (Test-Path ".vscode\tasks.json")
+  # Verifica se já está configurado
+  return (Test-Path "ma.ps1") -or (Test-Path "quero.ps1") -or (Test-Path ".vscode\tasks.json")
 }
 
 Write-InstallMessage "INSTALAÇÃO RÁPIDA - Agente Principal para VS Code" "🤖"
@@ -24,15 +24,15 @@ Write-InstallMessage "====================================================" "�
 
 # Verificar se já está instalado
 if ((Test-ProjectSetup) -and (-not $Force)) {
-    Write-Host ""
-    Write-Host "✅ Agente Principal já está configurado neste projeto!" -ForegroundColor Green
-    Write-Host ""
-    Write-Host "💡 Para usar:" -ForegroundColor Cyan
-    Write-Host "   quero 'sua tarefa aqui'" -ForegroundColor White
-    Write-Host "   ma 'seu comando aqui'" -ForegroundColor White
-    Write-Host ""
-    Write-Host "🔧 Para reinstalar: .\install-rapido.ps1 -Force" -ForegroundColor Gray
-    exit 0
+  Write-Host ""
+  Write-Host "✅ Agente Principal já está configurado neste projeto!" -ForegroundColor Green
+  Write-Host ""
+  Write-Host "💡 Para usar:" -ForegroundColor Cyan
+  Write-Host "   quero 'sua tarefa aqui'" -ForegroundColor White
+  Write-Host "   ma 'seu comando aqui'" -ForegroundColor White
+  Write-Host ""
+  Write-Host "🔧 Para reinstalar: .\install-rapido.ps1 -Force" -ForegroundColor Gray
+  exit 0
 }
 
 Write-InstallMessage "Baixando arquivos do Agente Principal..." "📦"
@@ -40,27 +40,28 @@ Write-InstallMessage "Baixando arquivos do Agente Principal..." "📦"
 # URLs dos arquivos essenciais (GitHub raw)
 $baseUrl = "https://raw.githubusercontent.com/jessefreitas/vscode-multiagent/master"
 $arquivosEssenciais = @{
-    "ma.ps1" = "$baseUrl/scripts/ma.ps1"
-    "quero.ps1" = "$baseUrl/quero.ps1"
-    "super-agent.ps1" = "$baseUrl/scripts/super-agent.ps1"
-    "generate-code-scpo.ps1" = "$baseUrl/scripts/generate-code-scpo.ps1"
+  "ma.ps1"                 = "$baseUrl/scripts/ma.ps1"
+  "quero.ps1"              = "$baseUrl/quero.ps1"
+  "super-agent.ps1"        = "$baseUrl/scripts/super-agent.ps1"
+  "generate-code-scpo.ps1" = "$baseUrl/scripts/generate-code-scpo.ps1"
 }
 
 # Baixar arquivos principais
 foreach ($arquivo in $arquivosEssenciais.Keys) {
-    try {
-        Write-InstallMessage "Baixando $arquivo..." "⬇️"
-        Invoke-WebRequest -Uri $arquivosEssenciais[$arquivo] -OutFile $arquivo -UseBasicParsing
-        Write-InstallMessage "$arquivo baixado com sucesso!" "✅"
-    } catch {
-        Write-InstallMessage "Erro ao baixar $arquivo: $($_.Exception.Message)" "❌"
-    }
+  try {
+    Write-InstallMessage "Baixando $arquivo..." "⬇️"
+    Invoke-WebRequest -Uri $arquivosEssenciais[$arquivo] -OutFile $arquivo -UseBasicParsing
+    Write-InstallMessage "$arquivo baixado com sucesso!" "✅"
+  }
+  catch {
+    Write-InstallMessage "Erro ao baixar $arquivo: $($_.Exception.Message)" "❌"
+  }
 }
 
 # Criar pasta .vscode se não existir
 if (-not (Test-Path ".vscode")) {
-    New-Item -ItemType Directory -Path ".vscode" | Out-Null
-    Write-InstallMessage "Pasta .vscode criada" "📁"
+  New-Item -ItemType Directory -Path ".vscode" | Out-Null
+  Write-InstallMessage "Pasta .vscode criada" "📁"
 }
 
 # Configurar tasks.json

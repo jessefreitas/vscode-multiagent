@@ -1,0 +1,68 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🎉 Sexta-Feira Ativar Projeto",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                "& { Write-Host '🎉 SEXTA-FEIRA ATIVAR PROJETO 🎉' -ForegroundColor Magenta; Write-Host 'Ambiente completo em 1 comando!' -ForegroundColor Green; Write-Host ''; $nome = Read-Host '📝 Nome do projeto'; $desc = Read-Host '💭 Descrição (o que vai fazer)'; if (Test-Path '$PSScriptRoot/../sexta-feira.ps1') { & '$PSScriptRoot/../sexta-feira.ps1' $nome $desc } else { Write-Host '❌ Script não encontrado. Execute: git clone https://github.com/jessefreitas/vscode-multiagent.git' -ForegroundColor Red } }"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new",
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⚡ Sexta Rápida: Novo Projeto",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                "& { $input = Read-Host '🚀 Digite: NomeProjeto descrição'; $parts = $input -split ' ', 2; $nome = $parts[0]; $desc = if($parts.Length -gt 1) { $parts[1] } else { 'Projeto criado na sexta-feira' }; if (Test-Path '$PSScriptRoot/../sexta-feira.ps1') { & '$PSScriptRoot/../sexta-feira.ps1' $nome $desc } else { iwr https://raw.githubusercontent.com/jessefreitas/vscode-multiagent/master/sexta-feira.ps1 -OutFile sexta-feira.ps1; & './sexta-feira.ps1' $nome $desc } }"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "🤖 Agente Principal: Gerar Código",
+            "type": "shell", 
+            "command": "pwsh",
+            "args": [
+                "-Command",
+                "& { $task = Read-Host '🤖 Descreva sua tarefa (Agente interpretará automaticamente)'; if (Test-Path './ma.ps1') { ./ma.ps1 \"$task\" } elseif (Test-Path './quero.ps1') { ./quero.ps1 \"$task\" } elseif (Test-Path './agente.ps1') { ./agente.ps1 \"$task\" } else { Write-Host '⚠️ Agente não encontrado. Use: Sexta-Feira Ativar Projeto primeiro!' -ForegroundColor Yellow } }"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "📊 Status do Sistema",
+            "type": "shell",
+            "command": "pwsh",
+            "args": [
+                "-Command", 
+                "& { if (Test-Path './ma.ps1') { ./ma.ps1 status } else { Write-Host '🎯 Para ativar o sistema completo:' -ForegroundColor Cyan; Write-Host 'Execute: Sexta-Feira Ativar Projeto' -ForegroundColor White } }"
+            ],
+            "group": "build"
+        }
+    ]
+}
