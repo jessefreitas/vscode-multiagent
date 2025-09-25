@@ -42,7 +42,8 @@ try {
   Copy-Item "$temp\settings" "$Nome\settings" -Recurse -Force  
   Write-Host "    ✅ Prompts e configurações" -ForegroundColor Green
   
-} catch {
+}
+catch {
   Write-Host "❌ Usando arquivos locais..." -ForegroundColor Yellow
   $arquivos = @("ma.ps1", "anti-erros.ps1", "sistema-anti-erros.ps1", "validacao-tempo-real.ps1", "gerar-codigo-seguro.ps1", "corrigir-prompts.ps1", "reparar-projeto.ps1")
   
@@ -54,7 +55,8 @@ try {
   
   Copy-Item "prompts" "$Nome\prompts" -Recurse -Force
   Copy-Item "settings" "$Nome\settings" -Recurse -Force
-} finally {
+}
+finally {
   if (Test-Path $temp) { Remove-Item $temp -Recurse -Force -ErrorAction SilentlyContinue }
 }
 

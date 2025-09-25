@@ -66,7 +66,8 @@ Write-Host "  🔧 Configurando prompts SCPO..." -ForegroundColor Yellow
 if (Test-Path "prompts") {
   $quantidadePrompts = (Get-ChildItem "prompts" -Filter "*.md").Count
   Write-Host "  ✅ $quantidadePrompts prompts SCPO instalados" -ForegroundColor Green
-} else {
+}
+else {
   Write-Host "  ⚠️ Erro ao instalar prompts" -ForegroundColor Yellow
 }
 
@@ -74,7 +75,8 @@ if (Test-Path "prompts") {
 if (Test-Path "$PSScriptRoot\settings") {
   Copy-Item "$PSScriptRoot\settings" ".\settings" -Recurse -Force
   Write-Host "  ✅ Configurações copiadas" -ForegroundColor Gray
-} else {
+}
+else {
   Write-Host "  ⚠️ Configurações não encontradas, criando básicas..." -ForegroundColor Yellow
   New-Item -ItemType Directory -Path "settings" -Force | Out-Null
   

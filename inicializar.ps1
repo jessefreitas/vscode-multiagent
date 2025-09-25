@@ -14,7 +14,8 @@ $multiagentJson = "multiagent.json"
 
 if ((Test-Path $projetoJson) -or (Test-Path $multiagentJson)) {
   Write-Host "✅ Projeto MultiAgent detectado!" -ForegroundColor Green
-} else {
+}
+else {
   Write-Host "⚠️  Criando configuração básica..." -ForegroundColor Yellow
   
   # Criar projeto.json básico
@@ -43,7 +44,8 @@ Write-Host "🔧 Verificando prompts SCPO..." -ForegroundColor Yellow
 
 if (Test-Path ".\corrigir-prompts.ps1") {
   & ".\corrigir-prompts.ps1" "." 2>$null
-} else {
+}
+else {
   Write-Host "  ⚠️  Script de correção não encontrado, copiando manualmente..." -ForegroundColor Yellow
   
   # Verificar se pasta prompts existe
@@ -76,7 +78,8 @@ foreach ($script in $scriptsEssenciais) {
   if (Test-Path $script) {
     Write-Host "  ✅ $script" -ForegroundColor Green
     $scriptsEncontrados++
-  } else {
+  }
+  else {
     Write-Host "  ❌ $script (faltando)" -ForegroundColor Red
   }
 }
@@ -85,7 +88,8 @@ foreach ($script in $scriptsEssenciais) {
 Write-Host "🔧 Verificando configurações..." -ForegroundColor Yellow
 if (Test-Path "settings") {
   Write-Host "  ✅ Configurações encontradas" -ForegroundColor Green
-} else {
+}
+else {
   Write-Host "  ⚠️  Criando configurações básicas..." -ForegroundColor Yellow
   New-Item -ItemType Directory -Path "settings" -Force | Out-Null
   
@@ -124,7 +128,8 @@ if ($scriptsEncontrados -eq $scriptsEssenciais.Count) {
   Write-Host "  .\ma.ps1 check          - Verificar sistema" -ForegroundColor Gray
   Write-Host "  .\gerar-codigo-seguro.ps1 - Gerar código" -ForegroundColor Gray
   Write-Host "  .\reparar-projeto.ps1   - Reparar se necessário" -ForegroundColor Gray
-} else {
+}
+else {
   Write-Host "⚠️  CONFIGURAÇÃO INCOMPLETA" -ForegroundColor Yellow
   Write-Host ""
   Write-Host "💡 Para reparar, execute:" -ForegroundColor Cyan
