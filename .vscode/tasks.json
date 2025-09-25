@@ -14,6 +14,22 @@
                 "echo": true,
                 "reveal": "always",
                 "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "😊 SUPER FÁCIL: Só me diga o que quer!",
+            "type": "shell",
+            "command": "pwsh", 
+            "args": [
+                "-Command",
+                "& { Write-Host '😊 Me diga o que você quer (em linguagem normal):' -ForegroundColor Green; Write-Host 'Exemplos: quero um site, preciso de uma API, fazer um app' -ForegroundColor Gray; $want = Read-Host 'O que você quer'; .\\quero.ps1 \"$want\" }"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
                 "panel": "new"
             },
             "problemMatcher": []

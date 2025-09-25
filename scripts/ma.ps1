@@ -11,7 +11,8 @@ param(
     
   [switch]$DryRun = $false,
   [switch]$Force = $false,
-  [switch]$SCPO = $false
+  [switch]$SCPO = $false,
+  [switch]$AutoMode = $true
 )
 
 # Cores e emojis para output
@@ -46,13 +47,17 @@ function Show-Help {
   Write-Host ""
   Write-Host "🤖 AGENTE PRINCIPAL - MultiAgent + SCPO + OmniForge" -ForegroundColor Cyan
   Write-Host "=====================================================" -ForegroundColor Cyan
-  Write-Host "🚀 Agente Inteligente que assume controle automaticamente" -ForegroundColor Green
+  Write-Host "🚀 PARA USUÁRIOS LEIGOS: Você só precisa PEDIR, eu faço TUDO!" -ForegroundColor Green
   Write-Host ""
-  Write-Host "MODO INTELIGENTE (Recomendado):" -ForegroundColor White
-  Write-Host "  ma 'sua tarefa aqui'                # Agente interpreta automaticamente" -ForegroundColor Yellow
-  Write-Host "  ma 'criar API REST Python'          # Gera código automaticamente" -ForegroundColor Gray
-  Write-Host "  ma 'otimizar performance'           # Otimiza automaticamente" -ForegroundColor Gray
-  Write-Host "  ma 'revisar segurança código.py'    # Analisa automaticamente" -ForegroundColor Gray
+  Write-Host "💬 MODO SUPER FÁCIL (Para quem não entende de código):" -ForegroundColor White
+  Write-Host "  ma 'quero um site de vendas'        # Eu crio TUDO automaticamente!" -ForegroundColor Yellow
+  Write-Host "  ma 'preciso de uma API'             # Eu desenvolvo e testo!" -ForegroundColor Yellow
+  Write-Host "  ma 'fazer um app mobile'            # Eu programo completo!" -ForegroundColor Yellow
+  Write-Host "  ma 'otimizar meu código'            # Eu melhoro automaticamente!" -ForegroundColor Yellow
+  Write-Host ""
+  Write-Host "😊 Você NÃO precisa:" -ForegroundColor Green
+  Write-Host "   • Entender código • Fazer review • Instalar nada • Configurar nada" -ForegroundColor Gray
+  Write-Host "   • EU FAÇO TUDO PRA VOCÊ AUTOMATICAMENTE!" -ForegroundColor Green
   Write-Host ""
   Write-Host "COMANDOS CLÁSSICOS:" -ForegroundColor White
   Write-Host "  init       Initialize MultiAgent project" -ForegroundColor Green
@@ -473,33 +478,39 @@ $success = switch ($Command.ToLower()) {
   "backup" { Invoke-Backup }
   "help" { Show-Help; $true }
   default { 
-    # 🤖 AGENTE PRINCIPAL ASSUME CONTROLE DIRETO
-    Write-MALog "Agente Principal assumindo controle: '$Command'" "Info" "🤖"
+    # 🤖 AGENTE ULTRA AUTOMÁTICO PARA LEIGOS
+    Write-MALog "🤖 Agente assumindo controle TOTAL: '$Command'" "Info" "🚀"
+    Write-Host ""
+    Write-Host "😊 Perfeito! Você não precisa entender nada técnico!" -ForegroundColor Green
+    Write-Host "🤖 Vou fazer TUDO automaticamente para você!" -ForegroundColor Cyan
+    Write-Host ""
     
-    # Detectar se é uma tarefa ou comando desconhecido
-    if ($Command -match "(criar|gerar|implementar|desenvolver|build|make|code|otimizar|melhorar|fix|corrigir|revisar|analisar|testar|test|deploy)") {
-      Write-MALog "Interpretando como tarefa de desenvolvimento..." "Info" "⚡"
+    # MODO ULTRA AUTOMÁTICO - SEM PERGUNTAS, SEM REVIEWS
+    try {
+      # Chama o super agente automático
+      & "$PSScriptRoot\super-agent.ps1" "$Command"
+      $true
+    } catch {
+      Write-Host "🤖 Ops! Deixe-me tentar de outra forma..." -ForegroundColor Yellow
       
-      # Usar como comando de geração automática
-      $global:Target = $Command
-      $global:Command = "generate"
-      Invoke-Generate
-    } else {
-      Write-MALog "Comando não reconhecido. Agente sugerindo alternativas..." "Warning" "💡"
-      Write-Host "`n🤖 AGENTE PRINCIPAL - SUGESTÕES INTELIGENTES:" -ForegroundColor Cyan
-      Write-Host "================================================" -ForegroundColor Cyan
-      Write-Host ""
-      Write-Host "📝 Talvez você queria:" -ForegroundColor Yellow
-      Write-Host "   ma generate '$Command'     # Para gerar código" -ForegroundColor White
-      Write-Host "   ma review '$Command'       # Para revisar arquivo" -ForegroundColor White
-      Write-Host "   ma execute '$Command'      # Para executar arquivo" -ForegroundColor White
-      Write-Host ""
-      Write-Host "💡 Ou tente comandos diretos:" -ForegroundColor Green
-      Write-Host "   ma 'criar API REST Python'" -ForegroundColor White
-      Write-Host "   ma 'otimizar este código'" -ForegroundColor White
-      Write-Host "   ma 'revisar segurança'" -ForegroundColor White
-      Show-Help
-      $false
+      # Fallback: modo inteligente tradicional
+      if ($Command -match "(criar|gerar|fazer|preciso|quero|site|api|app|otimizar|melhorar|fix|corrigir)") {
+        Write-Host "🎯 Interpretando: '$Command'" -ForegroundColor Cyan
+        Write-Host "⚡ Executando automaticamente..." -ForegroundColor Green
+        
+        # Chama o gerador SCPO diretamente
+        & "$PSScriptRoot\generate-code-scpo.ps1" -CodeTask $Command -Domain "auto" -AutoMode -NoReview -Execute
+      } else {
+        Write-Host ""
+        Write-Host "💬 Não entendi exatamente. Tente assim:" -ForegroundColor Yellow
+        Write-Host "   ma 'quero fazer um site'" -ForegroundColor White
+        Write-Host "   ma 'preciso de uma API'" -ForegroundColor White
+        Write-Host "   ma 'criar um app'" -ForegroundColor White
+        Write-Host "   ma 'otimizar meu código'" -ForegroundColor White
+        Write-Host ""
+        Write-Host "😊 Lembre-se: você só precisa PEDIR, eu faço tudo!" -ForegroundColor Green
+        $false
+      }
     }
   }
 }

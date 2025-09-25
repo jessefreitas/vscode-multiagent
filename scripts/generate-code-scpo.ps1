@@ -1,11 +1,11 @@
-# Script MultiAgent + SCPO: Geração Inteligente de Código
+# 🤖 Script MultiAgent + SCPO: Geração ULTRA AUTOMÁTICA para Leigos
 param(
   [Parameter(Mandatory = $true)]
   [string]$CodeTask,
     
   [Parameter(Mandatory = $false)]
-  [ValidateSet("backend", "frontend", "testing", "optimization", "documentation", "mobile", "database")]
-  [string]$Domain = "backend",
+  [ValidateSet("backend", "frontend", "testing", "optimization", "documentation", "mobile", "database", "auto")]
+  [string]$Domain = "auto",
     
   [Parameter(Mandatory = $false)]
   [string]$OutputFile = "",
@@ -17,12 +17,46 @@ param(
   [switch]$Review = $false,
     
   [Parameter(Mandatory = $false)]
-  [switch]$Execute = $false
+  [switch]$Execute = $true,
+    
+  [Parameter(Mandatory = $false)]
+  [switch]$AutoMode = $true,
+    
+  [Parameter(Mandatory = $false)]
+  [switch]$NoReview = $true,
+    
+  [Parameter(Mandatory = $false)]
+  [switch]$LearnFromUser = $true
 )
 
-Write-Host "🤖 MultiAgent + SCPO Code Generator" -ForegroundColor Cyan
-Write-Host "📝 Task: $CodeTask" -ForegroundColor Gray
-Write-Host "🎯 Domain: $Domain" -ForegroundColor Gray
+# 🤖 DETECÇÃO AUTOMÁTICA PARA LEIGOS
+if ($AutoMode -and $Domain -eq "auto") {
+    Write-Host "� Analisando sua solicitação..." -ForegroundColor Cyan
+    
+    # Detecta automaticamente o melhor domínio
+    $Domain = if ($CodeTask -match "(site|website|página|html|css|interface|design|frontend|visual)") { "frontend" }
+              elseif ($CodeTask -match "(api|servidor|backend|banco|database|server|rest)") { "backend" }
+              elseif ($CodeTask -match "(app|aplicativo|mobile|android|ios)") { "mobile" }
+              elseif ($CodeTask -match "(test|teste|validar|verificar)") { "testing" }
+              elseif ($CodeTask -match "(otimiz|performance|rápido|melhor|acelerar)") { "optimization" }
+              elseif ($CodeTask -match "(document|readme|manual|guia)") { "documentation" }
+              else { "backend" } # Default para backend
+    
+    Write-Host "✅ Identifiquei que você quer: $Domain" -ForegroundColor Green
+}
+
+if ($AutoMode) {
+    Write-Host ""
+    Write-Host "🤖 MODO AUTOMÁTICO ATIVADO" -ForegroundColor Green  
+    Write-Host "😊 Você pode relaxar - eu cuido de TUDO!" -ForegroundColor Cyan
+    Write-Host "📝 Tarefa: $CodeTask" -ForegroundColor Gray
+    Write-Host "🎯 Domínio: $Domain" -ForegroundColor Gray
+    Write-Host ""
+} else {
+    Write-Host "�🤖 MultiAgent + SCPO Code Generator" -ForegroundColor Cyan
+    Write-Host "📝 Task: $CodeTask" -ForegroundColor Gray
+    Write-Host "🎯 Domain: $Domain" -ForegroundColor Gray
+}
 
 # Verificar se é um projeto MultiAgent
 if (-not (Test-Path "multiagent.json")) {

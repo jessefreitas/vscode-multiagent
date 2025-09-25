@@ -1,4 +1,19 @@
-[
+[    {
+        "key": "ctrl+shift+m g",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "ma \"\\u0008\" "
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+m q",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "quero \"\\u0008\" "
+        },
+        "when": "terminalFocus"
+    },
     {
         "key": "ctrl+shift+m g",
         "command": "workbench.action.terminal.sendSequence",
