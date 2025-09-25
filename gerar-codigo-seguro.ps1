@@ -3,21 +3,21 @@
 # Sistema inteligente para gerar código com proteções automáticas
 
 param(
-    [Parameter(Mandatory)]
-    [string]$Tipo,
+  [Parameter(Mandatory)]
+  [string]$Tipo,
     
-    [string]$Nome = "",
-    [string]$Linguagem = "js"
+  [string]$Nome = "",
+  [string]$Linguagem = "js"
 )
 
 function Write-CodeMessage {
-    param([string]$Message, [string]$Icon = "🎯")
-    Write-Host "$Icon $Message" -ForegroundColor Cyan
+  param([string]$Message, [string]$Icon = "🎯")
+  Write-Host "$Icon $Message" -ForegroundColor Cyan
 }
 
 function Write-CodeSuccess {
-    param([string]$Message, [string]$Icon = "✅")
-    Write-Host "$Icon $Message" -ForegroundColor Green
+  param([string]$Message, [string]$Icon = "✅")
+  Write-Host "$Icon $Message" -ForegroundColor Green
 }
 
 # Templates seguros
@@ -766,48 +766,48 @@ Write-Host ""
 
 # Definir nome se não especificado
 if (-not $Nome) {
-    $Nome = Read-Host "Nome da função/componente"
-    if (-not $Nome) {
-        $Nome = "MinhaFuncao"
-    }
+  $Nome = Read-Host "Nome da função/componente"
+  if (-not $Nome) {
+    $Nome = "MinhaFuncao"
+  }
 }
 
 # Selecionar template
 $template = switch ($Linguagem.ToLower()) {
-    "js" { $templateJS }
-    "javascript" { $templateJS }
-    "py" { $templatePython }
-    "python" { $templatePython }
-    "react" { $templateReact }
-    "jsx" { $templateReact }
-    "cs" { $templateCSharp }
-    "csharp" { $templateCSharp }
-    "c#" { $templateCSharp }
-    "go" { $templateGo }
-    "golang" { $templateGo }
-    "rs" { $templateRust }
-    "rust" { $templateRust }
-    "java" { $templateJava }
-    "php" { $templatePHP }
-    default { $templateJS }
+  "js" { $templateJS }
+  "javascript" { $templateJS }
+  "py" { $templatePython }
+  "python" { $templatePython }
+  "react" { $templateReact }
+  "jsx" { $templateReact }
+  "cs" { $templateCSharp }
+  "csharp" { $templateCSharp }
+  "c#" { $templateCSharp }
+  "go" { $templateGo }
+  "golang" { $templateGo }
+  "rs" { $templateRust }
+  "rust" { $templateRust }
+  "java" { $templateJava }
+  "php" { $templatePHP }
+  default { $templateJS }
 }
 
 # Extensão do arquivo
 $extensao = switch ($Linguagem.ToLower()) {
-    "py" { ".py" }
-    "python" { ".py" }
-    "react" { ".jsx" }
-    "jsx" { ".jsx" }
-    "cs" { ".cs" }
-    "csharp" { ".cs" }
-    "c#" { ".cs" }
-    "go" { ".go" }
-    "golang" { ".go" }
-    "rs" { ".rs" }
-    "rust" { ".rs" }
-    "java" { ".java" }
-    "php" { ".php" }
-    default { ".js" }
+  "py" { ".py" }
+  "python" { ".py" }
+  "react" { ".jsx" }
+  "jsx" { ".jsx" }
+  "cs" { ".cs" }
+  "csharp" { ".cs" }
+  "c#" { ".cs" }
+  "go" { ".go" }
+  "golang" { ".go" }
+  "rs" { ".rs" }
+  "rust" { ".rs" }
+  "java" { ".java" }
+  "php" { ".php" }
+  default { ".js" }
 }
 
 $nomeArquivo = "$Nome$extensao"
@@ -819,44 +819,45 @@ $codigo = $template -replace '\{NOME\}', $Nome
 
 # Salvar arquivo
 try {
-    $codigo | Set-Content $nomeArquivo -Encoding UTF8
-    Write-CodeSuccess "Código gerado: $nomeArquivo"
+  $codigo | Set-Content $nomeArquivo -Encoding UTF8
+  Write-CodeSuccess "Código gerado: $nomeArquivo"
     
-    # Estatísticas
-    $linhas = ($codigo -split "`n").Count
-    $protecoes = ($codigo | Select-String "try|catch|validate|error|🛡️").Matches.Count
+  # Estatísticas
+  $linhas = ($codigo -split "`n").Count
+  $protecoes = ($codigo | Select-String "try|catch|validate|error|🛡️").Matches.Count
     
-    Write-Host ""
-    Write-Host "📊 ESTATÍSTICAS:" -ForegroundColor Cyan
-    Write-Host "   📄 Linhas: $linhas" -ForegroundColor Gray
-    Write-Host "   🛡️ Proteções: $protecoes" -ForegroundColor Green
-    Write-Host "   ✅ Testes: Incluídos" -ForegroundColor Green
-    Write-Host "   🔍 Logging: Incluído" -ForegroundColor Green
+  Write-Host ""
+  Write-Host "📊 ESTATÍSTICAS:" -ForegroundColor Cyan
+  Write-Host "   📄 Linhas: $linhas" -ForegroundColor Gray
+  Write-Host "   🛡️ Proteções: $protecoes" -ForegroundColor Green
+  Write-Host "   ✅ Testes: Incluídos" -ForegroundColor Green
+  Write-Host "   🔍 Logging: Incluído" -ForegroundColor Green
     
-    Write-Host ""
-    Write-Host "💡 PRÓXIMOS PASSOS:" -ForegroundColor Yellow
-    Write-Host "   1. Editar: code $nomeArquivo" -ForegroundColor White
-    Write-Host "   2. Implementar lógica na seção marcada" -ForegroundColor White
+  Write-Host ""
+  Write-Host "💡 PRÓXIMOS PASSOS:" -ForegroundColor Yellow
+  Write-Host "   1. Editar: code $nomeArquivo" -ForegroundColor White
+  Write-Host "   2. Implementar lógica na seção marcada" -ForegroundColor White
     
-    # Instruções específicas por linguagem
-    switch ($Linguagem.ToLower()) {
-        "js" { Write-Host "   3. Testar: node $nomeArquivo" -ForegroundColor White }
-        "py" { Write-Host "   3. Testar: python $nomeArquivo" -ForegroundColor White }
-        "cs" { Write-Host "   3. Compilar: dotnet run" -ForegroundColor White }
-        "go" { Write-Host "   3. Executar: go run $nomeArquivo" -ForegroundColor White }
-        "rs" { Write-Host "   3. Executar: cargo run" -ForegroundColor White }
-        "java" { 
-            Write-Host "   3. Compilar: javac $nomeArquivo" -ForegroundColor White
-            Write-Host "   4. Executar: java $Nome" -ForegroundColor White
-        }
-        "php" { Write-Host "   3. Executar: php $nomeArquivo" -ForegroundColor White }
-        default { Write-Host "   3. Executar conforme sua linguagem" -ForegroundColor White }
+  # Instruções específicas por linguagem
+  switch ($Linguagem.ToLower()) {
+    "js" { Write-Host "   3. Testar: node $nomeArquivo" -ForegroundColor White }
+    "py" { Write-Host "   3. Testar: python $nomeArquivo" -ForegroundColor White }
+    "cs" { Write-Host "   3. Compilar: dotnet run" -ForegroundColor White }
+    "go" { Write-Host "   3. Executar: go run $nomeArquivo" -ForegroundColor White }
+    "rs" { Write-Host "   3. Executar: cargo run" -ForegroundColor White }
+    "java" { 
+      Write-Host "   3. Compilar: javac $nomeArquivo" -ForegroundColor White
+      Write-Host "   4. Executar: java $Nome" -ForegroundColor White
     }
+    "php" { Write-Host "   3. Executar: php $nomeArquivo" -ForegroundColor White }
+    default { Write-Host "   3. Executar conforme sua linguagem" -ForegroundColor White }
+  }
     
-    Write-Host "   🔍 Validar: .\anti-erros.ps1" -ForegroundColor White
+  Write-Host "   🔍 Validar: .\anti-erros.ps1" -ForegroundColor White
     
-} catch {
-    Write-Host "❌ Erro ao criar arquivo: $($_.Exception.Message)" -ForegroundColor Red
+}
+catch {
+  Write-Host "❌ Erro ao criar arquivo: $($_.Exception.Message)" -ForegroundColor Red
 }
 
 Write-Host ""

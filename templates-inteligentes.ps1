@@ -3,28 +3,28 @@
 # Gera código com proteções automáticas contra erros
 
 param(
-    [Parameter(Mandatory)]
-    [string]$TemplateType,
+  [Parameter(Mandatory)]
+  [string]$TemplateType,
     
-    [string]$FileName = "",
-    [string]$FunctionName = "",
-    [string]$ClassName = "",
-    [hashtable]$Parameters = @{}
+  [string]$FileName = "",
+  [string]$FunctionName = "",
+  [string]$ClassName = "",
+  [hashtable]$Parameters = @{}
 )
 
 function Write-TemplateMessage {
-    param([string]$Message, [string]$Icon = "🎯")
-    Write-Host "$Icon $Message" -ForegroundColor Cyan
+  param([string]$Message, [string]$Icon = "🎯")
+  Write-Host "$Icon $Message" -ForegroundColor Cyan
 }
 
 function Write-TemplateSuccess {
-    param([string]$Message, [string]$Icon = "✅")
-    Write-Host "$Icon $Message" -ForegroundColor Green
+  param([string]$Message, [string]$Icon = "✅")
+  Write-Host "$Icon $Message" -ForegroundColor Green
 }
 
 # Templates anti-erros por linguagem
 $templates = @{
-    "js-function" = @"
+  "js-function"     = @"
 /**
  * $FunctionName - Função com proteções anti-erros
  * @param {Object} params - Parâmetros da função
@@ -86,7 +86,7 @@ if (typeof require !== 'undefined' && require.main === module) {
 }
 "@
 
-    "py-function" = @"
+  "py-function"     = @"
 """
 $FunctionName - Função Python com proteções anti-erros
 """
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     test_$FunctionName()
 "@
 
-    "cs-class" = @"
+  "cs-class"        = @"
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -283,7 +283,7 @@ namespace AntiErros
 }
 "@
 
-    "api-endpoint" = @"
+  "api-endpoint"    = @"
 /**
  * 🛡️ API Endpoint com proteções anti-erros
  * Rota: /$FunctionName
@@ -395,7 +395,7 @@ router.use((error, req, res, next) => {
 module.exports = router;
 "@
 
-    "react-component" = @"
+  "react-component" = @"
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
@@ -567,43 +567,43 @@ Write-Host ""
 
 # Verificar se template existe
 if (-not $templates.ContainsKey($TemplateType)) {
-    Write-Host "❌ Template '$TemplateType' não encontrado!" -ForegroundColor Red
-    Write-Host ""
-    Write-Host "Templates disponíveis:" -ForegroundColor Yellow
-    foreach ($template in $templates.Keys) {
-        Write-Host "   • $template" -ForegroundColor White
-    }
-    exit 1
+  Write-Host "❌ Template '$TemplateType' não encontrado!" -ForegroundColor Red
+  Write-Host ""
+  Write-Host "Templates disponíveis:" -ForegroundColor Yellow
+  foreach ($template in $templates.Keys) {
+    Write-Host "   • $template" -ForegroundColor White
+  }
+  exit 1
 }
 
 # Definir nome do arquivo se não especificado
 if (-not $FileName) {
-    $extension = switch ($TemplateType) {
-        "js-function" { ".js" }
-        "py-function" { ".py" }
-        "cs-class" { ".cs" }
-        "api-endpoint" { ".js" }
-        "react-component" { ".jsx" }
-        default { ".txt" }
-    }
+  $extension = switch ($TemplateType) {
+    "js-function" { ".js" }
+    "py-function" { ".py" }
+    "cs-class" { ".cs" }
+    "api-endpoint" { ".js" }
+    "react-component" { ".jsx" }
+    default { ".txt" }
+  }
     
-    $baseName = if ($FunctionName) { $FunctionName } elseif ($ClassName) { $ClassName } else { "template" }
-    $FileName = "$baseName$extension"
+  $baseName = if ($FunctionName) { $FunctionName } elseif ($ClassName) { $ClassName } else { "template" }
+  $FileName = "$baseName$extension"
 }
 
 # Solicitar parâmetros se não fornecidos
 if (-not $FunctionName -and $TemplateType -match "function|endpoint") {
-    $FunctionName = Read-Host "Nome da função"
-    if (-not $FunctionName) {
-        $FunctionName = "minhaFuncao"
-    }
+  $FunctionName = Read-Host "Nome da função"
+  if (-not $FunctionName) {
+    $FunctionName = "minhaFuncao"
+  }
 }
 
 if (-not $ClassName -and $TemplateType -match "class|component") {
-    $ClassName = Read-Host "Nome da classe/componente"
-    if (-not $ClassName) {
-        $ClassName = "MinhaClasse"
-    }
+  $ClassName = Read-Host "Nome da classe/componente"
+  if (-not $ClassName) {
+    $ClassName = "MinhaClasse"
+  }
 }
 
 Write-TemplateMessage "Gerando template '$TemplateType'..." "🎯"
@@ -619,30 +619,31 @@ $templateContent = $templateContent -replace '\$FileName', ([System.IO.Path]::Ge
 
 # Salvar arquivo
 try {
-    $templateContent | Set-Content $FileName -Encoding UTF8
-    Write-TemplateSuccess "Template criado: $FileName"
+  $templateContent | Set-Content $FileName -Encoding UTF8
+  Write-TemplateSuccess "Template criado: $FileName"
     
-    # Mostrar estatísticas
-    $lines = ($templateContent -split "`n").Count
-    $protections = ($templateContent | Select-String "🛡️|try|catch|validate|error").Matches.Count
+  # Mostrar estatísticas
+  $lines = ($templateContent -split "`n").Count
+  $protections = ($templateContent | Select-String "🛡️|try|catch|validate|error").Matches.Count
     
-    Write-Host ""
-    Write-Host "📊 ESTATÍSTICAS:" -ForegroundColor Cyan
-    Write-Host "   📄 Linhas: $lines" -ForegroundColor Gray
-    Write-Host "   🛡️ Proteções: $protections" -ForegroundColor Green
-    Write-Host "   ✅ Testes incluídos: Sim" -ForegroundColor Green
-    Write-Host "   🔍 Logging incluído: Sim" -ForegroundColor Green  
-    Write-Host "   🚨 Error handling: Sim" -ForegroundColor Green
+  Write-Host ""
+  Write-Host "📊 ESTATÍSTICAS:" -ForegroundColor Cyan
+  Write-Host "   📄 Linhas: $lines" -ForegroundColor Gray
+  Write-Host "   🛡️ Proteções: $protections" -ForegroundColor Green
+  Write-Host "   ✅ Testes incluídos: Sim" -ForegroundColor Green
+  Write-Host "   🔍 Logging incluído: Sim" -ForegroundColor Green  
+  Write-Host "   🚨 Error handling: Sim" -ForegroundColor Green
     
-    Write-Host ""
-    Write-Host "💡 PRÓXIMOS PASSOS:" -ForegroundColor Yellow
-    Write-Host "   1. Edite o arquivo gerado: code $FileName" -ForegroundColor White
-    Write-Host "   2. Implemente sua lógica na seção marcada" -ForegroundColor White
-    Write-Host "   3. Execute testes: node $FileName (JS) ou python $FileName (PY)" -ForegroundColor White
-    Write-Host "   4. Valide com: .\anti-erros.ps1" -ForegroundColor White
+  Write-Host ""
+  Write-Host "💡 PRÓXIMOS PASSOS:" -ForegroundColor Yellow
+  Write-Host "   1. Edite o arquivo gerado: code $FileName" -ForegroundColor White
+  Write-Host "   2. Implemente sua lógica na seção marcada" -ForegroundColor White
+  Write-Host "   3. Execute testes: node $FileName (JS) ou python $FileName (PY)" -ForegroundColor White
+  Write-Host "   4. Valide com: .\anti-erros.ps1" -ForegroundColor White
     
-} catch {
-    Write-Host "❌ Erro ao criar arquivo: $($_.Exception.Message)" -ForegroundColor Red
+}
+catch {
+  Write-Host "❌ Erro ao criar arquivo: $($_.Exception.Message)" -ForegroundColor Red
 }
 
 Write-Host ""

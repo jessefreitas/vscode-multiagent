@@ -1,10 +1,10 @@
 # MultiAgent Quick Command - Comando rápido para tarefas comuns
 param(
-    [Parameter(Position=0, Mandatory=$true)]
+    [Parameter(Position = 0, Mandatory = $true)]
     [ValidateSet("init", "generate", "review", "execute", "template", "safe-code", "check", "fix")]
     [string]$Command,
     
-    [Parameter(Position=1)]
+    [Parameter(Position = 1)]
     [string]$Target = "",
     
     [Parameter()]
@@ -22,10 +22,10 @@ param(
 
 # Cores para output
 $colors = @{
-    Success = "Green"
-    Warning = "Yellow" 
-    Error = "Red"
-    Info = "Cyan"
+    Success   = "Green"
+    Warning   = "Yellow" 
+    Error     = "Red"
+    Info      = "Cyan"
     Highlight = "Magenta"
 }
 
@@ -53,7 +53,7 @@ switch ($Command) {
         Write-ColorOutput "🚀 Inicializando projeto MultiAgent..." "Info"
         
         $params = @{
-            ProjectPath = if([string]::IsNullOrEmpty($Target)) { (Get-Location).Path } else { $Target }
+            ProjectPath = if ([string]::IsNullOrEmpty($Target)) { (Get-Location).Path } else { $Target }
             ProjectType = $Type
         }
         
@@ -129,7 +129,8 @@ switch ($Command) {
                     
                     $projectName = if ($Interactive) { 
                         Read-Host "Nome do projeto"
-                    } else { 
+                    }
+                    else { 
                         "DataScienceProject" 
                     }
                     
@@ -150,12 +151,14 @@ switch ($Command) {
             $linguagem = if ([string]::IsNullOrEmpty($Type)) { "js" } else { $Type }
             $nome = if ([string]::IsNullOrEmpty($Target)) { 
                 Read-Host "Nome da função/componente" 
-            } else { 
+            }
+            else { 
                 $Target 
             }
             
             & .\gerar-codigo-seguro.ps1 -Tipo "funcao" -Nome $nome -Linguagem $linguagem
-        } else {
+        }
+        else {
             Write-ColorOutput "❌ Script gerar-codigo-seguro.ps1 não encontrado!" "Error"
             Write-ColorOutput "Execute: ma fix" "Warning"
         }
@@ -167,7 +170,8 @@ switch ($Command) {
         # Verificar scripts anti-erros
         if (Test-Path "sistema-anti-erros.ps1") {
             & .\sistema-anti-erros.ps1 verificar
-        } else {
+        }
+        else {
             Write-ColorOutput "⚠️ Sistema anti-erros não encontrado" "Warning"
             Write-ColorOutput "Execute: ma fix" "Warning"
         }
