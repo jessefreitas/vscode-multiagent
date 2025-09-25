@@ -118,5 +118,62 @@
       "$0"
     ],
     "description": "Ativar agente @ com comando personalizado"
+  },
+
+  "SCPO - Estrutura Completa": {
+    "prefix": "scpo-full",
+    "body": [
+      "/*",
+      "🤖 SCPO (Sistema de Cadeia de Pensamento Operacional)",
+      "====================================================",
+      "Task: ${1:Descrever tarefa}",
+      "Domain: ${2:backend/frontend/testing/optimization}",
+      "Generated: ${CURRENT_YEAR}/${CURRENT_MONTH}/${CURRENT_DATE} ${CURRENT_HOUR}:${CURRENT_MINUTE}:${CURRENT_SECOND}",
+      "SCPO Context Applied: True",
+      "",
+      "🔄 SCPO Workflow:",
+      "1. Input validation and sanitization",
+      "2. Structured processing with clear phases", 
+      "3. Output validation and formatting",
+      "4. Error handling and recovery",
+      "5. Logging and monitoring",
+      "*/",
+      "",
+      "$0"
+    ],
+    "description": "Estrutura SCPO completa com cabeçalho"
+  },
+
+  "SCPO - Função Otimizada": {
+    "prefix": "scpo-func",
+    "body": [
+      "/**",
+      " * 🤖 SCPO Function: ${1:Nome da função}",
+      " * =====================================",
+      " * Purpose: ${2:Propósito da função}",
+      " * Input: ${3:Tipo de entrada}",
+      " * Output: ${4:Tipo de saída}",
+      " * SCPO Pattern: ${5:validation|processing|optimization|error-handling}",
+      " */",
+      "function ${1:functionName}(${6:parameters}) {",
+      "    // 🔍 SCPO: Input Validation",
+      "    if (!${6:parameters}) {",
+      "        throw new Error('Invalid input parameters');",
+      "    }",
+      "",
+      "    try {",
+      "        // 🔄 SCPO: Structured Processing",
+      "        ${0:// Implementation here}",
+      "",
+      "        // ✅ SCPO: Output Validation",
+      "        return result;",
+      "    } catch (error) {",
+      "        // ❌ SCPO: Error Handling",
+      "        console.error('SCPO Error:', error);",
+      "        throw error;",
+      "    }",
+      "}"
+    ],
+    "description": "Função com padrões SCPO otimizados"
   }
 }

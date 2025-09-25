@@ -125,7 +125,7 @@ switch ($language) {
     }
         
     # Verificar if __name__ == "__main__"
-    if ($fileContent -match '__name__\s*==\s*["\']__main__["\']') {
+    if ($fileContent -match "__name__\s*==\s*[`"']__main__[`"']") {
             $positives += "✅ Padrão __main__ implementado"
         } else {
             $suggestions += "💡 Considere adicionar if __name__ == '__main__'"
