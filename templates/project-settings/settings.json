@@ -1,0 +1,14 @@
+{
+    "python.defaultInterpreterPath": "./venv/Scripts/python.exe",
+    "python.terminal.activateEnvironment": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.autopep8Enabled": true,
+    "python.testing.pytestEnabled": true,
+    "python.analysis.extraPaths": ["./src"],
+    "python.analysis.autoImportCompletions": true,
+    "multiagent.project.language": "python",
+    "multiagent.project.initialized": false,
+    "multiagent.project.type": "generic",
+    "multiagent.project.createdAt": ""
+}

@@ -1,0 +1,37 @@
+# Logs e cache
+.multiagent-cache/
+multiagent-logs/
+*.multiagent-temp
+
+# Backups
+*.zip
+backup-*/
+
+# Configurações locais
+.vscode/settings.json.local
+multiagent.json.local
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# Linux
+*~
+
+# Temporários
+*.tmp
+*.temp
+temp/
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/

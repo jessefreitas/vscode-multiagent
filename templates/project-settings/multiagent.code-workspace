@@ -1,0 +1,85 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "multiagent.project.initialized": true,
+    "multiagent.project.type": "generic",
+    "multiagent.agents.enabled": [
+      "coder",
+      "reviewer", 
+      "executor"
+    ],
+    "multiagent.workflows.available": [
+      "code-generation",
+      "bug-fixing",
+      "refactoring",
+      "documentation"
+    ],
+    "multiagent.sandbox.enabled": true,
+    "multiagent.sandbox.timeout": 30000,
+    "files.associations": {
+      "*.multiagent": "json"
+    },
+    "tasks": {
+      "version": "2.0.0",
+      "tasks": [
+        {
+          "label": "MultiAgent: Generate Code",
+          "type": "shell",
+          "command": "multiagent",
+          "args": ["generate", "${input:task}"],
+          "group": "build",
+          "presentation": {
+            "echo": true,
+            "reveal": "always",
+            "focus": false,
+            "panel": "shared"
+          }
+        },
+        {
+          "label": "MultiAgent: Review Code",
+          "type": "shell", 
+          "command": "multiagent",
+          "args": ["review", "${file}"],
+          "group": "test"
+        },
+        {
+          "label": "MultiAgent: Execute Code",
+          "type": "shell",
+          "command": "multiagent", 
+          "args": ["execute", "${file}"],
+          "group": "build"
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "github.copilot",
+      "github.copilot-chat", 
+      "ms-python.python",
+      "ms-dotnettools.csharp",
+      "ms-vscode.powershell",
+      "ms-vscode.extension-test-runner"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "MultiAgent Debug",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/multiagent_runner.py",
+        "console": "integratedTerminal",
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "MULTIAGENT_DEBUG": "true"
+        }
+      }
+    ]
+  }
+}
