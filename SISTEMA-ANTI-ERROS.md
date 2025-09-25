@@ -29,9 +29,14 @@ O Sistema Anti-Erros é uma solução completa para prevenir, detectar e corrigi
 - ✅ Logging integrado
 
 **Linguagens suportadas:**
-- JavaScript/Node.js
-- Python
-- React/JSX
+- JavaScript/Node.js - async/await e error handling
+- Python - type hints e exception handling  
+- React/JSX - error boundaries e loading states
+- C# - async/await com ILogger e dependency injection
+- Go - goroutines seguras com panic recovery
+- Rust - Result types e error handling robusto
+- Java - exception handling e logging estruturado
+- PHP - error handling e validação de tipos
 
 **Exemplo de uso:**
 ```powershell
@@ -101,6 +106,78 @@ const MeuComponente = ({ onError, onSuccess }) => {
     // 🚨 Error recovery
     // ✅ PropTypes validation
 };
+```
+
+#### C#
+```csharp
+public class MinhaClasse
+{
+    private readonly ILogger<MinhaClasse> _logger;
+    
+    public async Task<OperationResult> ExecuteAsync(Dictionary<string, object> parameters)
+    {
+        // 🛡️ Validação de entrada
+        // 🔍 Logging estruturado  
+        // 🚨 Exception handling
+        // ✅ Async/await seguro
+    }
+}
+```
+
+#### Go
+```go
+func MinhaFuncao(params map[string]interface{}) *OperationResult {
+    // 🛡️ Panic recovery
+    defer func() {
+        if r := recover(); r != nil {
+            log.Printf("Panic recuperado: %v", r)
+        }
+    }()
+    
+    // 🎯 Lógica com proteções
+    // 🔍 Logging estruturado
+    // ✅ Goroutines seguras
+}
+```
+
+#### Rust
+```rust
+pub fn minha_funcao(params: Option<HashMap<String, Value>>) -> Result<OperationResult, Box<dyn Error>> {
+    // 🛡️ Result types
+    // 🔍 Logging com log crate
+    // 🚨 Error propagation  
+    // ✅ Memory safety
+}
+```
+
+#### Java
+```java
+public class MinhaClasse {
+    private static final Logger logger = Logger.getLogger(MinhaClasse.class.getName());
+    
+    public static OperationResult execute(Map<String, Object> params) {
+        // 🛡️ Exception handling
+        // 🔍 Java logging
+        // 🚨 Try-catch robusto
+        // ✅ Null safety
+    }
+}
+```
+
+#### PHP
+```php
+class MinhaClasse {
+    public function execute($params = []) {
+        try {
+            // 🛡️ Type validation
+            // 🔍 Error logging
+            // 🚨 Exception handling
+            // ✅ Array safety
+        } catch (Exception $ex) {
+            // Error handling
+        }
+    }
+}
 ```
 
 ### 📊 MÉTRICAS E RELATÓRIOS
