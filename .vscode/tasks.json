@@ -124,6 +124,39 @@
       "type": "shell",
       "group": "build",
       "command": "pwsh"
+    },
+    {
+      "label": "🤖 Auto-Carregar Contexto Copilot",
+      "type": "shell",
+      "command": "pwsh",
+      "args": ["-Command", ".\\carregar-contexto-copilot.ps1 -Silent"],
+      "group": "build",
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false,
+        "close": true
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔄 Recarregar Contexto Copilot",
+      "type": "shell", 
+      "command": "pwsh",
+      "args": ["-Command", ".\\carregar-contexto-copilot.ps1"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
     }
   ]
 }

@@ -1,0 +1,69 @@
+{
+  "folders": [
+    {
+      "name": "🤖 MultiAgent Project",
+      "path": "."
+    }
+  ],
+  "settings": {
+    // ⚡ FORÇA COPILOT A SEMPRE USAR CONTEXTO
+    "github.copilot.enable": {
+      "*": true,
+      "markdown": true,
+      "powershell": true,
+      "python": true,
+      "javascript": true,
+      "typescript": true
+    },
+    
+    "github.copilot.chat.includeWorkspaceContext": true,
+    "github.copilot.chat.includeCodeSelection": true,
+    "github.copilot.chat.includeHistory": true,
+    "github.copilot.referencesInChat": "on",
+    
+    // 🎯 ARQUIVOS SEMPRE NO CONTEXTO
+    "files.exclude": {
+      "**/.git": false,
+      "**/.copilot-*": false,
+      "**/prompts": false
+    },
+    
+    "search.exclude": {
+      "**/.copilot-*": false,
+      "**/prompts": false
+    },
+    
+    // 🔄 AUTO-RELOAD DE CONTEXTO
+    "files.watcherExclude": {},
+    
+    // 📁 ARQUIVOS IMPORTANTES SEMPRE VISÍVEIS
+    "explorer.fileNesting.enabled": false,
+    "files.associations": {
+      ".copilot-*": "markdown",
+      "prompts/*.md": "markdown"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "github.copilot",
+      "github.copilot-chat",
+      "ms-vscode.powershell",
+      "ms-python.python"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🤖 Inicializar Contexto Copilot",
+        "type": "shell",
+        "command": "pwsh",
+        "args": ["-Command", ".\\carregar-contexto-copilot.ps1"],
+        "group": "build",
+        "runOptions": {
+          "runOn": "folderOpen"
+        }
+      }
+    ]
+  }
+}

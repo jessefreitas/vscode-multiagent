@@ -121,19 +121,6 @@ Write-Host "  📄 Prompts: $((Get-ChildItem 'prompts' -Filter '*.md' -ErrorActi
 Write-Host "  ⚙️  Configurações: $(if (Test-Path 'settings') { '✅' } else { '❌' })" -ForegroundColor White
 Write-Host ""
 
-# Carregar contexto do Copilot automaticamente
-if (Test-Path ".\carregar-contexto-copilot.ps1") {
-  Write-Host "🧠 Carregando contexto para o Copilot..." -ForegroundColor Cyan
-  try {
-    & ".\carregar-contexto-copilot.ps1" -Silent
-    Write-Host "  ✅ Contexto do Copilot carregado com sucesso" -ForegroundColor Green
-  }
-  catch {
-    Write-Host "  ⚠️  Erro ao carregar contexto do Copilot: $($_.Exception.Message)" -ForegroundColor Yellow
-  }
-  Write-Host ""
-}
-
 if ($scriptsEncontrados -eq $scriptsEssenciais.Count) {
   Write-Host "🎉 PROJETO TOTALMENTE CONFIGURADO!" -ForegroundColor Green
   Write-Host ""
@@ -141,7 +128,6 @@ if ($scriptsEncontrados -eq $scriptsEssenciais.Count) {
   Write-Host "  .\ma.ps1 check          - Verificar sistema" -ForegroundColor Gray
   Write-Host "  .\gerar-codigo-seguro.ps1 - Gerar código" -ForegroundColor Gray
   Write-Host "  .\reparar-projeto.ps1   - Reparar se necessário" -ForegroundColor Gray
-  Write-Host "  .\carregar-contexto-copilot.ps1 - Atualizar contexto do Copilot" -ForegroundColor Gray
 }
 else {
   Write-Host "⚠️  CONFIGURAÇÃO INCOMPLETA" -ForegroundColor Yellow

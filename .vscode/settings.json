@@ -24,5 +24,60 @@
       "command": "npx"
     }
   },
-  "chat.mcp.autostart": "newAndOutdated"
+  "chat.mcp.autostart": "newAndOutdated",
+  
+  // 🤖 CONFIGURAÇÕES GITHUB COPILOT - SISTEMA MULTIAGENT
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": true,
+    "markdown": true,
+    "powershell": true,
+    "python": true,
+    "javascript": true,
+    "typescript": true
+  },
+  
+  // ⚡ FORÇA COPILOT A SEMPRE USAR CONTEXTO DO PROJETO
+  "github.copilot.chat.includeCodeSelection": true,
+  "github.copilot.chat.includeWorkspaceContext": true,
+  "github.copilot.chat.includeHistory": true,
+  "github.copilot.chat.useProjectTemplates": true,
+  "github.copilot.advanced": {
+    "length": 10000,
+    "temperature": 0.3,
+    "top_p": 1,
+    "inlineSuggestCount": 5
+  },
+  
+  // 🔥 CARREGAMENTO AUTOMÁTICO DE CONTEXTO
+  "github.copilot.referencesInChat": "on",
+  "github.copilot.chat.welcomeMessage": "never",
+  
+  // Configurações de contexto específicas
+  "files.associations": {
+    "*.copilot-instructions.md": "markdown",
+    "*.copilot-contexto-ativo.md": "markdown",
+    "prompts/*.md": "markdown",
+    ".copilot-*": "markdown"
+  },
+  
+  // 🔥 ARQUIVOS SEMPRE INCLUÍDOS NO CONTEXTO
+  "files.readonlyInclude": {
+    ".copilot-contexto-ativo.md": true,
+    ".copilot-instructions.md": true,
+    "CONTEXTO-COPILOT.md": true
+  },
+  
+  // Inclui arquivos importantes no contexto
+  "search.useGlobalSearchResult": true,
+  "workbench.editor.enablePreview": true,
+  
+  // Força abertura de arquivos essenciais
+  "workbench.startupEditor": "readme",
+  
+  // Comentários especiais para Copilot
+  "editor.comments.insertSpace": true,
+  "editor.suggest.showConstants": true,
+  "editor.suggest.showWords": true
 }

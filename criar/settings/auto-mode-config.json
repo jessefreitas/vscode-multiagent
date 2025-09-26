@@ -1,0 +1,101 @@
+{
+  "// 🤖 CONFIGURAÇÃO ULTRA AUTOMÁTICA PARA LEIGOS": "Elimina TODAS as decisões técnicas",
+  
+  "// Modo Automático Total": "",
+  "autoMode": true,
+  "requireUserConfirmation": false,
+  "showTechnicalDetails": false,
+  "autoInstallDependencies": true,
+  "autoExecuteCode": true,
+  "autoFixErrors": true,
+  "autoDeploy": true,
+  
+  "// Interface Amigável": "",
+  "useSimpleLanguage": true,
+  "hideComplexErrors": true,
+  "showOnlyResults": true,
+  "friendlyMessages": true,
+  
+  "// Configurações SCPO Automáticas": "",
+  "scpo": {
+    "autoSelectBestPrompt": true,
+    "autoOptimizeCode": true,
+    "autoApplyBestPractices": true,
+    "skipManualReview": true,
+    "trustAIDecisions": true
+  },
+  
+  "// Configurações de Geração": "",
+  "generation": {
+    "autoSelectLanguage": true,
+    "autoSelectFramework": true,
+    "includeAllFeatures": true,
+    "generateDocumentation": true,
+    "generateTests": true,
+    "optimizePerformance": true
+  },
+  
+  "// Configurações de Execução": "",
+  "execution": {
+    "autoRun": true,
+    "autoTest": true,
+    "autoFix": true,
+    "silentMode": false,
+    "showOnlySuccess": true
+  },
+  
+  "// Mensagens para Leigos": "",
+  "messages": {
+    "starting": "🤖 Entendi! Vou fazer isso para você...",
+    "working": "⚡ Trabalhando... (você pode relaxar!)",
+    "installing": "📦 Instalando tudo que precisa...",
+    "testing": "🧪 Testando automaticamente...",
+    "fixing": "🔧 Corrigindo qualquer problema...",
+    "success": "✅ Pronto! Tudo funcionando perfeitamente!",
+    "error": "😊 Pequeno ajuste... deixe comigo!"
+  },
+  
+  "// Configurações de Desenvolvimento": "",
+  "development": {
+    "autoChooseBestTech": true,
+    "includeModernFeatures": true,
+    "followBestPractices": true,
+    "optimizeForPerformance": true,
+    "includeErrorHandling": true,
+    "generateCleanCode": true
+  },
+  
+  "// Configurações Específicas por Tipo": "",
+  "projectTypes": {
+    "website": {
+      "autoInclude": ["HTML5", "CSS3", "JavaScript", "Responsive Design", "SEO"],
+      "autoSetupHosting": true,
+      "generateContent": true
+    },
+    "api": {
+      "autoInclude": ["REST", "Authentication", "Database", "Documentation", "Testing"],
+      "autoSetupDatabase": true,
+      "generateEndpoints": true
+    },
+    "app": {
+      "autoInclude": ["Modern UI", "Data Storage", "Error Handling", "Performance"],
+      "autoOptimize": true,
+      "generateIcons": false
+    }
+  },
+  
+  "// Configurações de Segurança (Automáticas)": "",
+  "security": {
+    "autoApplySecurityMeasures": true,
+    "includeInputValidation": true,
+    "includeErrorHandling": true,
+    "autoSanitizeData": true
+  },
+  
+  "// Para o usuário entender": "",
+  "userInfo": {
+    "whatThisDoes": "Esta configuração faz o agente trabalhar 100% automaticamente",
+    "youDontNeedTo": ["entender código", "fazer reviews", "tomar decisões técnicas"],
+    "justSay": "Fale o que você quer em linguagem normal, como: 'quero um site de vendas'"
+  }
+}
